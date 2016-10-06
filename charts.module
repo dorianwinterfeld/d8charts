@@ -1,0 +1,30 @@
+<?php
+/**
+ * @file
+ * Charts module file that provides hook_theme.
+ */
+
+// Store Charts preprocess theme functions in a separate .inc file.
+\Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
+
+/**
+* Implements hook_theme().
+*/
+
+
+/**
+* Implements hook_theme().
+* @param $existing
+* @param $type
+* @param $theme
+* @param $path
+* @return array
+*/
+
+function charts_theme($existing, $type, $theme, $path) {
+  return array(
+    'charts' => array(
+      'variables' => array('view' => NULL, 'row' => NULL),
+    )
+  );
+}

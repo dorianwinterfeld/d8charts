@@ -1,0 +1,4 @@
+charts_google:
+  version: 1.x
+  js:
+    js/charts_google.js: {}
