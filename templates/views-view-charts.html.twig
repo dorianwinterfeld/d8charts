@@ -1,15 +1,11 @@
-<div id="container" style="width:100%; height:400px;"> </div>
-<script>
-  var charts = {};
-  charts.values = [];
-  charts.labels = [];
-  charts.chart_type = '{{ options.type }}';
-  {% for r in data %}
-  charts.values.push({{ r.value }});
-  charts.labels.push('{{ r.label }}');
-  {% endfor %}
-  charts.title = '{{ title }}';
-  charts.yTitle ='{{ options.chart_value }}';
-  charts.xAxis = '{{ options.chart_xaxis }}';
-</script>
+<div id="container" style="width:100%; height:400px;">
+{#
+    <ul>
+        {% for r in data %}
+        <li>{{ r.value }}</li>
+        {% endfor %}
+    </ul>
+#}
+
+</div>
 

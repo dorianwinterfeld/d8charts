@@ -6,6 +6,7 @@
 
 namespace Drupal\charts\Plugin\views\style;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\core\form\FormStateInterface;
 use Drupal\Core\Template\Attribute;
 use Drupal\views\Plugin\views\style\StylePluginBase;
@@ -168,7 +169,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
   /**
    * Render the entire view from the view result.
    */
-  function render() {
+  public function render() {
     module_load_include('inc', 'charts', 'includes/charts.pages');
     $field_handlers = $this->displayHandler->getHandlers('field');
 
@@ -373,6 +374,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
         }
       }
     }
+
     // Print the chart.
     return $chart;
   }

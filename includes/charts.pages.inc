@@ -76,8 +76,8 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
   if ($field_options) {
     $first_field = key($field_options);
     $field_keys = array_diff($field_options, array($first_field => NULL));
-    $form['fields']['#theme'] = 'charts_settings_fields';
-    $form['fields']['label_field'] = array(
+    $form['#theme'] = 'charts_settings_fields';
+    $form['label_field'] = array(
       '#type' => 'radios',
       '#title' => t('Label field'),
       '#options' => $field_options + array('' => t('No label field')),
@@ -85,7 +85,7 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
       '#weight' => -10,
       '#parents' => array_merge($parents, array('label_field')),
     );
-    $form['fields']['data_fields'] = array(
+    $form['data_fields'] = array(
       '#type' => 'checkboxes',
       '#title' => t('Data fields'),
       '#options' => $field_options,
