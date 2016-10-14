@@ -23,41 +23,17 @@ define('CHARTS_DUAL_AXIS', 'xy');
 // Store Charts preprocess theme functions in a separate .inc file.
 \Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
 
-
-///**
-// * Implements hook_menu().
-// */
-//function charts_menu()
-//{
-//  $items['admin/config/content/charts'] = array(
-//    'title' => 'Default chart configuration',
-//    'description' => 'Set the default library, behavior, and style of charts.',
-//    'page callback' => 'drupal_get_form',
-//    'page arguments' => array('charts_default_settings_form'),
-//    'access arguments' => array('administer charts'),
-//    'file' => 'includes/charts.pages.inc',
-//  );
-//  return $items;
-//}
-
-
-///**
-// * Provides a one-line text field form element.
-// *
-// * @RenderElement("chart")
-// */
-//class RenderChart extends RenderElement {
-
   /**
    * @return mixed
    */
 function getInfo()
-  {
+{
 
 ///**
 // * Implements hook_element_info().
 // *
-//function charts_element_info() {
+//  function charts_element_info()
+//  {
     // Create the elements representing charts themselves.
     $info['chart'] = array(
       '#chart_type' => NULL, // Options: pie, bar, column, etc.
@@ -147,20 +123,7 @@ function getInfo()
   }
 //}
 
-///**
-// * Implements hook_library().
-// */
-//function charts_library() {
-//  $library['charts.admin'] = array(
-//    'title' => t('Charts admin integration'),
-//    'version' => '1.0',
-//    'js' => array(
-//      array('data' => drupal_get_path('module', 'charts') . '/js/charts.admin.js', 'type' => 'file', 'weight' => 10),
-//    ),
-//  );
-//
-//  return $library;
-//}
+
 
 /**
  * Implements hook_permission().
@@ -422,26 +385,3 @@ function charts_cast_element_integer_values(&$element)
     }
   }
 }
-
-
-///**
-// * Output the chart renderable as a string.
-// * @param $variables
-// * @return string
-// */
-//function theme_charts_chart($variables) {
-//
-//  $element = $variables['element'];
-//
-//  $attributes = $element['#attributes'];
-//  $attributes['id'] = $element['#id'];
-//  $attributes['class'][] = 'chart';
-//
-//  return '<div ' . new Attribute($attributes) . '>' . (isset($element['#chart']) ? $element['#chart'] : '') . '</div>';
-//
-//}
-
-
-//function charts_theme_registry_alter(&$theme_registry) {
-//  $theme_registry['sitemap']['path'] = drupal_get_path('module', 'charts') . '/templates';
-//}
