@@ -134,7 +134,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
    * Empty array if the display is valid; an array of error strings if it is not.
    */
   function validate() {
-    module_load_include('inc', 'charts', 'includes/charts.pages');
+    //module_load_include('inc', 'charts', 'includes/charts.pages');
     $errors = array();
     $field_handlers = $this->displayHandler->getHandlers('field');
 
