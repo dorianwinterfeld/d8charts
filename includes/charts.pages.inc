@@ -89,7 +89,8 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
       '#type' => 'checkboxes',
       '#title' => t('Data fields'),
       '#options' => $field_options,
-      '#default_value' => isset($options['data_fields']) ? $options['data_fields'] : array_diff(array_keys($field_options), array($first_field)),
+      //'#default_value' => isset($options['data_fields']) ? $options['data_fields'] : array_diff(array_keys($field_options), array($first_field)),
+        '#default_value' => $options['data_fields'],
       '#weight' => -9,
       '#parents' => array_merge($parents, array('data_fields')),
     );

@@ -61,10 +61,10 @@ class ChartsPluginDisplayChart extends DisplayPluginBase  {
 //  /**
 //   * @return array|null
 //   */
-  public function execute() {
-    $element = $this->view->render();
-    return $element;
-  }
+//  public function execute() {
+//    $element = $this->view->render();
+//    return $element;
+//  }
 
   /**
    * Provide the summary for page options in the views UI.
