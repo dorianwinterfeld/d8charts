@@ -23,7 +23,7 @@
 
 function charts_theme($existing, $type, $theme, $path) {
   return array(
-    'charts' => array(
+    'views-view-charts' => array(
       'variables' => array('view' => NULL, 'row' => NULL),
     )
   );

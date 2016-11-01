@@ -1,8 +1,13 @@
+{{ attach_library('charts/highcharts') }}
+{{ attach_library('charts/test') }}
+
 <div id="container" style="width:100%; height:400px;">
     <h1>{{options.type}}</h1>
     <table>
-        {% for r in data %}
-            <tr><td>{{ r.value }}</td><td>{{ r.label }}</td></tr>
+        {% for row in data %}
+            {% for col in row %}
+                <tr><td>{{col.value}}</td><td>{{ col.label }}</td></tr>
+            {% endfor %}
         {% endfor %}
     </table>
 
