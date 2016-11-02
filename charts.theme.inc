@@ -21,6 +21,7 @@ function template_preprocess_views_view_charts(&$variables) {
    $variables['data'] = array();
 
   $valueField = $view->style_plugin->options['data_fields'];
+    //Removes title from fields array
     array_pop($valueField);
 
     //$fieldValue = $valueField['field_number'];
@@ -32,9 +33,9 @@ function template_preprocess_views_view_charts(&$variables) {
   foreach ($view->result as $id => $row) {
       $numberFields = 0;
       $rowData = array();
-      foreach($valueField as $dataId => $dataValue) {
+      foreach($valueField as $fieldId => $rowDataValue) {
           $rowData[$numberFields] = array(
-              'value' => $view->field[$dataId]->getValue($row),
+              'value' => $view->field[$fieldId]->getValue($row),
              'label' => $view->field[$labelField]->getValue($row),
           );
           $numberFields++;
