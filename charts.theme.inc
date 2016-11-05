@@ -6,11 +6,11 @@
  * @param $page
  */
 
-function charts_highcharts_page_attachments(&$page)
+function charts_page_attachments(&$page)
 {
   $page['#attached']['library'][] = 'charts/charts';
-  $page['#attached']['library'][] = 'charts_highcharts/charts_highcharts';
-  $page['#attached']['library'][] = 'charts_highcharts/highcharts';
+  /*$page['#attached']['library'][] = 'charts_highcharts/charts_highcharts';
+  $page['#attached']['library'][] = 'charts_highcharts/highcharts';*/
 }
 
 
@@ -20,7 +20,8 @@ function template_preprocess_views_view_charts(&$variables) {
   $view = $variables['view'];
     //debug(array_keys($view->field['field_number']));
     //debug(get_class($view->field['field_number']->label));
-    drupal_set_message(json_encode($view->field['field_number']->label()));
+    //debug(get_class($view->result[0]));
+    //drupal_set_message(json_encode($view->result[0]->_entity));
    $variables['data'] = array();
 
   $valueField = $view->style_plugin->options['data_fields'];
