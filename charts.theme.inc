@@ -18,16 +18,18 @@ function template_preprocess_views_view_charts(&$variables) {
 
   $options = $variables['view']->style_plugin->options;
   $view = $variables['view'];
+    //debug(array_keys($view->field['field_number']));
+    //debug(get_class($view->field['field_number']->label));
+    drupal_set_message(json_encode($view->field['field_number']->label()));
    $variables['data'] = array();
 
   $valueField = $view->style_plugin->options['data_fields'];
-    //Removes title from fields array
-    array_pop($valueField);
 
     //$fieldValue = $valueField['field_number'];
     //$fieldValueTwo = $valueField['field_second_number'];
 
-  $labelField = $view->style_plugin->options['label_field'];
+  $title = $view->style_plugin->options['label_field'];
+
   $data = array();
 
   foreach ($view->result as $id => $row) {
@@ -36,7 +38,8 @@ function template_preprocess_views_view_charts(&$variables) {
       foreach($valueField as $fieldId => $rowDataValue) {
           $rowData[$numberFields] = array(
               'value' => $view->field[$fieldId]->getValue($row),
-             'label' => $view->field[$labelField]->getValue($row),
+             'title' => $view->field[$title]->getValue($row),
+              'label' => $view->field[$fieldId]->label(),
           );
           $numberFields++;
       }

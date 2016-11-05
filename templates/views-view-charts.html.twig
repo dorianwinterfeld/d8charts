@@ -2,30 +2,7 @@
 {{ attach_library('charts/generatechart') }}
 
 <div id="container" style="width:100%; height:400px;">
-    <h1>{{options.type}}</h1>
-    <table>
-        {% for row in data %}
-            {% for col in row %}
-                <tr><td>{{col.value}}</td><td>{{ col.label }}</td></tr>
-            {% endfor %}
-        {% endfor %}
-    </table>
-
-{#<p>type = {{ options.type }}</p>
-<p>title =  {{ view.field_number }}</p>#}
-{#<p>data_fields = {{ options.data_fields }}</p>
-<p>data_fields_key = {{ options.data_fields_key }}</p>
-<p>label_field = {{ options.label_field }}</p>
-  <p>label_field value = {{ options.label_field.value }}</p>
-<p>label_field_key = {{ options.label_field_key }}</p>
-<p>axis = {{ options.axis }}</p>
-<p>yaxis = {{ options.yaxis }}</p>
-
-  <p>row attributes = {{ row.field_number }}</p>
-  <p>row attributes = {{ row.field_number.value }}</p>#}
 
 
 </div>
-
-<div id="displaychart"></div>
 

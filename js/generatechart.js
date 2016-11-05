@@ -5,33 +5,38 @@
 
     Drupal.behaviors.charts = {
      attach: function (context, settings) {
-         var dataX = drupalSettings.charts.generatechart.data;
-         var dataLength = dataX.length;
+
+         var chartData = drupalSettings.charts.generatechart.data;
+         console.debug(chartData);
+         var chartDataLength = chartData.length;
          var categories = [];
          var data = [];
+         var seriesData = [];
 
 
-         for (var i = 0; i < dataLength; i++){
-             var colData = dataX[i];
+
+         for (var i = 0; i < chartDataLength; i++){
+             var colData = chartData[i];
+
+             var seriesRowData = {name: "", data: []};
+
              for(var j= 0; j < colData.length; j++) {
-                 console.debug(colData[j]['value']+' -- '+colData[j]['label']);
+                 seriesRowData.name = colData[j]['title'];
+                 seriesRowData.data.push(Number(colData[j]['value']))
                  categories.push(colData[j]['label']);
-                 console.debug(Number(colData[j]['value']) + 1000);
-                 data.push(Number(colData[j]['value']));
-             }
-         }
-         console.debug(categories);
-         console.debug(data);
 
-         $('#displaychart').highcharts({
+             }
+             seriesData.push(seriesRowData);
+         }
+
+         $('#container').highcharts({
              chart: {
                  type: 'bar'
              },
              title: {
-                 text: 'The chart title will come here'
+                 text: 'The chart title will comes here'
              },
              xAxis: {
-                 //categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
                  categories: categories,
                  title: {
                      text: null
@@ -71,11 +76,11 @@
              credits: {
                  enabled: false
              }*/,
-             series: [{
+             series: seriesData/*[{
                  name: 'Year 1800',
                  //data: [107, 31, 635, 203, 2]
                  data: data
-             }]
+             }]*/
          });
 
      }
