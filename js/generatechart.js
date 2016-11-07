@@ -7,7 +7,7 @@
      attach: function (context, settings) {
 
          var chartData = drupalSettings.charts.generatechart.data;
-         console.debug(chartData);
+        // console.debug(chartData);
          var chartDataLength = chartData.length;
          var categories = [];
          var data = [];
@@ -21,13 +21,16 @@
              var seriesRowData = {name: "", data: []};
 
              for(var j= 0; j < colData.length; j++) {
-                 seriesRowData.name = colData[j]['title'];
-                 seriesRowData.data.push(Number(colData[j]['value']))
-                 categories.push(colData[j]['label']);
 
+                 categories[i] = colData[j]['title']
+                 seriesRowData.name = colData[i]['label'];
+                 seriesRowData.data.push(Number(colData[j]['value']))
+                 //categories.push(colData[j]['label']);
              }
              seriesData.push(seriesRowData);
          }
+         console.debug('&&&&&&&&&')
+         console.debug(categories)
 
          $('#container').highcharts({
              chart: {

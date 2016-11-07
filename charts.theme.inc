@@ -18,7 +18,7 @@ function template_preprocess_views_view_charts(&$variables) {
 
   $options = $variables['view']->style_plugin->options;
   $view = $variables['view'];
-    //debug(array_keys($view->field['field_number']));
+    debug(array_keys($view->field['field_number']));
     //debug(get_class($view->field['field_number']->label));
     //debug(get_class($view->result[0]));
     //drupal_set_message(json_encode($view->result[0]->_entity));
