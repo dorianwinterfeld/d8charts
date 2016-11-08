@@ -28,6 +28,7 @@ function template_preprocess_views_view_charts(&$variables) {
 
   $valueField = $view->style_plugin->options['data_fields'];
     debug(array_keys($valueField));
+    array_pop($valueField);
     //$fieldValue = $valueField['field_number'];
     //$fieldValueTwo = $valueField['field_second_number'];
 
