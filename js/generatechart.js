@@ -10,29 +10,21 @@
         console.debug(chartData);
          var chartDataLength = chartData.length;
          var categories = [];
-         var data = [];
          var seriesData = [];
 
          for (var i = 0; i < chartData[0].length; i++){
-            // var colData = chartData[i];
-               // console.debug(colData)
+
              var seriesRowData = {name: "", color: "", data: []};
 
              for(var j= 0; j < chartDataLength; j++) {
 
-                // categories[i] = colData[j]['title']
                  categories[j] = chartData[j][i]['title']
-                // console.debug("title "+chartData[j][i]['title'])
                  seriesRowData.name = chartData[j][i]['label'];
                  seriesRowData.color = chartData[j][i]['color'];
-                 //console.debug("label "+chartData[j][i]['label']+" * J = "+j+" - i = "+i)
                  seriesRowData.data.push(Number(chartData[j][i]['value']))
-                 //categories.push(colData[j]['label']);
              }
              seriesData.push(seriesRowData);
          }
-         //console.debug('&&&&&&&&&')
-         //console.debug(categories)
 
          $('#container').highcharts({
              chart: {
@@ -91,3 +83,4 @@
      }
     }
 } (jQuery, drupalSettings));
+
