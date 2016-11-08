@@ -35,6 +35,8 @@ function template_preprocess_views_view_charts(&$variables) {
   $title = $view->style_plugin->options['label_field'];
     debug(array_keys($view->result[0]));
 
+  $color = $view->style_plugin->options['field_colors'];
+
   $data = array();
 
   foreach ($view->result as $id => $row) {
@@ -43,8 +45,9 @@ function template_preprocess_views_view_charts(&$variables) {
       foreach($valueField as $fieldId => $rowDataValue) {
           $rowData[$numberFields] = array(
               'value' => $view->field[$fieldId]->getValue($row),
-             'title' => $view->field[$title]->getValue($row),
+              'title' => $view->field[$title]->getValue($row),
               'label' => $view->field[$fieldId]->label(),
+              'color' => $color[$fieldId],
           );
           $numberFields++;
       }
@@ -53,5 +56,5 @@ function template_preprocess_views_view_charts(&$variables) {
 
   $variables['data'] = $data;
   $variables['options'] = $options;
-    $variables['#attached']['drupalSettings']['charts']['generatechart']['data'] = $data;
+  $variables['#attached']['drupalSettings']['charts']['generatechart']['data'] = $data;
 }
