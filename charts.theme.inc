@@ -9,8 +9,6 @@
 function charts_page_attachments(&$page)
 {
   $page['#attached']['library'][] = 'charts/charts';
-  /*$page['#attached']['library'][] = 'charts_highcharts/charts_highcharts';
-  $page['#attached']['library'][] = 'charts_highcharts/highcharts';*/
 }
 
 
@@ -18,22 +16,12 @@ function template_preprocess_views_view_charts(&$variables) {
 
   $options = $variables['view']->style_plugin->options;
   $view = $variables['view'];
-   // debug(array_keys($view->field['field_number']));
-    //debug(get_class($view->field['field_number']->label));
-    //debug(get_class($view->result[0]));
-    //drupal_set_message(json_encode($view->result[0]->_entity));
-    //debug(array_keys($view->field));
-    //debug(get_class($view->field['field_number']));
-   $variables['data'] = array();
+  $variables['data'] = array();
 
   $valueField = $view->style_plugin->options['data_fields'];
-    //debug(array_keys($valueField));
-    array_pop($valueField);
-    //$fieldValue = $valueField['field_number'];
-    //$fieldValueTwo = $valueField['field_second_number'];
+   array_pop($valueField);
 
-  $title = $view->style_plugin->options['label_field'];
-    debug(array_keys($view->result[0]));
+  $labelField = $view->style_plugin->options['label_field'];
 
   $color = $view->style_plugin->options['field_colors'];
 
@@ -45,7 +33,7 @@ function template_preprocess_views_view_charts(&$variables) {
       foreach($valueField as $fieldId => $rowDataValue) {
           $rowData[$numberFields] = array(
               'value' => $view->field[$fieldId]->getValue($row),
-              'title' => $view->field[$title]->getValue($row),
+              'label_field' => $view->field[$labelField]->getValue($row),
               'label' => $view->field[$fieldId]->label(),
               'color' => $color[$fieldId],
           );
@@ -54,7 +42,10 @@ function template_preprocess_views_view_charts(&$variables) {
       $data[$id] = $rowData;
   }
 
+
   $variables['data'] = $data;
   $variables['options'] = $options;
+  drupal_set_message(json_encode($options));
   $variables['#attached']['drupalSettings']['charts']['generatechart']['data'] = $data;
+  $variables['#attached']['drupalSettings']['charts']['generatechart']['options'] = $options;
 }

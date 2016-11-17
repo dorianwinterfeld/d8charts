@@ -6,11 +6,13 @@
     Drupal.behaviors.charts = {
      attach: function (context, settings) {
 
-         var chartData = drupalSettings.charts.generatechart.data;
-        console.debug(chartData);
-         var chartDataLength = chartData.length;
-         var categories = [];
-         var seriesData = [];
+       var chartData = drupalSettings.charts.generatechart.data;
+       var chartOptions = drupalSettings.charts.generatechart.options;
+       var chartDataLength = chartData.length;
+       var categories = [];
+       var seriesData = [];
+       var title = chartOptions.title;
+       var type = chartOptions.type;
 
          for (var i = 0; i < chartData[0].length; i++){
 
@@ -18,7 +20,7 @@
 
              for(var j= 0; j < chartDataLength; j++) {
 
-                 categories[j] = chartData[j][i]['title']
+                 categories[j] = chartData[j][i]['label_field']
                  seriesRowData.name = chartData[j][i]['label'];
                  seriesRowData.color = chartData[j][i]['color'];
                  seriesRowData.data.push(Number(chartData[j][i]['value']))
@@ -28,10 +30,10 @@
 
          $('#container').highcharts({
              chart: {
-                 type: 'bar'
+                 type: type
              },
              title: {
-                 text: 'The chart title will comes here'
+                 text: title
              },
              xAxis: {
                  categories: categories,
