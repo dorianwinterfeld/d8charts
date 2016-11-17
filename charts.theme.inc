@@ -45,7 +45,6 @@ function template_preprocess_views_view_charts(&$variables) {
 
   $variables['data'] = $data;
   $variables['options'] = $options;
-  drupal_set_message(json_encode($options));
   $variables['#attached']['drupalSettings']['charts']['generatechart']['data'] = $data;
   $variables['#attached']['drupalSettings']['charts']['generatechart']['options'] = $options;
 }
