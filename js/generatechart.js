@@ -13,7 +13,12 @@
        var seriesData = [];
        var title = chartOptions.title;
        var type = chartOptions.type;
-       var yaxisTitle = chartOptions.yaxis_title;
+
+       //y-axis variables
+       var yAxisTitle = chartOptions.yaxis_title;
+       var yAxisMin = chartOptions.yaxis_min;
+       var yAxisMax = chartOptions.yaxis_max;
+
        var xLabelsRotation = chartOptions.xaxis_labels_rotation;
      //  var yLabelsRotation = chartOptions.yaxis_labels_rotation;
        console.log(chartOptions);
@@ -49,13 +54,13 @@
                  }
              },
              yAxis: {
-                 min: 0,
+                 min: yAxisMin,
+                 max: yAxisMax,
                  title: {
-                     text: yaxisTitle,
+                     text: yAxisTitle,
                      align: 'high'
                  },
                  labels: {
-                     overflow: 'justify'
                    //  rotation: yLabelsRotation
                  }
              },
