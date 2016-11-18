@@ -180,24 +180,6 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
     '#parents' => array_merge($parents, array('legend_position')),
   );
 
-  $form['display']['colors'] = array(
-    '#title' => t('Chart colors'),
-    '#theme_wrappers' => array('form_element'),
-    '#prefix' => '<div class="chart-colors">',
-    '#suffix' => '</div>',
-  );
-  for ($color_count = 0; $color_count < 10; $color_count++) {
-    $form['display']['colors'][$color_count] = array(
-      '#type' => 'textfield',
-      '#attributes' => array('TYPE' => 'color'),
-      '#size' => 10,
-      '#maxlength' => 7,
-      '#theme_wrappers' => array(),
-      '#suffix' => ' ',
-      '#default_value' => $options['colors'][$color_count],
-      '#parents' => array_merge($parents, array('colors', $color_count)),
-    );
-  }
   $form['display']['background'] = array(
     '#title' => t('Background color'),
     '#type' => 'textfield',
@@ -407,7 +389,7 @@ function charts_default_settings() {
   $defaults['data_labels'] = FALSE;
   $defaults['legend'] = TRUE;
   $defaults['legend_position'] = 'right';
- // $defaults['colors'] = charts_default_colors();
+  $defaults['colors'] = charts_default_colors();
   $defaults['background'] = '';
   $defaults['tooltips'] = TRUE;
   $defaults['tooltips_use_html'] = FALSE;

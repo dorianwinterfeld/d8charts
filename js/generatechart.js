@@ -13,6 +13,10 @@
        var seriesData = [];
        var title = chartOptions.title;
        var type = chartOptions.type;
+       var yaxisTitle = chartOptions.yaxis_title;
+       var xLabelsRotation = chartOptions.xaxis_labels_rotation;
+     //  var yLabelsRotation = chartOptions.yaxis_labels_rotation;
+       console.log(chartOptions);
 
          for (var i = 0; i < chartData[0].length; i++){
 
@@ -39,16 +43,20 @@
                  categories: categories,
                  title: {
                      text: null
+                 },
+                 labels: {
+                   rotation: xLabelsRotation
                  }
-             }/*,
+             },
              yAxis: {
                  min: 0,
                  title: {
-                     text: 'Population (millions)',
+                     text: yaxisTitle,
                      align: 'high'
                  },
                  labels: {
                      overflow: 'justify'
+                   //  rotation: yLabelsRotation
                  }
              },
              tooltip: {
@@ -60,7 +68,7 @@
                          enabled: true
                      }
                  }
-             }*//*,
+             },
              legend: {
                  layout: 'vertical',
                  align: 'right',
@@ -71,10 +79,10 @@
                  borderWidth: 1,
                  backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
                  shadow: true
-             }*//*,
+             },
              credits: {
                  enabled: false
-             }*/,
+             },
              series: seriesData/*[{
                  name: 'Year 1800',
                  //data: [107, 31, 635, 203, 2]
