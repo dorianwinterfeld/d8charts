@@ -37,8 +37,9 @@ class ChartsPluginStyleChart extends StylePluginBase {
    *
    * @var bool
    */
+  protected $usesGrouping = FALSE;
   protected $usesFields = TRUE;
-    protected $usesRowPlugin = TRUE;
+  protected $usesRowPlugin = TRUE;
 
 
   /**

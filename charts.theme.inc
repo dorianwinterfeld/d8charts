@@ -9,6 +9,7 @@
 function charts_page_attachments(&$page)
 {
   $page['#attached']['library'][] = 'charts/charts';
+  $page['#attached']['library'][] = 'charts_highcharts/highcharts';
 }
 
 
