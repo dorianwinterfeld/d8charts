@@ -96,7 +96,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
     $form = charts_settings_form($form, $this->options, $field_options, array('style_options'));
 
     // Reduce the options if this is a chart extension.
-    if ($parent_display = $this->get_parent_chart_display()) {
+    /*if ($parent_display = $this->get_parent_chart_display()) {
       $parent_chart_type = chart_get_type($parent_display->display_options['style_options']['type']);
       if (empty($form['type']['#default_value'])) {
         $form['type']['#default_value'] = $parent_display->display_options['style_options']['type'];
@@ -114,7 +114,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
         $form['yaxis']['#title'] = t('Secondary axis');
         $form['yaxis']['#attributes']['class'] = array();
       }
-    }
+    }*/
   }
 
   /**
