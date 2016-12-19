@@ -3,11 +3,8 @@ charts:
   js:
     js/charts.admin.js: {}
     js/generatechart.js: {}
-
-
   dependencies:
     - core/jquery
-    - core/jquery.once
     - core/drupal
     - core/drupalSettings
 

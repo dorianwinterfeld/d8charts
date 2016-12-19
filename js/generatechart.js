@@ -3,9 +3,8 @@
  */
 (function ($, drupalSettings) {
 
-    Drupal.behaviors.charts = {
+    /*Drupal.behaviors.charts = {
      attach: function (context, settings) {
-
        var chartData = drupalSettings.charts.generatechart.data;
        var chartOptions = drupalSettings.charts.generatechart.options;
        var chartDataLength = chartData.length;
@@ -88,14 +87,10 @@
              credits: {
                  enabled: false
              },
-             series: seriesData/*[{
-                 name: 'Year 1800',
-                 //data: [107, 31, 635, 203, 2]
-                 data: data
-             }]*/
+             series: seriesData
          });
 
      }
-    }
+    }*/
 } (jQuery, drupalSettings));
 

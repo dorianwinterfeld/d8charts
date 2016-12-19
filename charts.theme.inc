@@ -9,11 +9,12 @@
 function charts_page_attachments(&$page)
 {
   $page['#attached']['library'][] = 'charts/charts';
-  $page['#attached']['library'][] = 'charts_highcharts/highcharts';
+  $page['#attached']['library'][] = 'charts_highcharts/charts_highcharts';
+    $page['#attached']['library'][] = 'charts_highcharts/highcharts';
 }
 
 
-function template_preprocess_views_view_charts(&$variables) {
+/*function template_preprocess_views_view_charts(&$variables) {
 
   $options = $variables['view']->style_plugin->options;
   $view = $variables['view'];
@@ -48,4 +49,4 @@ function template_preprocess_views_view_charts(&$variables) {
   $variables['options'] = $options;
   $variables['#attached']['drupalSettings']['charts']['generatechart']['data'] = $data;
   $variables['#attached']['drupalSettings']['charts']['generatechart']['options'] = $options;
-}
+}*/

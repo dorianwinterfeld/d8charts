@@ -6,6 +6,7 @@
 
 // Store Charts preprocess theme functions in a separate .inc file.
 \Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
+\Drupal::moduleHandler()->loadInclude('charts', 'inc', 'includes/charts.classes');
 
 /**
 * Implements hook_theme().
@@ -20,11 +21,98 @@
 * @param $path
 * @return array
 */
-
 function charts_theme($existing, $type, $theme, $path) {
   return array(
-    'views-view-charts' => array(
+    'views_view_charts' => array(
       'variables' => array('view' => NULL, 'row' => NULL),
     )
   );
+}
+
+function theme_views_view_charts($variables){
+    $options = $variables['view']->style_plugin->options;
+    $view = $variables['view'];
+    $variables['data'] = array();
+
+    $valueField = $view->style_plugin->options['data_fields'];
+    array_pop($valueField);
+
+    $labelField = $view->style_plugin->options['label_field'];
+
+    $color = $view->style_plugin->options['field_colors'];
+
+    $data = array();
+
+    foreach ($view->result as $id => $row) {
+        $numberFields = 0;
+        $rowData = array();
+        foreach($valueField as $fieldId => $rowDataValue) {
+            $rowData[$numberFields] = array(
+                'value' => $view->field[$fieldId]->getValue($row),
+                'label_field' => $view->field[$labelField]->getValue($row),
+                'label' => $view->field[$fieldId]->label(),
+                'color' => $color[$fieldId],
+            );
+            $numberFields++;
+        }
+        $data[$id] = $rowData;
+    }
+
+    $categories = array();
+    $seriesData = array();
+
+    for ($i = 0; $i < count($data[0]); $i++){
+
+
+        //var seriesRowData = {name: "", color: "", data: []};
+        $seriesRowData = array('name' => '','color' => '', 'data' => array());
+        for($j = 0; $j < count($data); $j++) {
+            $categories[$j] = $data[$j][$i]['label_field'];
+            $seriesRowData['name'] = $data[$j][$i]['label'];
+            $seriesRowData['color'] = $data[$j][$i]['color'];
+            array_push($seriesRowData['data'],((int)($data[$j][$i]['value'])));
+        }
+        array_push($seriesData, $seriesRowData);
+    }
+    $chart = new ChartType();
+    $chart->type = 'bar';
+    $chartTitle = new ChartTitle();
+    $chartTitle->text = $options['title'];
+    $chartXaxis = new Xaxis();
+    $chartLabels = new ChartLabel();
+    $chartLabels->rotation = $options['xaxis_labels_rotation'];
+    $chartXaxis->categories = $categories;
+    $chartXaxis->title = ($chartTitle->text = 'xAs');
+    $chartXaxis->labels = $chartLabels;
+    $chartYaxis = new Yaxis();
+    $yAxisTitle = new YaxisTitle();
+    $yAxisTitle->text =  $options['yaxis_title'];
+    $chartYaxis->min = $options['yaxis_min'];
+    //$chartYaxis->max = $options['yaxis_max'];
+    $chartYaxis->title = $yAxisTitle;
+    $dLabels = new DataLabelStatus();
+    $dataLabels = new DataLabels();
+    $dataLabels->dataLabels = $dLabels;
+    $barPlotOptns = new PlotOptions();
+    $barPlotOptns->bar = $dataLabels;
+    $chartTooltip = new Tooltip();
+    $chartCredits = new ChartCredits();
+    $chartLegend = new ChartLegend();
+
+    $highchart = new Highcharts();
+    $highchart->chart = $chart;
+    $highchart->title = $chartTitle;
+    $highchart->xAxis = $chartXaxis;
+    $highchart->yAxis = $chartYaxis;
+    $highchart->tooltip = $chartTooltip;
+    $highchart->plotOptions = $barPlotOptns;
+    $highchart->credits = $chartCredits;
+    $highchart->legend = $chartLegend;
+    $highchart->series = $seriesData;
+
+    $highchartAttributes = array('class' => 'charts-highchart','data-chart' => json_encode($highchart));
+
+    $attributes = new \Drupal\Core\Template\Attribute($highchartAttributes);
+    $variables['#attached']['library'][] = 'charts_highcharts/charts_highcharts';
+    return '<div ' . $attributes . '></div>';
 }
