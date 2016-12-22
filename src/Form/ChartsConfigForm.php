@@ -30,19 +30,12 @@ class ChartsConfigForm extends ConfigFormBase
     }
     public function buildForm(array $form, FormStateInterface $form_state)
     {
-        $defaults = $this->config()->get('charts.settings');
+        $config = \Drupal::service('config.factory')->getEditable('charts.settings');
 
         $parents = array('charts_default_settings');
-        if ($defaults == NULL)
-            $defaults = [] + $this->charts_default_settings();
-        else
-            $defaults += $this->charts_default_settings();
-        //drupal_set_message(print_r($defaults, 1));
+        $defaults = $config->get('things') + $this->charts_default_settings();
 
-        //$defaults =  $this->charts_default_settings();
         $field_options = array();
-        // = array('charts_default_settings');
-
         $url = Url::fromRoute('views_ui.add');
         $link = Link::fromTextAndUrl(t('create a new view'), $url)->toRenderable();
 
@@ -76,7 +69,6 @@ class ChartsConfigForm extends ConfigFormBase
             '#value' => t('Save defaults'),
         );
 
-        //return parent::buildForm($form, $form_state);
         return $form;
     }
     public function charts_default_settings() {
@@ -144,11 +136,14 @@ class ChartsConfigForm extends ConfigFormBase
             '#parents' => array_merge($parents, array('library')),
         );
 
-        $chart_types = $this->charts_type_info();
+        //$chart_types = $this->charts_type_info();
+        //This is a work around will need to revisit this
+        $chart_types = $this->charts_charts_type_info();
         $type_options = array();
         foreach ($chart_types as $chart_type => $chart_type_info) {
             $type_options[$chart_type] = $chart_type_info['label'];
         }
+
         $form['type'] = array(
             '#title' => t('Chart type'),
             '#type' => 'radios',
@@ -428,5 +423,52 @@ class ChartsConfigForm extends ConfigFormBase
 
         \Drupal::moduleHandler()->alter('charts_type_info', $charts_type_info);
         return $charts_type_info;
+    }
+    /**
+     * Retrieve a specific chart type.
+     */
+    public function chart_get_type($chart_type) {
+        $types = charts_type_info();
+        return $types[$chart_type] ? $types[$chart_type] : FALSE;
+    }
+
+    /**
+     * Implements hook_charts_type_info().
+     */
+    public function charts_charts_type_info() {
+        $chart_types['pie'] = array(
+            'label' => t('Pie'),
+            'axis' => CHARTS_SINGLE_AXIS,
+        );
+        $chart_types['bar'] = array(
+            'label' => t('Bar'),
+            'axis' => CHARTS_DUAL_AXIS,
+            'axis_inverted' => TRUE, // Meaning x/y axis are flipped.
+            'stacking' => TRUE,
+        );
+        $chart_types['column'] = array(
+            'label' => t('Column'),
+            'axis' => CHARTS_DUAL_AXIS,
+            'stacking' => TRUE,
+        );
+        $chart_types['line'] = array(
+            'label' => t('Line'),
+            'axis' => CHARTS_DUAL_AXIS,
+        );
+        $chart_types['area'] = array(
+            'label' => t('Area'),
+            'axis' => CHARTS_DUAL_AXIS,
+            'stacking' => TRUE,
+        );
+        $chart_types['scatter'] = array(
+            'label' => t('Scatter'),
+            'axis' => CHARTS_DUAL_AXIS,
+        );
+        return $chart_types;
+    }
+    public function submitForm(array &$form, FormStateInterface $form_state) {
+        $config = \Drupal::service('config.factory')->getEditable('charts.settings');
+        $config->set('things',$form_state->getValue('charts_default_settings'));
+        $config->save();
     }
 }
