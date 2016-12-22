@@ -46,7 +46,6 @@ class ChartsConfigForm extends ConfigFormBase
             '#weight' => -100,
         );
 
-
         // Reuse the global settings form for defaults, but remove JS classes.
         $form = $this->charts_settings_form($form, $defaults, $field_options, $parents);
         $form['xaxis']['#attributes']['class'] = array();
@@ -117,6 +116,7 @@ class ChartsConfigForm extends ConfigFormBase
         $options = array_merge($this->charts_default_settings(), $defaults);
 
         $form['#attached']['library'][] = array('charts', 'charts.admin');
+        $form['#attached']['library'][] = 'charts/vertical-tabs';
 
         // Get a list of available chart libraries.
         $charts_info = $this->charts_info();
@@ -202,7 +202,7 @@ class ChartsConfigForm extends ConfigFormBase
 
         $form['display'] = array(
             '#title' => t('Display'),
-            '#type' => 'fieldset',
+            '#type' => 'details',
             '#collapsible' => TRUE,
             '#collapsed' => TRUE,
         );
@@ -293,7 +293,7 @@ class ChartsConfigForm extends ConfigFormBase
 
         $form['xaxis'] = array(
             '#title' => t('Horizontal axis'),
-            '#type' => 'fieldset',
+            '#type' => 'details',
             '#collapsible' => TRUE,
             '#collapsed' => TRUE,
             '#attributes' => array('class' => array('chart-xaxis')),
@@ -322,7 +322,7 @@ class ChartsConfigForm extends ConfigFormBase
 
         $form['yaxis'] = array(
             '#title' => t('Vertical axis'),
-            '#type' => 'fieldset',
+            '#type' => 'details',
             '#collapsible' => TRUE,
             '#collapsed' => TRUE,
             '#attributes' => array('class' => array('chart-yaxis')),

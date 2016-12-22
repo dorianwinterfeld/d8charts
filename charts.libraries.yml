@@ -1,5 +1,7 @@
 charts:
   version: 1.x
+  css:
+    css/vertical-tabs.css: {}
   js:
     js/charts.admin.js: {}
     js/generatechart.js: {}
