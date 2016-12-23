@@ -33,7 +33,11 @@ class ChartsConfigForm extends ConfigFormBase
         $config = \Drupal::service('config.factory')->getEditable('charts.settings');
 
         $parents = array('charts_default_settings');
-        $defaults = $config->get('things') + $this->charts_default_settings();
+        $default_config = $config->get('charts_default_settings');
+        if ($default_config == NULL)
+            $defaults = [] + $this->charts_default_settings();
+        else
+            $defaults = $default_config + $this->charts_default_settings();
 
         $field_options = array();
         $url = Url::fromRoute('views_ui.add');
@@ -116,7 +120,6 @@ class ChartsConfigForm extends ConfigFormBase
         $options = array_merge($this->charts_default_settings(), $defaults);
 
         $form['#attached']['library'][] = array('charts', 'charts.admin');
-        $form['#attached']['library'][] = 'charts/vertical-tabs';
 
         // Get a list of available chart libraries.
         $charts_info = $this->charts_info();
@@ -468,7 +471,7 @@ class ChartsConfigForm extends ConfigFormBase
     }
     public function submitForm(array &$form, FormStateInterface $form_state) {
         $config = \Drupal::service('config.factory')->getEditable('charts.settings');
-        $config->set('things',$form_state->getValue('charts_default_settings'));
+        $config->set('charts_default_settings',$form_state->getValue('charts_default_settings'));
         $config->save();
     }
 }
