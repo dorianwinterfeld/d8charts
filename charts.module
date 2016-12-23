@@ -63,8 +63,6 @@ function theme_views_view_charts($variables){
 
     for ($i = 0; $i < count($data[0]); $i++){
 
-
-        //var seriesRowData = {name: "", color: "", data: []};
         $seriesRowData = array('name' => '','color' => '', 'data' => array());
         for($j = 0; $j < count($data); $j++) {
             $categories[$j] = $data[$j][$i]['label_field'];

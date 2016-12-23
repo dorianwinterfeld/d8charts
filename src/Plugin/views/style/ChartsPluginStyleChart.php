@@ -133,7 +133,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
    * @return array Empty array if the display is valid; an array of error strings if it is not.
    * Empty array if the display is valid; an array of error strings if it is not.
    */
-  function validate() {
+  public function validate() {
     $errors = array();
     $field_handlers = $this->displayHandler->getHandlers('field');
 
