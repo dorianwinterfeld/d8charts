@@ -6,11 +6,25 @@
  * @param $page
  */
 
-function charts_page_attachments(&$page)
+function charts_page_attachments(&$attachments)
 {
-  $page['#attached']['library'][] = 'charts/charts';
-  $page['#attached']['library'][] = 'charts_highcharts/charts_highcharts';
-    $page['#attached']['library'][] = 'charts_highcharts/highcharts';
+    $service = \Drupal::service('charts.charts_service');
+    $library = $service->getLibrarySelected();
+    drupal_set_message(' TOGGLE ATTACHMENTS -> '.$service->getLibrarySelected());
+    $attachments['#attached']['library'][] = 'charts/charts';
+
+    switch($library){
+        case 'google':
+
+            break;
+        case 'highcharts':
+            $attachments['#attached']['library'][] = 'charts_highcharts/charts_highcharts';
+            $attachments['#attached']['library'][] = 'charts_highcharts/highcharts';
+            break;
+        case 'C3':
+            $attachments['#attached']['library'][] = 'c3/c3';
+            break;
+    }
 }
 
 

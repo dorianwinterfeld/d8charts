@@ -1,0 +1,14 @@
+<?php
+
+/**
+* Implements hook_charts_info().
+*/
+function c3_charts_info() {
+    $info['C3'] = array(
+        'label' => t('C3'),
+        //'render' => '_charts_highcharts_render',
+        'types' => array('area', 'bar', 'column', 'line', 'pie', 'scatter'),
+        //'file' => 'charts_highcharts.inc',
+        );
+    return $info;
+}

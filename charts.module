@@ -3,10 +3,23 @@
  * @file
  * Charts module file that provides hook_theme.
  */
+use Drupal\charts\Settings\Highcharts\ChartType;
+use Drupal\charts\Settings\Highcharts\ChartTitle;
+use Drupal\charts\Settings\Highcharts\Xaxis;
+use Drupal\charts\Settings\Highcharts\ChartLabel;
+use Drupal\charts\Settings\Highcharts\Yaxis;
+use Drupal\charts\Settings\Highcharts\YaxisTitle;
+use Drupal\charts\Settings\Highcharts\DataLabelStatus;
+use Drupal\charts\Settings\Highcharts\DataLabels;
+use Drupal\charts\Settings\Highcharts\PlotOptions;
+use Drupal\charts\Settings\Highcharts\Tooltip;
+use Drupal\charts\Settings\Highcharts\ChartCredits;
+use Drupal\charts\Settings\Highcharts\ChartLegend;
+use Drupal\charts\Settings\Highcharts\Highcharts;
 
 // Store Charts preprocess theme functions in a separate .inc file.
 \Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
-\Drupal::moduleHandler()->loadInclude('charts', 'inc', 'includes/charts.classes');
+//\Drupal::moduleHandler()->loadInclude('charts', 'inc', 'includes/charts.classes');
 
 /**
 * Implements hook_theme().
@@ -31,7 +44,10 @@ function charts_theme($existing, $type, $theme, $path) {
 
 function theme_views_view_charts($variables){
     $options = $variables['view']->style_plugin->options;
+
     $view = $variables['view'];
+    drupal_set_message(print_r(json_encode($view->style_plugin->options['library']), 1).' vhg');
+    $library = $view->style_plugin->options['library'];
     $variables['data'] = array();
 
     $valueField = $view->style_plugin->options['data_fields'];
@@ -72,45 +88,88 @@ function theme_views_view_charts($variables){
         }
         array_push($seriesData, $seriesRowData);
     }
+    $service = \Drupal::service('charts.charts_service');
+    $service->setLibrarySelected($view->style_plugin->options['library']);
+    drupal_set_message(' LIBRARY -> '.$service->getLibrarySelected());
+    switch($library){
+        case 'google':
+            drupal_set_message('Google in switch');
+            return '<h2> ' . 'Google to be implemented' . '</h2>';
+            //break;
+        case 'highcharts':
+            drupal_set_message('Highcharts in switch');
+            $highchart = renderHigchartsCharts($options, $categories, $seriesData);
+            drupal_set_message('f'.print_r(json_encode($highchart), 1));
+
+           $variables['#attached']['library'][] = 'c3/c3';
+            $highchartAttributes = array('class' => 'charts-highchart','data-chart' => json_encode($highchart));
+            $attributes = new \Drupal\Core\Template\Attribute($highchartAttributes);
+            return '<div ' . $attributes . '></div>';
+            //break;
+        case 'C3':
+            drupal_set_message('C3 in switch');
+            //return '<h2> ' . 'C3 to be implemented' . '</h2>';
+            //break;
+            return '<div id="chart">'.'C3'.'</div>';
+        default:
+    }
+
+
+
+    //return $chartAttributes;
+
+   /* if ($library == 'highcharts'){
+        $variables['#attached']['library'][] = 'charts_highcharts/charts_highcharts';
+        return '<div ' . $attributes . '></div>';
+    }
+    else
+        return '<h1>Google charts come here</h1>';*/
+
+}
+
+function renderHigchartsCharts($options, $categories = array(), $seriesData = array()){
     $chart = new ChartType();
-    $chart->type = 'bar';
+    $chart->setType('bar');
     $chartTitle = new ChartTitle();
-    $chartTitle->text = $options['title'];
+    $chartTitle->setText($options['title']);
     $chartXaxis = new Xaxis();
     $chartLabels = new ChartLabel();
-    $chartLabels->rotation = $options['xaxis_labels_rotation'];
-    $chartXaxis->categories = $categories;
-    $chartXaxis->title = ($chartTitle->text = 'xAs');
-    $chartXaxis->labels = $chartLabels;
+    //$chartLabels->setRotation($options['xaxis_labels_rotation']);
+    $chartXaxis->setCategories($categories);
+    $chartTitle->setText($text = 'xAs');
+    $chartXaxis->setTitle($chartTitle);
+    $chartXaxis->setLabels($chartLabels);
     $chartYaxis = new Yaxis();
     $yAxisTitle = new YaxisTitle();
-    $yAxisTitle->text =  $options['yaxis_title'];
-    $chartYaxis->min = $options['yaxis_min'];
+    $yAxisTitle->setText($options['yaxis_title']);
+    $chartYaxis->setMin($options['yaxis_min']);
     //$chartYaxis->max = $options['yaxis_max'];
-    $chartYaxis->title = $yAxisTitle;
+    $chartYaxis->setTitle($yAxisTitle);
     $dLabels = new DataLabelStatus();
     $dataLabels = new DataLabels();
-    $dataLabels->dataLabels = $dLabels;
+    $dataLabels->setDataLabels($dLabels);
     $barPlotOptns = new PlotOptions();
-    $barPlotOptns->bar = $dataLabels;
+    $barPlotOptns->setBar($dataLabels);
     $chartTooltip = new Tooltip();
     $chartCredits = new ChartCredits();
     $chartLegend = new ChartLegend();
 
     $highchart = new Highcharts();
-    $highchart->chart = $chart;
-    $highchart->title = $chartTitle;
-    $highchart->xAxis = $chartXaxis;
-    $highchart->yAxis = $chartYaxis;
-    $highchart->tooltip = $chartTooltip;
-    $highchart->plotOptions = $barPlotOptns;
-    $highchart->credits = $chartCredits;
-    $highchart->legend = $chartLegend;
-    $highchart->series = $seriesData;
+    $highchart->setChart($chart);
+    $highchart->setTitle($chartTitle);
+    $highchart->setXAxis($chartXaxis);
+    $highchart->setYAxis($chartYaxis);
+    $highchart->setTooltip($chartTooltip);
+    $highchart->setPlotOptions($barPlotOptns);
+    $highchart->setCredits($chartCredits);
+    $highchart->setLegend($chartLegend);
+    $highchart->setSeries($seriesData);
 
-    $highchartAttributes = array('class' => 'charts-highchart','data-chart' => json_encode($highchart));
+    return $highchart;
+}
+function renderGoogleCharts(){
 
-    $attributes = new \Drupal\Core\Template\Attribute($highchartAttributes);
-    $variables['#attached']['library'][] = 'charts_highcharts/charts_highcharts';
-    return '<div ' . $attributes . '></div>';
+}
+function renderC3Charts(){
+
 }

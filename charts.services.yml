@@ -1,0 +1,3 @@
+services:
+  charts.charts_service:
+    class: Drupal\charts\Services\ChartService

@@ -411,33 +411,6 @@ class ChartsConfigForm extends ConfigFormBase
         \Drupal::moduleHandler()->alter('charts_info', $charts_info);
         return $charts_info;
     }
-    public function charts_type_info()
-    {
-        $charts_type_info = \Drupal::moduleHandler()->invokeAll('charts_type_info');
-
-        foreach ($charts_type_info as $chart_type => $chart_type_info) {
-            $charts_type_info[$chart_type] += array(
-                'label' => '',
-                'axis' => CHARTS_DUAL_AXIS,
-                'axis_inverted' => FALSE,
-                'stacking' => FALSE,
-            );
-        }
-
-        \Drupal::moduleHandler()->alter('charts_type_info', $charts_type_info);
-        return $charts_type_info;
-    }
-    /**
-     * Retrieve a specific chart type.
-     */
-    public function chart_get_type($chart_type) {
-        $types = charts_type_info();
-        return $types[$chart_type] ? $types[$chart_type] : FALSE;
-    }
-
-    /**
-     * Implements hook_charts_type_info().
-     */
     public function charts_charts_type_info() {
         $chart_types['pie'] = array(
             'label' => t('Pie'),
