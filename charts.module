@@ -94,7 +94,7 @@ function theme_views_view_charts($variables){
     switch($library){
         case 'google':
             drupal_set_message('Google in switch');
-            return '<h2> ' . 'Google to be implemented' . '</h2>';
+            return '<div id="chart">'.'Google'.'</div>';
             //break;
         case 'highcharts':
             drupal_set_message('Highcharts in switch');
@@ -113,18 +113,6 @@ function theme_views_view_charts($variables){
             return '<div id="chart">'.'C3'.'</div>';
         default:
     }
-
-
-
-    //return $chartAttributes;
-
-   /* if ($library == 'highcharts'){
-        $variables['#attached']['library'][] = 'charts_highcharts/charts_highcharts';
-        return '<div ' . $attributes . '></div>';
-    }
-    else
-        return '<h1>Google charts come here</h1>';*/
-
 }
 
 function renderHigchartsCharts($options, $categories = array(), $seriesData = array()){

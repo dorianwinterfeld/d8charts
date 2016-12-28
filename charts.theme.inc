@@ -15,7 +15,8 @@ function charts_page_attachments(&$attachments)
 
     switch($library){
         case 'google':
-
+            $attachments['#attached']['library'][] = 'charts_google/google';
+            $attachments['#attached']['library'][] = 'charts_google/charts_google';
             break;
         case 'highcharts':
             $attachments['#attached']['library'][] = 'charts_highcharts/charts_highcharts';

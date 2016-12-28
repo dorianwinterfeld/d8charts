@@ -2,3 +2,16 @@ charts_google:
   version: 1.x
   js:
     js/charts_google.js: {}
+    js/google_charts.js: {}
+  dependencies:
+        - core/jquery
+        - core/jquery.once
+        - core/drupal
+
+google:
+  js:
+    https://www.gstatic.com/charts/loader.js: { type: external }
+  dependencies:
+          - core/jquery
+          - core/jquery.once
+          - core/drupal
