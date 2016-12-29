@@ -8,10 +8,9 @@
         attach: function(context, settings) {
             google.charts.load('current', {'packages':['corechart']});
             google.charts.setOnLoadCallback(drawChart);
-            var config = $('.chart-google').attr('data-chart');
-            alert($.parseJSON(config))
+            var dataTable = $('.chart-google').attr('data-chart');
             function drawChart() {
-                var data = google.visualization.arrayToDataTable($.parseJSON(config));
+                var data = google.visualization.arrayToDataTable($.parseJSON(dataTable));
                 // Set chart options
                 var options = {'title':'How Much Pizza I Ate Last Night',
                     'width':600,

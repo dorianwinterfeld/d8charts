@@ -89,26 +89,20 @@ function theme_views_view_charts($variables){
         }
         array_push($seriesData, $seriesRowData);
     }
-    drupal_set_message(print_r($categories, 1));
-    drupal_set_message(print_r($seriesData, 1));
     $service = \Drupal::service('charts.charts_service');
     $service->setLibrarySelected($view->style_plugin->options['library']);
 
+    //Handles the toggling from one library to another
     switch($library){
         case 'google':
             $googleData = renderGoogleCharts($categories, $seriesData);
-            drupal_set_message(print_r($googleData, 1));
             $googleAttributes = array('id'=>'chart', 'class' => 'chart-google','data-chart' => $googleData);
             $attributes = new Attribute($googleAttributes);
             //return '<div id="chart">'.'Google'.'</div>';
             return '<div ' . $attributes . '></div>';
             //break;
         case 'highcharts':
-            drupal_set_message('Highcharts in switch');
             $highchart = renderHigchartsCharts($options, $categories, $seriesData);
-            drupal_set_message('f'.print_r(json_encode($highchart), 1));
-
-           $variables['#attached']['library'][] = 'c3/c3';
             $highchartAttributes = array('class' => 'charts-highchart','data-chart' => json_encode($highchart));
             $attributes = new Attribute($highchartAttributes);
             return '<div ' . $attributes . '></div>';
@@ -122,6 +116,13 @@ function theme_views_view_charts($variables){
     }
 }
 
+/**
+ * Creates a JSON Object formatted for Highcharts to use
+ * @param $options
+ * @param array $categories
+ * @param array $seriesData
+ * @return Highcharts
+ */
 function renderHigchartsCharts($options, $categories = array(), $seriesData = array()){
     $chart = new ChartType();
     $chart->setType('bar');
@@ -162,10 +163,17 @@ function renderHigchartsCharts($options, $categories = array(), $seriesData = ar
 
     return $highchart;
 }
+
+/**
+ * Creates a JSON Object formatted for Google charts to use
+ * @param array $categories
+ * @param array $seriesData
+ * @return string
+ */
 function renderGoogleCharts($categories = array(), $seriesData = array()){
     $dataTable = array();
     $dataTableHeader = array('dfd');
-    $catx = array();
+    $dataTableRows = array();
     $j = 0;
     foreach ($seriesData as $key=>$category){
 
@@ -178,11 +186,11 @@ function renderGoogleCharts($categories = array(), $seriesData = array()){
             array_push($rowDataTable, $seriesData[$i]['data'][$j]);
         }
         $j++;
-        array_push($catx, $rowDataTable);
+        array_push($dataTableRows, $rowDataTable);
     }
     array_push($dataTable, $dataTableHeader);
-    foreach ($catx as $catxy){
-        array_push($dataTable, $catxy);
+    foreach ($dataTableRows as $dataTableRow){
+        array_push($dataTable, $dataTableRow);
     }
 
     return json_encode($dataTable);
