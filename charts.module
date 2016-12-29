@@ -3,6 +3,7 @@
  * @file
  * Charts module file that provides hook_theme.
  */
+use \Drupal\Core\Template\Attribute;
 use Drupal\charts\Settings\Highcharts\ChartType;
 use Drupal\charts\Settings\Highcharts\ChartTitle;
 use Drupal\charts\Settings\Highcharts\Xaxis;
@@ -88,13 +89,19 @@ function theme_views_view_charts($variables){
         }
         array_push($seriesData, $seriesRowData);
     }
+    drupal_set_message(print_r($categories, 1));
+    drupal_set_message(print_r($seriesData, 1));
     $service = \Drupal::service('charts.charts_service');
     $service->setLibrarySelected($view->style_plugin->options['library']);
-    drupal_set_message(' LIBRARY -> '.$service->getLibrarySelected());
+
     switch($library){
         case 'google':
-            drupal_set_message('Google in switch');
-            return '<div id="chart">'.'Google'.'</div>';
+            $googleData = renderGoogleCharts($categories, $seriesData);
+            drupal_set_message(print_r($googleData, 1));
+            $googleAttributes = array('id'=>'chart', 'class' => 'chart-google','data-chart' => $googleData);
+            $attributes = new Attribute($googleAttributes);
+            //return '<div id="chart">'.'Google'.'</div>';
+            return '<div ' . $attributes . '></div>';
             //break;
         case 'highcharts':
             drupal_set_message('Highcharts in switch');
@@ -103,7 +110,7 @@ function theme_views_view_charts($variables){
 
            $variables['#attached']['library'][] = 'c3/c3';
             $highchartAttributes = array('class' => 'charts-highchart','data-chart' => json_encode($highchart));
-            $attributes = new \Drupal\Core\Template\Attribute($highchartAttributes);
+            $attributes = new Attribute($highchartAttributes);
             return '<div ' . $attributes . '></div>';
             //break;
         case 'C3':
@@ -155,8 +162,30 @@ function renderHigchartsCharts($options, $categories = array(), $seriesData = ar
 
     return $highchart;
 }
-function renderGoogleCharts(){
+function renderGoogleCharts($categories = array(), $seriesData = array()){
+    $dataTable = array();
+    $dataTableHeader = array('dfd');
+    $catx = array();
+    $j = 0;
+    foreach ($seriesData as $key=>$category){
 
+        array_push($dataTableHeader, $category['name']);
+        $rowDataTable = [];
+        array_push($rowDataTable, $categories[$key]);
+
+        for ($i = 0; $i < count($seriesData); $i++){
+
+            array_push($rowDataTable, $seriesData[$i]['data'][$j]);
+        }
+        $j++;
+        array_push($catx, $rowDataTable);
+    }
+    array_push($dataTable, $dataTableHeader);
+    foreach ($catx as $catxy){
+        array_push($dataTable, $catxy);
+    }
+
+    return json_encode($dataTable);
 }
 function renderC3Charts(){
 

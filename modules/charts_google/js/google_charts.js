@@ -6,31 +6,19 @@
 
     Drupal.behaviors.chartsHighcharts = {
         attach: function(context, settings) {
-            alert('google maps')
             google.charts.load('current', {'packages':['corechart']});
             google.charts.setOnLoadCallback(drawChart);
-
+            var config = $('.chart-google').attr('data-chart');
+            alert($.parseJSON(config))
             function drawChart() {
-
-                // Create the data table.
-                var data = new google.visualization.DataTable();
-                data.addColumn('string', 'Topping');
-                data.addColumn('number', 'Slices');
-                data.addRows([
-                    ['Mushrooms', 3],
-                    ['Onions', 1],
-                    ['Olives', 1],
-                    ['Zucchini', 1],
-                    ['Pepperoni', 2]
-                ]);
-
+                var data = google.visualization.arrayToDataTable($.parseJSON(config));
                 // Set chart options
                 var options = {'title':'How Much Pizza I Ate Last Night',
-                    'width':400,
-                    'height':300};
+                    'width':600,
+                    'height':400};
 
                 // Instantiate and draw our chart, passing in some options.
-                var chart = new google.visualization.PieChart(document.getElementById('chart'));
+                var chart = new google.visualization.BarChart(document.getElementById('chart'));
                 chart.draw(data, options);
             }
         }
