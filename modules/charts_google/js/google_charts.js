@@ -13,8 +13,9 @@
                 var data = google.visualization.arrayToDataTable($.parseJSON(dataTable));
                 // Set chart options
                 var options = {'title':'How Much Pizza I Ate Last Night',
-                    'width':600,
-                    'height':400};
+                    //'width':600,
+                    //'height':400
+                };
 
                 // Instantiate and draw our chart, passing in some options.
                 var chart = new google.visualization.BarChart(document.getElementById('chart'));

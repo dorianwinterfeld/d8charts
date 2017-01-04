@@ -26,7 +26,6 @@ module_load_include('php', 'charts', 'charts.functions');
 function charts_settings_form($form, $defaults = array(), $field_options = array(), $parents = array()) {
   // Ensure all defaults are set.
   $options = array_merge(charts_default_settings(), $defaults);
-
   $form['#attached']['library'][] = array('charts', 'charts.admin');
 
   // Get a list of available chart libraries.
@@ -80,7 +79,7 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
 
 
     $form['fields'] = array(
-      '#title' => 'Charts fields',
+      '#caption' => t('Charts fields'),
       '#type' => 'table',
       //  '#header' => array(t('Field Name'), t('Provides Labels'), t('Provides Data'), t('Color')),
       '#tabledrag' => TRUE,
@@ -94,6 +93,8 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
       '#weight' => -10,
       '#parents' => array_merge($parents, array('label_field')),
     );
+      //drupal_set_message(print_r($options['data_fields']['field_number'], 1).' df');
+
     $form['fields']['data_fields'] = array(
       '#type' => 'checkboxes',
       '#title' => t('Data fields'),
@@ -104,8 +105,30 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
       '#parents' => array_merge($parents, array('data_fields')),
     );
     $color_count = 0;
+      foreach ($field_options as $field_name => $field_label) {
+          $form['fields']['field_colors'][$field_name] = array(
+              '#type' => 'textfield',
+              '#attributes' => array('TYPE' => 'color'),
+              '#size' => 10,
+              '#maxlength' => 7,
+              '#theme_wrappers' => array(),
+              '#default_value' => !empty($options['field_colors'][$field_name]) ? $options['field_colors'][$field_name] : $options['colors'][$color_count],
+              '#parents' => array_merge($parents, array('field_colors', $field_name)),
+          );
+          $color_count++;
+      }
+      /*$color_count = 0;
     foreach ($field_options as $field_name => $field_label) {
-      $form['fields']['field_colors'][$field_name] = array(
+        $form['fields'][$color_count]['data_fields'] = array(
+            '#type' => 'checkboxes',
+            //'#title' => t('Data fields'),
+            '#options' => [$field_options[$field_name]],
+            //'#default_value' => isset($options['data_fields']) ? $options['data_fields'] : array_diff(array_keys($field_options), array($first_field)),
+            '#default_value' => $options['data_fields'],
+            '#weight' => -9,
+            '#parents' => array_merge($parents, array('data_fields')),
+        );
+      $form['fields'][$color_count]['field_colors'][$field_name] = array(
         '#type' => 'textfield',
         '#attributes' => array('TYPE' => 'color'),
         '#size' => 10,
@@ -115,7 +138,7 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
         '#parents' => array_merge($parents, array('field_colors', $field_name)),
       );
       $color_count++;
-    }
+    }*/
   }
 
   $form['display'] = array(

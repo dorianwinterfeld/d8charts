@@ -195,6 +195,10 @@ function renderGoogleCharts($categories = array(), $seriesData = array()){
 
     return json_encode($dataTable);
 }
+
+function createGoogleChartsOptions($options){
+
+}
 function renderC3Charts(){
 
 }

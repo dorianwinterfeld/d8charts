@@ -168,9 +168,5 @@ class ChartsPluginDisplayChart extends DisplayPluginBase  {
       break;
     }
   }
-
-
-
-
 }
 

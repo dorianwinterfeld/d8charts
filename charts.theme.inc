@@ -6,6 +6,11 @@
  * @param $page
  */
 
+/**
+ * Hook attaches assests to pages depending on library selected
+ *
+ * @param $attachments
+ */
 function charts_page_attachments(&$attachments)
 {
     $service = \Drupal::service('charts.charts_service');
