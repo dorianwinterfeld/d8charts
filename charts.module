@@ -132,7 +132,7 @@ function renderHigchartsCharts($options, $categories = array(), $seriesData = ar
     $chartLabels = new ChartLabel();
     //$chartLabels->setRotation($options['xaxis_labels_rotation']);
     $chartXaxis->setCategories($categories);
-    $chartTitle->setText($text = 'xAs');
+    $chartTitle->setText($options['title']);
     $chartXaxis->setTitle($chartTitle);
     $chartXaxis->setLabels($chartLabels);
     $chartYaxis = new Yaxis();

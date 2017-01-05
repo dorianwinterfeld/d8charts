@@ -2,7 +2,6 @@ charts:
   version: 1.x
   js:
     js/charts.admin.js: {}
-    js/generatechart.js: {}
   dependencies:
     - core/jquery
     - core/jquery.once
