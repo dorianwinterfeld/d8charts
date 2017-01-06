@@ -9,12 +9,12 @@
 namespace Drupal\charts\Settings\Google;
 
 
-class GoogleOptions
+class GoogleOptions implements \JsonSerializable
 {
     private $title;
-    private $chartArea;
+    /*private $chartArea;
     private $hAxis;
-    private $vAxis;
+    private $vAxis;*/
 
     /**
      * @return mixed
@@ -32,51 +32,57 @@ class GoogleOptions
         $this->title = $title;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getChartArea()
+//    /**
+//     * @return mixed
+//     */
+//    public function getChartArea()
+//    {
+//        return $this->chartArea;
+//    }
+//
+//    /**
+//     * @param mixed $chartArea
+//     */
+//    public function setChartArea($chartArea)
+//    {
+//        $this->chartArea = $chartArea;
+//    }
+//
+//    /**
+//     * @return mixed
+//     */
+//    public function getHAxis()
+//    {
+//        return $this->hAxis;
+//    }
+//
+//    /**
+//     * @param mixed $hAxis
+//     */
+//    public function setHAxis($hAxis)
+//    {
+//        $this->hAxis = $hAxis;
+//    }
+//
+//    /**
+//     * @return mixed
+//     */
+//    public function getVAxis()
+//    {
+//        return $this->vAxis;
+//    }
+//
+//    /**
+//     * @param mixed $vAxis
+//     */
+//    public function setVAxis($vAxis)
+//    {
+//        $this->vAxis = $vAxis;
+//    }
+    public function jsonSerialize()
     {
-        return $this->chartArea;
-    }
+        $vars = get_object_vars($this);
 
-    /**
-     * @param mixed $chartArea
-     */
-    public function setChartArea($chartArea)
-    {
-        $this->chartArea = $chartArea;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getHAxis()
-    {
-        return $this->hAxis;
-    }
-
-    /**
-     * @param mixed $hAxis
-     */
-    public function setHAxis($hAxis)
-    {
-        $this->hAxis = $hAxis;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getVAxis()
-    {
-        return $this->vAxis;
-    }
-
-    /**
-     * @param mixed $vAxis
-     */
-    public function setVAxis($vAxis)
-    {
-        $this->vAxis = $vAxis;
+        return $vars;
     }
 }

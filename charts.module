@@ -98,6 +98,7 @@ function theme_views_view_charts($variables){
         case 'google':
             $googleData = renderGoogleCharts($categories, $seriesData);
             $googleOptions = createGoogleChartsOptions($options);
+            //drupal_set_message(print_r($googleOptions->getTitle(), 1).'google options');
             $googleAttributes = array('id'=>'chart', 'class' => 'chart-google','data-chart' => $googleData, 'google-options'=> json_encode($googleOptions));
             $attributes = new Attribute($googleAttributes);
             //return '<div id="chart">'.'Google'.'</div>';
