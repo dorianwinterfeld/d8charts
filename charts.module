@@ -17,6 +17,7 @@ use Drupal\charts\Settings\Highcharts\Tooltip;
 use Drupal\charts\Settings\Highcharts\ChartCredits;
 use Drupal\charts\Settings\Highcharts\ChartLegend;
 use Drupal\charts\Settings\Highcharts\Highcharts;
+use Drupal\charts\Settings\Google\GoogleOptions;
 
 // Store Charts preprocess theme functions in a separate .inc file.
 \Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
@@ -96,7 +97,8 @@ function theme_views_view_charts($variables){
     switch($library){
         case 'google':
             $googleData = renderGoogleCharts($categories, $seriesData);
-            $googleAttributes = array('id'=>'chart', 'class' => 'chart-google','data-chart' => $googleData);
+            $googleOptions = createGoogleChartsOptions($options);
+            $googleAttributes = array('id'=>'chart', 'class' => 'chart-google','data-chart' => $googleData, 'google-options'=> json_encode($googleOptions));
             $attributes = new Attribute($googleAttributes);
             //return '<div id="chart">'.'Google'.'</div>';
             return '<div ' . $attributes . '></div>';
@@ -197,7 +199,10 @@ function renderGoogleCharts($categories = array(), $seriesData = array()){
 }
 
 function createGoogleChartsOptions($options){
+    $googleOptions = new GoogleOptions();
+    $googleOptions->setTitle($options['title']);
 
+    return $googleOptions;
 }
 function renderC3Charts(){
 

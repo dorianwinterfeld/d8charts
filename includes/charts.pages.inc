@@ -77,7 +77,6 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
     $field_keys = array_diff($field_options, array($first_field => NULL));
     $form['#theme'] = 'charts_settings_fields';
 
-
     $form['fields'] = array(
       '#caption' => t('Charts fields'),
       '#type' => 'table',
