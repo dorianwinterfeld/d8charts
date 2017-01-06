@@ -20,7 +20,7 @@
 */
                 // Instantiate and draw our chart, passing in some options.
                 var chart = new google.visualization.BarChart(document.getElementById('chart'));
-                chart.draw(data, ggleOptions);
+                chart.draw(data, $.parseJSON(ggleOptions));
             }
         }
     }
