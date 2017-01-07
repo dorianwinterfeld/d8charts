@@ -15,9 +15,8 @@
                 var data = google.visualization.arrayToDataTable(JSON.parse(dataTable));
                 var googleChartTypeObject = JSON.parse(googleChartType);
                 var googleChartTypeFormatted = googleChartTypeObject.type;
-window.alert(googleChartTypeFormatted);
-                // Instantiate and draw our chart, passing in some options.
 
+                // Instantiate and draw our chart, passing in some options.
                 if(googleChartTypeFormatted=='BarChart'){
                    var chart = new google.visualization.BarChart(document.getElementById('chart'));
                 }
@@ -26,6 +25,12 @@ window.alert(googleChartTypeFormatted);
                 }
                 if(googleChartTypeFormatted=='PieChart'){
                    var chart = new google.visualization.PieChart(document.getElementById('chart'));
+                }
+                if(googleChartTypeFormatted=='ScatterChart'){
+                    var chart = new google.visualization.ScatterChart(document.getElementById('chart'));
+                }
+                if(googleChartTypeFormatted=='AreaChart'){
+                    var chart = new google.visualization.AreaChart(document.getElementById('chart'));
                 }
                 else if(googleChartTypeFormatted=='LineChart'){
                    var chart = new google.visualization.LineChart(document.getElementById('chart'));
