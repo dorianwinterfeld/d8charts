@@ -19,6 +19,7 @@ use Drupal\charts\Settings\Highcharts\ChartLegend;
 use Drupal\charts\Settings\Highcharts\Highcharts;
 use Drupal\charts\Settings\Google\GoogleOptions;
 use Drupal\charts\Settings\Google\GoogleChartType;
+use Drupal\charts\Settings\C3\C3ChartType;
 
 // Store Charts preprocess theme functions in a separate .inc file.
 \Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
@@ -110,7 +111,10 @@ function theme_views_view_charts($variables){
             return '<div ' . $attributes . '></div>';
         case 'C3':
             drupal_set_message('C3 in switch');
-            return '<div id="chart">'.'C3'.'</div>';
+            $c3Chart = renderC3Charts($options, $categories, $seriesData);
+            $c3chartAttributes = array('class' => 'charts-c3','c3-chart-type' => json_encode($c3Chart));
+            $c3attributes = new Attribute($c3chartAttributes);
+            return '<div ' . $c3attributes . ' id="chart"></div>'; //'<div id="chart">'.'C3'.'</div>';
         default:
     }
 }
@@ -124,7 +128,7 @@ function theme_views_view_charts($variables){
  */
 function renderHigchartsCharts($options, $categories = array(), $seriesData = array()){
     $chart = new ChartType();
-    $chart->setType('bar');
+    $chart->setType($options['type']);
     $chartTitle = new ChartTitle();
     $chartTitle->setText($options['title']);
     $chartXaxis = new Xaxis();
@@ -207,6 +211,9 @@ function createGoogleChartType($options){
 
     return $googleChartType;
 }
-function renderC3Charts(){
+function renderC3Charts($options, $categories = array(), $seriesData = array()){
+    $c3Chart = new C3ChartType();
+    $c3Chart->setType($options['type']);
 
+    return $c3Chart;
 }
