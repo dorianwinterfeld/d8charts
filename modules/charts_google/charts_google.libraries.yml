@@ -1,8 +1,7 @@
 charts_google:
   version: 1.x
   js:
-    #js/charts_google.js: {}
-    js/google_charts.js: {}
+    js/charts_google.js: {}
   dependencies:
         - core/jquery
         - core/jquery.once
