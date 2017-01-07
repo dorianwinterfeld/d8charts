@@ -9,18 +9,16 @@
             google.charts.load('current', {'packages':['corechart']});
             google.charts.setOnLoadCallback(drawChart);
             var dataTable = $('.chart-google').attr('data-chart');
-            var ggleOptions = $('.chart-google').attr('google-options');
+            var googleChartOptions = $('.chart-google').attr('google-options');
+            var googleChartType = $('.chart-google').attr('google-chart-type');
             function drawChart() {
-                var data = google.visualization.arrayToDataTable($.parseJSON(dataTable));
-                // Set chart options
-                /*var options = {'title':'How Much Pizza I Ate Last Night',
-                    //'width':600,
-                    //'height':400
-                };
-*/
+                var data = google.visualization.arrayToDataTable(JSON.parse(dataTable));
+                var googleChartTypeObject = JSON.parse(googleChartType);
+                var googleChartTypeFormatted = googleChartTypeObject.type;
+                window.alert(googleChartTypeFormatted);
                 // Instantiate and draw our chart, passing in some options.
                 var chart = new google.visualization.BarChart(document.getElementById('chart'));
-                chart.draw(data, $.parseJSON(ggleOptions));
+                chart.draw(data, JSON.parse(googleChartOptions));
             }
         }
     }

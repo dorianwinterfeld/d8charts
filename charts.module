@@ -18,15 +18,10 @@ use Drupal\charts\Settings\Highcharts\ChartCredits;
 use Drupal\charts\Settings\Highcharts\ChartLegend;
 use Drupal\charts\Settings\Highcharts\Highcharts;
 use Drupal\charts\Settings\Google\GoogleOptions;
+use Drupal\charts\Settings\Google\GoogleChartType;
 
 // Store Charts preprocess theme functions in a separate .inc file.
 \Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
-//\Drupal::moduleHandler()->loadInclude('charts', 'inc', 'includes/charts.classes');
-
-/**
-* Implements hook_theme().
-*/
-
 
 /**
 * Implements hook_theme().
@@ -98,22 +93,23 @@ function theme_views_view_charts($variables){
         case 'google':
             $googleData = renderGoogleCharts($categories, $seriesData);
             $googleOptions = createGoogleChartsOptions($options);
-            //drupal_set_message(print_r($googleOptions->getTitle(), 1).'google options');
-            $googleAttributes = array('id'=>'chart', 'class' => 'chart-google','data-chart' => $googleData, 'google-options'=> json_encode($googleOptions));
+            $googleChartType = createGoogleChartType($options);
+            $googleAttributes = array(
+                'id'=>'chart',
+                'class' => 'chart-google',
+                'data-chart' => $googleData,
+                'google-options'=> json_encode($googleOptions),
+                'google-chart-type' => json_encode($googleChartType),
+            );
             $attributes = new Attribute($googleAttributes);
-            //return '<div id="chart">'.'Google'.'</div>';
             return '<div ' . $attributes . '></div>';
-            //break;
         case 'highcharts':
             $highchart = renderHigchartsCharts($options, $categories, $seriesData);
             $highchartAttributes = array('class' => 'charts-highchart','data-chart' => json_encode($highchart));
             $attributes = new Attribute($highchartAttributes);
             return '<div ' . $attributes . '></div>';
-            //break;
         case 'C3':
             drupal_set_message('C3 in switch');
-            //return '<h2> ' . 'C3 to be implemented' . '</h2>';
-            //break;
             return '<div id="chart">'.'C3'.'</div>';
         default:
     }
@@ -204,6 +200,12 @@ function createGoogleChartsOptions($options){
     $googleOptions->setTitle($options['title']);
 
     return $googleOptions;
+}
+function createGoogleChartType($options){
+    $googleChartType = new GoogleChartType();
+    $googleChartType->setChartType($options['type']);
+
+    return $googleChartType;
 }
 function renderC3Charts(){
 
