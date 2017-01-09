@@ -7,7 +7,7 @@
 
     Drupal.behaviors.chartsC3 = {
         attach: function(context, settings) {
-            var c3ChartType = $('.chart-c3').attr('c3-chart-type');
+            var c3ChartType = $('.charts-c3').attr('c3-chart-type');
             var type = JSON.parse(c3ChartType);
             var formattedType = type.type;
             window.alert(formattedType);
