@@ -15,25 +15,24 @@
                 var data = google.visualization.arrayToDataTable(JSON.parse(dataTable));
                 var googleChartTypeObject = JSON.parse(googleChartType);
                 var googleChartTypeFormatted = googleChartTypeObject.type;
-
-                // Instantiate and draw our chart, passing in some options.
-                if(googleChartTypeFormatted=='BarChart'){
-                   var chart = new google.visualization.BarChart(document.getElementById('chart'));
-                }
-                if(googleChartTypeFormatted=='ColumnChart'){
-                   var chart = new google.visualization.ColumnChart(document.getElementById('chart'));
-                }
-                if(googleChartTypeFormatted=='PieChart'){
-                   var chart = new google.visualization.PieChart(document.getElementById('chart'));
-                }
-                if(googleChartTypeFormatted=='ScatterChart'){
-                    var chart = new google.visualization.ScatterChart(document.getElementById('chart'));
-                }
-                if(googleChartTypeFormatted=='AreaChart'){
-                    var chart = new google.visualization.AreaChart(document.getElementById('chart'));
-                }
-                else if(googleChartTypeFormatted=='LineChart'){
-                   var chart = new google.visualization.LineChart(document.getElementById('chart'));
+                switch(googleChartTypeFormatted) {
+                    case 'BarChart':
+                        var chart = new google.visualization.BarChart(document.getElementById('chart'));
+                        break;
+                    case 'ColumnChart':
+                        var chart = new google.visualization.ColumnChart(document.getElementById('chart'));
+                        break;
+                    case 'PieChart':
+                        var chart = new google.visualization.PieChart(document.getElementById('chart'));
+                        break;
+                    case 'ScatterChart':
+                        var chart = new google.visualization.ScatterChart(document.getElementById('chart'));
+                        break;
+                    case 'AreaChart':
+                        var chart = new google.visualization.AreaChart(document.getElementById('chart'));
+                        break;
+                    case 'LineChart':
+                        var chart = new google.visualization.LineChart(document.getElementById('chart'));
                 }
                 chart.draw(data, JSON.parse(googleChartOptions));
 

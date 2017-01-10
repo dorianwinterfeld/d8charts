@@ -20,6 +20,8 @@ use Drupal\charts\Settings\Highcharts\Highcharts;
 use Drupal\charts\Settings\Google\GoogleOptions;
 use Drupal\charts\Settings\Google\GoogleChartType;
 use Drupal\charts\Settings\C3\C3ChartType;
+use Drupal\charts\Settings\C3\C3;
+use Drupal\charts\Settings\C3\C3ChartTitle;
 
 // Store Charts preprocess theme functions in a separate .inc file.
 \Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
@@ -106,15 +108,21 @@ function theme_views_view_charts($variables){
             return '<div ' . $attributes . '></div>';
         case 'highcharts':
             $highchart = renderHigchartsCharts($options, $categories, $seriesData);
-            $highchartAttributes = array('class' => 'charts-highchart','data-chart' => json_encode($highchart));
+            $highchartAttributes = array(
+                'class' => 'charts-highchart',
+                'data-chart' => json_encode($highchart)
+            );
             $attributes = new Attribute($highchartAttributes);
             return '<div ' . $attributes . '></div>';
         case 'C3':
             drupal_set_message('C3 in switch');
-            $c3Chart = renderC3Charts($options, $categories, $seriesData);
-            $c3chartAttributes = array('class' => 'charts-c3','c3-chart-type' => json_encode($c3Chart));
+            $c3 = renderC3Charts($options, $categories, $seriesData);
+            $c3chartAttributes = array(
+                'class' => 'charts-c3',
+                'data-chart' => json_encode($c3)
+            );
             $c3attributes = new Attribute($c3chartAttributes);
-            return '<div ' . $c3attributes . ' id="chart"></div>'; //'<div id="chart">'.'C3'.'</div>';
+            return '<div ' . $c3attributes . ' id="chart"></div>';
         default:
     }
 }
@@ -215,5 +223,13 @@ function renderC3Charts($options, $categories = array(), $seriesData = array()){
     $c3Chart = new C3ChartType();
     $c3Chart->setType($options['type']);
 
-    return $c3Chart;
+    $c3ChartTitle = new C3ChartTitle();
+    $c3ChartTitle->setText($options['title']);
+
+    $c3 = new C3();
+    $c3->setChart($c3Chart);
+    $c3->setTitle($c3ChartTitle);
+    $c3->setSeries($seriesData);
+
+    return $c3;
 }

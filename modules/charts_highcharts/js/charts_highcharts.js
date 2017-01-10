@@ -12,7 +12,7 @@
       $('.charts-highchart').once('charts-highchart', function() {
         if ($(this).attr('data-chart')) {
 
-          var config = $.parseJSON($(this).attr('data-chart'));
+          var config = JSON.parse($(this).attr('data-chart'));
           $(this).highcharts(config);
         }
       })

@@ -164,6 +164,7 @@ class Highcharts implements \JsonSerializable
         $this->series = $series;
     }
     private $series;
+
     public function jsonSerialize()
     {
         $vars = get_object_vars($this);
