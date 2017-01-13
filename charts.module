@@ -46,7 +46,6 @@ function theme_views_view_charts($variables){
     $options = $variables['view']->style_plugin->options;
 
     $view = $variables['view'];
-    drupal_set_message(print_r(json_encode($view->style_plugin->options['library']), 1).' vhg');
     $library = $view->style_plugin->options['library'];
     $variables['data'] = array();
 
@@ -114,7 +113,7 @@ function theme_views_view_charts($variables){
             );
             $attributes = new Attribute($highchartAttributes);
             return '<div ' . $attributes . '></div>';
-        case 'C3':
+        case 'c3':
             drupal_set_message('C3 in switch');
             $c3 = renderC3Charts($options, $categories, $seriesData);
             $c3chartAttributes = array(
@@ -220,6 +219,20 @@ function createGoogleChartType($options){
     return $googleChartType;
 }
 function renderC3Charts($options, $categories = array(), $seriesData = array()){
+ //   drupal_set_message(print_r($seriesData,1));
+    $cthreedata = array();
+    for($i = 0; $i < count($seriesData); $i++ ) {
+//        $cthreedatatemp = array();
+
+        $cthreedatatemp = $seriesData[$i]['data'];
+        array_unshift($cthreedatatemp, $seriesData[$i]['name']);
+        array_push($cthreedata, $cthreedatatemp);
+    }
+
+    drupal_set_message(json_encode($cthreedata). 'c3 data');
+
+
+
     $c3Chart = new C3ChartType();
     $c3Chart->setType($options['type']);
 
@@ -229,7 +242,7 @@ function renderC3Charts($options, $categories = array(), $seriesData = array()){
     $c3 = new C3();
     $c3->setChart($c3Chart);
     $c3->setTitle($c3ChartTitle);
-    $c3->setSeries($seriesData);
+    $c3->setSeries($cthreedata);
 
     return $c3;
 }
