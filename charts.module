@@ -113,7 +113,7 @@ function theme_views_view_charts($variables){
             );
             $attributes = new Attribute($highchartAttributes);
             return '<div ' . $attributes . '></div>';
-        case 'c3':
+        case 'C3':
             drupal_set_message('C3 in switch');
             $c3 = renderC3Charts($options, $categories, $seriesData);
             $c3chartAttributes = array(
