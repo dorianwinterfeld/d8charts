@@ -92,7 +92,7 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
       '#weight' => -10,
       '#parents' => array_merge($parents, array('label_field')),
     );
-      
+
     $form['fields']['data_fields'] = array(
       '#type' => 'checkboxes',
       '#title' => t('Data fields'),

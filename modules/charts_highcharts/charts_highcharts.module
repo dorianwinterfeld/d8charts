@@ -3,6 +3,19 @@
  * @file
  * Charts module integration with Highcharts library.
  */
+use Drupal\charts_highcharts\Settings\Highcharts\ChartType;
+use Drupal\charts_highcharts\Settings\Highcharts\ChartTitle;
+use Drupal\charts_highcharts\Settings\Highcharts\Xaxis;
+use Drupal\charts_highcharts\Settings\Highcharts\ChartLabel;
+use Drupal\charts_highcharts\Settings\Highcharts\Yaxis;
+use Drupal\charts_highcharts\Settings\Highcharts\YaxisTitle;
+use Drupal\charts_highcharts\Settings\Highcharts\DataLabelStatus;
+use Drupal\charts_highcharts\Settings\Highcharts\DataLabels;
+use Drupal\charts_highcharts\Settings\Highcharts\PlotOptions;
+use Drupal\charts_highcharts\Settings\Highcharts\Tooltip;
+use Drupal\charts_highcharts\Settings\Highcharts\ChartCredits;
+use Drupal\charts_highcharts\Settings\Highcharts\ChartLegend;
+use Drupal\charts_highcharts\Settings\Highcharts\Highcharts;
 
 /**
  * Implements hook_charts_info().
@@ -15,4 +28,52 @@ function charts_highcharts_charts_info() {
     'file' => 'charts_highcharts.inc',
   );
   return $info;
+}
+
+/**
+ * Creates a JSON Object formatted for Highcharts to use
+ * @param $options
+ * @param array $categories
+ * @param array $seriesData
+ * @return Highcharts
+ */
+function renderHigchartsCharts($options, $categories = array(), $seriesData = array()){
+    $chart = new ChartType();
+    $chart->setType($options['type']);
+    $chartTitle = new ChartTitle();
+    $chartTitle->setText($options['title']);
+    $chartXaxis = new Xaxis();
+    $chartLabels = new ChartLabel();
+    //$chartLabels->setRotation($options['xaxis_labels_rotation']);
+    $chartXaxis->setCategories($categories);
+    $chartTitle->setText($options['title']);
+    $chartXaxis->setTitle($chartTitle);
+    $chartXaxis->setLabels($chartLabels);
+    $chartYaxis = new Yaxis();
+    $yAxisTitle = new YaxisTitle();
+    $yAxisTitle->setText($options['yaxis_title']);
+    $chartYaxis->setMin($options['yaxis_min']);
+    //$chartYaxis->max = $options['yaxis_max'];
+    $chartYaxis->setTitle($yAxisTitle);
+    $dLabels = new DataLabelStatus();
+    $dataLabels = new DataLabels();
+    $dataLabels->setDataLabels($dLabels);
+    $barPlotOptns = new PlotOptions();
+    $barPlotOptns->setBar($dataLabels);
+    $chartTooltip = new Tooltip();
+    $chartCredits = new ChartCredits();
+    $chartLegend = new ChartLegend();
+
+    $highchart = new Highcharts();
+    $highchart->setChart($chart);
+    $highchart->setTitle($chartTitle);
+    $highchart->setXAxis($chartXaxis);
+    $highchart->setYAxis($chartYaxis);
+    $highchart->setTooltip($chartTooltip);
+    $highchart->setPlotOptions($barPlotOptns);
+    $highchart->setCredits($chartCredits);
+    $highchart->setLegend($chartLegend);
+    $highchart->setSeries($seriesData);
+
+    return $highchart;
 }

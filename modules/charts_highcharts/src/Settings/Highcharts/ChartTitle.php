@@ -1,9 +1,9 @@
 <?php
 
-namespace Drupal\charts\Settings\C3;
+namespace Drupal\charts_highcharts\Settings\Highcharts;
 
 
-class C3ChartTitle implements \JsonSerializable
+class ChartTitle implements \JsonSerializable
 {
     private $text;
 
@@ -22,7 +22,6 @@ class C3ChartTitle implements \JsonSerializable
     {
         $this->text = $text;
     }
-
     public function jsonSerialize()
     {
         $vars = get_object_vars($this);

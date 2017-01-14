@@ -3,6 +3,9 @@
  * @file
  * Charts module integration with C3 library.
  */
+use Drupal\charts_c3\Settings\C3\C3ChartType;
+use Drupal\charts_c3\Settings\C3\C3;
+use Drupal\charts_c3\Settings\C3\C3ChartTitle;
 
 /**
 * Implements hook_charts_info().
@@ -13,4 +16,27 @@ function charts_c3_charts_info() {
         'types' => array('area', 'bar', 'column', 'line', 'pie', 'scatter'),
         );
     return $info;
+}
+
+function renderC3Charts($options, $categories = array(), $seriesData = array()){
+
+    $cthreedata = array();
+    for($i = 0; $i < count($seriesData); $i++ ) {
+        $cthreedatatemp = $seriesData[$i]['data'];
+        array_unshift($cthreedatatemp, $seriesData[$i]['name']);
+        array_push($cthreedata, $cthreedatatemp);
+    }
+
+    $c3Chart = new C3ChartType();
+    $c3Chart->setType($options['type']);
+
+    $c3ChartTitle = new C3ChartTitle();
+    $c3ChartTitle->setText($options['title']);
+
+    $c3 = new C3();
+    $c3->setChart($c3Chart);
+    $c3->setTitle($c3ChartTitle);
+    $c3->setSeries($cthreedata);
+
+    return $c3;
 }

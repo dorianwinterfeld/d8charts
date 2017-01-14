@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mmwebaze
- * Date: 12/24/2016
- * Time: 3:48 PM
- */
 
-namespace Drupal\charts\Settings\C3;
-
+namespace Drupal\charts_c3\Settings\C3;
 
 class C3 implements \JsonSerializable
 {
