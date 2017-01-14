@@ -105,6 +105,9 @@ function hook_chart_definition_alter(&$definition, $chart) {
   if ($chart['#chart_library'] === 'google') {
     $definition['options']['titleTextStyle']['fontSize'] = 20;
   }
+    if ($chart['#chart_library'] === 'c3') {
+        $definition['options']['titleTextStyle']['fontSize'] = 20;
+    }
   elseif ($chart['#chart_library'] === 'highcharts') {
     /** @var TYPE_NAME $definition */
     $definition['title']['style']['fontSize'] = 20;

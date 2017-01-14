@@ -19,15 +19,16 @@ function charts_page_attachments(&$attachments)
 
     switch($library){
         case 'google':
-            $attachments['#attached']['library'][] = 'charts_google/google';
             $attachments['#attached']['library'][] = 'charts_google/charts_google';
+            $attachments['#attached']['library'][] = 'charts_google/google';
             break;
         case 'highcharts':
             $attachments['#attached']['library'][] = 'charts_highcharts/charts_highcharts';
             $attachments['#attached']['library'][] = 'charts_highcharts/highcharts';
             break;
-        case 'C3':
-            $attachments['#attached']['library'][] = 'c3/c3';
+        case 'c3':
+            $attachments['#attached']['library'][] = 'charts_c3/charts_c3';
+            $attachments['#attached']['library'][] = 'charts_c3/c3';
             break;
     }
 }

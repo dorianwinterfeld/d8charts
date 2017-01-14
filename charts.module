@@ -105,6 +105,7 @@ function theme_views_view_charts($variables){
             );
             $attributes = new Attribute($googleAttributes);
             return '<div ' . $attributes . '></div>';
+            break;
         case 'highcharts':
             $highchart = renderHigchartsCharts($options, $categories, $seriesData);
             $highchartAttributes = array(
@@ -113,7 +114,8 @@ function theme_views_view_charts($variables){
             );
             $attributes = new Attribute($highchartAttributes);
             return '<div ' . $attributes . '></div>';
-        case 'C3':
+            break;
+        case 'c3':
             drupal_set_message('C3 in switch');
             $c3 = renderC3Charts($options, $categories, $seriesData);
             $c3chartAttributes = array(
@@ -122,6 +124,7 @@ function theme_views_view_charts($variables){
             );
             $c3attributes = new Attribute($c3chartAttributes);
             return '<div ' . $c3attributes . ' id="chart"></div>';
+            break;
         default:
     }
 }
@@ -219,19 +222,13 @@ function createGoogleChartType($options){
     return $googleChartType;
 }
 function renderC3Charts($options, $categories = array(), $seriesData = array()){
- //   drupal_set_message(print_r($seriesData,1));
+
     $cthreedata = array();
     for($i = 0; $i < count($seriesData); $i++ ) {
-//        $cthreedatatemp = array();
-
         $cthreedatatemp = $seriesData[$i]['data'];
         array_unshift($cthreedatatemp, $seriesData[$i]['name']);
         array_push($cthreedata, $cthreedatatemp);
     }
-
-    drupal_set_message(json_encode($cthreedata). 'c3 data');
-
-
 
     $c3Chart = new C3ChartType();
     $c3Chart->setType($options['type']);

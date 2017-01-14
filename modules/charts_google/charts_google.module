@@ -1,4 +1,8 @@
 <?php
+/**
+ * @file
+ * Charts module integration with Google Charts library.
+ */
 
 /**
  * Implements hook_charts_info().

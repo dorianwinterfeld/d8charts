@@ -7,15 +7,6 @@ charts_highcharts:
       - core/jquery.once
       - core/drupal
 
-init:
-  version: VERSION
-  js:
-    js/charts_highcharts.js: {}
-  dependencies:
-    - core/jquery
-    - core/jquery.once
-    - core/drupal
-
 highcharts:
   remote: https://code.highcharts.com/highcharts.js
   version: VERSION
