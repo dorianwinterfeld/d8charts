@@ -79,7 +79,6 @@ class ChartsPluginStyleChart extends StylePluginBase {
         '#markup' => '<div class="error messages">' . t('You need at least one field before you can configure your table settings') . '</div>',
       );
     }
-      drupal_set_message('after am empty');
 
     // Limit grouping options (we only support one grouping field).
     if (isset($form['grouping'][0])) {
@@ -96,7 +95,6 @@ class ChartsPluginStyleChart extends StylePluginBase {
 
     // Merge in the global chart settings form.
     $field_options = $this->displayHandler->getFieldLabels();
-      drupal_set_message(print_r(json_encode($field_options), 1).' handlers');
     $form = charts_settings_form($form, $this->options, $field_options, array('style_options'));
 
     // Reduce the options if this is a chart extension.
@@ -147,7 +145,6 @@ class ChartsPluginStyleChart extends StylePluginBase {
     // Make sure that all chart extensions first have a parent chart selected.
     // was plugin_name instead of view->style_plugin
 //    if ($this->view->style_plugin === 'chart_extension' && $this->get_parent_chart_display() === FALSE) {
-      drupal_set_message(print_r(json_encode($this->options['data_fields']), 1).'defaults');
     if ($this->view->style_plugin === 'chart' && $this->get_parent_chart_display() === FALSE) {
       $errors[] = t('This chart add-on must have a parent chart selected under the chart settings.');
     }

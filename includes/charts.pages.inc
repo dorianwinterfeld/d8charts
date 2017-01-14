@@ -92,8 +92,7 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
       '#weight' => -10,
       '#parents' => array_merge($parents, array('label_field')),
     );
-      //drupal_set_message(print_r($options['data_fields']['field_number'], 1).' df');
-
+      
     $form['fields']['data_fields'] = array(
       '#type' => 'checkboxes',
       '#title' => t('Data fields'),

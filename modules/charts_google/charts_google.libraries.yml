@@ -11,7 +11,7 @@ google:
   remote: https://www.gstatic.com/charts/loader.js
   version: VERSION
   license:
-      name: apache
+      name: Apache 2.0
       url: http://www.apache.org/licenses/LICENSE-2.0
       gpl-compatible: false
   js:
