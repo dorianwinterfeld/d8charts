@@ -87,6 +87,7 @@ function theme_views_view_charts($variables){
         }
         array_push($seriesData, $seriesRowData);
     }
+
     $service = \Drupal::service('charts.charts_service');
     $service->setLibrarySelected($view->style_plugin->options['library']);
 
@@ -183,28 +184,32 @@ function renderHigchartsCharts($options, $categories = array(), $seriesData = ar
  * @param array $seriesData
  * @return string
  */
-function renderGoogleCharts($categories = array(), $seriesData = array()){
+function renderGoogleCharts($categories = array(), $seriesData = array()) {
+
     $dataTable = array();
-    $dataTableHeader = array('dfd');
-    $dataTableRows = array();
-    $j = 0;
-    foreach ($seriesData as $key=>$category){
 
-        array_push($dataTableHeader, $category['name']);
+    $dataTableHeader = array();
+    for($r = 0; $r < count($seriesData); $r++ ) {
+        array_push($dataTableHeader, $seriesData[$r]['name']);
+    }
+
+    for ($j = 0; $j < count($categories); $j++) {
         $rowDataTable = [];
-        array_push($rowDataTable, $categories[$key]);
-
-        for ($i = 0; $i < count($seriesData); $i++){
-
-            array_push($rowDataTable, $seriesData[$i]['data'][$j]);
+        for ($i = 0; $i < count($seriesData); $i++) {
+            $rowDataTabletemp = $seriesData[$i]['data'][$j];
+            array_push($rowDataTable, $rowDataTabletemp);
         }
-        $j++;
-        array_push($dataTableRows, $rowDataTable);
+        array_unshift($rowDataTable, $categories[$j]);
+        array_push($dataTable, $rowDataTable);
     }
-    array_push($dataTable, $dataTableHeader);
-    foreach ($dataTableRows as $dataTableRow){
-        array_push($dataTable, $dataTableRow);
+
+    $dataTableHeader = array();
+    for($r = 0; $r < count($seriesData); $r++ ) {
+        array_push($dataTableHeader, $seriesData[$r]['name']);
     }
+
+    array_unshift($dataTableHeader, 'label');
+    array_unshift($dataTable, $dataTableHeader);
 
     return json_encode($dataTable);
 }
