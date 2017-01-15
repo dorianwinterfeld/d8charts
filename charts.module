@@ -77,7 +77,7 @@ function theme_views_view_charts($variables){
     switch($library){
         case 'google':
             $googleData = renderGoogleCharts($categories, $seriesData);
-            $googleOptions = createGoogleChartsOptions($options);
+            $googleOptions = createGoogleChartsOptions($options, $seriesData);
             $googleChartType = createGoogleChartType($options);
             $googleAttributes = array(
                 'id'=>'chart',

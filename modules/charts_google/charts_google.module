@@ -55,10 +55,17 @@ function renderGoogleCharts($categories = array(), $seriesData = array()) {
     return json_encode($dataTable);
 }
 
-function createGoogleChartsOptions($options){
+function createGoogleChartsOptions($options, $seriesData = array()){
     $googleOptions = new GoogleOptions();
     $googleOptions->setTitle($options['title']);
 
+    $seriesColors = array();
+    for ($i = 0; $i < count($seriesData); $i++) {
+        $seriesColor = $seriesData[$i]['color'];
+        array_push($seriesColors, $seriesColor);
+    }
+
+    $googleOptions->setColors($seriesColors);
     return $googleOptions;
 }
 function createGoogleChartType($options){

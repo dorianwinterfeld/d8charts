@@ -33,6 +33,9 @@
                         ratio: 0.5
                     }
                 },
+                color: {
+                    pattern: c3ChartData.pattern
+                },
                 axis: {
                     rotated: rotatedAxis
                 }

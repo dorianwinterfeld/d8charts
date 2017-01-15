@@ -8,6 +8,7 @@ class GoogleOptions implements \JsonSerializable
     private $chartArea;
     private $hAxis;
     private $vAxis;
+    private $colors;
 
     /**
      * @return mixed
@@ -72,6 +73,23 @@ class GoogleOptions implements \JsonSerializable
     {
         $this->vAxis = $vAxis;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getColors()
+    {
+        return $this->colors;
+    }
+
+    /**
+     * @param mixed $colors
+     */
+    public function setColors($colors)
+    {
+        $this->colors = $colors;
+    }
+
     public function jsonSerialize()
     {
         $vars = get_object_vars($this);

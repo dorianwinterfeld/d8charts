@@ -12,6 +12,7 @@ class C3 implements \JsonSerializable
     private $plotOptions;
     private $legend;
     private $credits;
+    private $pattern;
 
     /**
      * @return mixed
@@ -157,6 +158,22 @@ class C3 implements \JsonSerializable
         $this->series = $series;
     }
     private $series;
+
+    /**
+     * @return mixed
+     */
+    public function getPattern()
+    {
+        return $this->pattern;
+    }
+
+    /**
+     * @param mixed $pattern
+     */
+    public function setPattern($pattern)
+    {
+        $this->pattern = $pattern;
+    }
 
     public function jsonSerialize()
     {
