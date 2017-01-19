@@ -31,10 +31,12 @@ function theme_views_view_charts($variables){
     $library = $view->style_plugin->options['library'];
     $variables['data'] = array();
 
-    $valueField = $view->style_plugin->options['data_fields'];
-    array_pop($valueField);
-
     $labelField = $view->style_plugin->options['label_field'];
+    $valueField = $view->style_plugin->options['data_fields'];
+    //   array_pop($valueField);
+    if(($key = array_search('0', $valueField)) !== false) {
+        unset($valueField[$key]);
+    }
 
     $color = $view->style_plugin->options['field_colors'];
 

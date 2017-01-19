@@ -2,7 +2,7 @@
 
 namespace Drupal\charts_c3\Settings\C3;
 
-class C3ChartTitle implements \JsonSerializable
+class ChartTitle implements \JsonSerializable
 {
     private $text;
 

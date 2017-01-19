@@ -1,15 +1,15 @@
 <?php
 
-namespace Drupal\charts_c3\Settings\C3;
+namespace Drupal\charts_google\Settings\Google;
 
-class C3ChartType implements \JsonSerializable
+class ChartType implements \JsonSerializable
 {
     private $type;
 
     /**
      * @return mixed
      */
-    public function getType()
+    public function getChartType()
     {
         return $this->type;
     }
@@ -17,9 +17,10 @@ class C3ChartType implements \JsonSerializable
     /**
      * @param mixed $type
      */
-    public function setType($type)
+    public function setChartType($type)
     {
-        $this->type = $type;
+        $ucType = ucfirst($type);
+        $this->type = $ucType . 'Chart';
     }
 
     public function jsonSerialize()

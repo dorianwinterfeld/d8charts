@@ -74,71 +74,58 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
 
   if ($field_options) {
     $first_field = key($field_options);
-    $field_keys = array_diff($field_options, array($first_field => NULL));
+
     $form['#theme'] = 'charts_settings_fields';
 
     $form['fields'] = array(
-      '#caption' => t('Charts fields'),
+        '#title' => t('Charts fields'),
+        '#type' => 'fieldset',
+    );
+    $form['fields']['label_field'] = array(
+        '#type' => 'radios',
+        '#title' => t('Label field'),
+        '#options' => $field_options + array('' => t('No label field')),
+        '#default_value' => isset($options['label_field']) ? $options['label_field'] : $first_field,
+        '#weight' => -10,
+        '#parents' => array_merge($parents, array('label_field')),
+    );
+    $form['fields']['table'] = array(
       '#type' => 'table',
-      //  '#header' => array(t('Field Name'), t('Provides Labels'), t('Provides Data'), t('Color')),
+      '#header' => array(t('Field Name'), t('Provides Data'), t('Color')),
       '#tabledrag' => TRUE,
     );
 
-    $form['fields']['label_field'] = array(
-      '#type' => 'radios',
-      '#title' => t('Label field'),
-      '#options' => $field_options + array('' => t('No label field')),
-      '#default_value' => isset($options['label_field']) ? $options['label_field'] : $first_field,
-      '#weight' => -10,
-      '#parents' => array_merge($parents, array('label_field')),
-    );
-
-    $form['fields']['data_fields'] = array(
-      '#type' => 'checkboxes',
-      '#title' => t('Data fields'),
-      '#options' => $field_options,
-      //'#default_value' => isset($options['data_fields']) ? $options['data_fields'] : array_diff(array_keys($field_options), array($first_field)),
-        '#default_value' => $options['data_fields'],
-      '#weight' => -9,
-      '#parents' => array_merge($parents, array('data_fields')),
-    );
-    $color_count = 0;
-      foreach ($field_options as $field_name => $field_label) {
-          $form['fields']['field_colors'][$field_name] = array(
-              '#type' => 'textfield',
-              '#attributes' => array('TYPE' => 'color'),
-              '#size' => 10,
-              '#maxlength' => 7,
-              '#theme_wrappers' => array(),
-              '#default_value' => !empty($options['field_colors'][$field_name]) ? $options['field_colors'][$field_name] : $options['colors'][$color_count],
-              '#parents' => array_merge($parents, array('field_colors', $field_name)),
-          );
-          $color_count++;
-      }
-      /*$color_count = 0;
+    $field_count = 0;
     foreach ($field_options as $field_name => $field_label) {
-        $form['fields'][$color_count]['data_fields'] = array(
-            '#type' => 'checkboxes',
-            //'#title' => t('Data fields'),
-            '#options' => [$field_options[$field_name]],
-            //'#default_value' => isset($options['data_fields']) ? $options['data_fields'] : array_diff(array_keys($field_options), array($first_field)),
-            '#default_value' => $options['data_fields'],
-            '#weight' => -9,
-            '#parents' => array_merge($parents, array('data_fields')),
+        $form['fields']['table'][$field_count]['label_label'] = array(
+            '#type' => 'label',
+            '#title' => $field_label,
+            '#column' => 'one',
         );
-      $form['fields'][$color_count]['field_colors'][$field_name] = array(
-        '#type' => 'textfield',
-        '#attributes' => array('TYPE' => 'color'),
-        '#size' => 10,
-        '#maxlength' => 7,
-        '#theme_wrappers' => array(),
-        '#default_value' => !empty($options['field_colors'][$field_name]) ? $options['field_colors'][$field_name] : $options['colors'][$color_count],
-        '#parents' => array_merge($parents, array('field_colors', $field_name)),
-      );
-      $color_count++;
-    }*/
-  }
+        $form['fields']['table'][$field_count]['data_fields'][$field_name] = array(
+            '#type' => 'checkbox',
+            '#title' => $field_name,
+            '#default_value' => $options['data_fields'][$field_name],
+            '#return_value' => $field_name,
+            '#weight' => -9,
+            '#parents' => array_merge($parents, array('data_fields', $field_name)),
+            '#column' => 'two',
+        );
+        $form['fields']['table'][$field_count]['field_colors'][$field_name] = array(
+            '#type' => 'textfield',
+            '#attributes' => array('TYPE' => 'color'),
+            '#size' => 10,
+            '#maxlength' => 7,
+            '#theme_wrappers' => array(),
+            '#default_value' => !empty($options['field_colors'][$field_name]) ? $options['field_colors'][$field_name] : $options['colors'][$field_count],
+            '#parents' => array_merge($parents, array('field_colors', $field_name)),
+            '#column' => 'three',
+        );
+        $field_count++;
 
+    }
+
+  }
   $form['display'] = array(
     '#title' => t('Display'),
     '#type' => 'fieldset',
@@ -432,54 +419,3 @@ function charts_default_settings() {
   return $defaults;
 }
 
-/**
- * Output the table of field settings within the charts settings form.
- * @param $variables
- * @return
- */
-function theme_charts_settings_fields($variables) {
-  $element = $variables['element'];
-
-  $table = array(
-    'sticky' => FALSE,
-  );
-  $table['header'] = array(
-    array('data' => t('Field name')),
-    array('data' => t('Provides labels'), 'class' => array('chart-label-field', 'checkbox')),
-    array('data' => t('Provides data'), 'class' => array('chart-data-field', 'checkbox')),
-    array('data' => t('Color'), 'class' => array('chart-field-color', 'checkbox')),
-  );
-  foreach ($element['label_field']['#options'] as $field_name => $field_label) {
-    $element['label_field'][$field_name]['#title_display'] = 'attribute';
-    $element['data_fields'][$field_name]['#title_display'] = 'attribute';
-    $element['field_colors'][$field_name]['#title_display'] = 'attribute';
-
-    $row = array();
-    $row[] = array(
-      'data' => $field_label,
-    );
-    $row[] = array(
-      'data' => \Drupal::service('renderer')->render($element['label_field'][$field_name]),
-      'class' => array('chart-label-field', 'checkbox'),
-    );
-    $row[] = array(
-      'data' => $field_name ? \Drupal::service('renderer')->render($element['data_fields'][$field_name]) : '',
-      'class' => array('chart-data-field', 'checkbox'),
-    );
-    $row[] = array(
-      'data' => $field_name ? \Drupal::service('renderer')->render($element['field_colors'][$field_name]) : '',
-      'class' => array('chart-field-color', 'checkbox'),
-    );
-    $table['rows'][] = $row;
-  }
-
-  $wrapper = array(
-    '#title' => t('Chart fields'),
-    '#id' => 'chart-fields',
-    '#theme_wrappers' => array('form_element'),
-  //  '#markup' => theme('table', $table),
-    '#description' => t('Any field may be used to provide labels. Usually this is the first field configured in the view. e.g. Month names, types of content, etc. Subsequent fields typically provide numeric data which can be charted. In some chart types, no label field may be used at all to utilize a continuous axis.'),
-  );
-
-  return \Drupal::service('renderer')->render($wrapper);
-}

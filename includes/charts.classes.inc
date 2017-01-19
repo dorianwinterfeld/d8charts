@@ -29,7 +29,7 @@ class Yaxis{
 }
 class Tooltip
 {
-    public $valueSuffix = 'millions';
+    public $valueSuffix = '';
 }
 class DataLabelStatus{
     public $enabled = true;
