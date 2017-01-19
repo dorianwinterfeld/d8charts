@@ -5,7 +5,7 @@ namespace Drupal\charts_highcharts\Settings\Highcharts;
 
 class Tooltip implements \JsonSerializable
 {
-    private $valueSuffix = 'millions';
+    private $valueSuffix = '';
 
     /**
      * @return string

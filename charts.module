@@ -33,7 +33,7 @@ function theme_views_view_charts($variables){
 
     $labelField = $view->style_plugin->options['label_field'];
     $valueField = $view->style_plugin->options['data_fields'];
-    //   array_pop($valueField);
+    unset($valueField[$labelField]);
     if(($key = array_search('0', $valueField)) !== false) {
         unset($valueField[$key]);
     }
