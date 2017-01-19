@@ -124,7 +124,7 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
         $field_count++;
 
     }
-drupal_set_message(json_encode($options['data_fields'])." data field");
+
   }
   $form['display'] = array(
     '#title' => t('Display'),
