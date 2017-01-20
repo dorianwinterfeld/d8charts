@@ -44,7 +44,7 @@ function renderHigchartsCharts($options, $categories = array(), $seriesData = ar
     $chartTitle->setText($options['title']);
     $chartXaxis = new Xaxis();
     $chartLabels = new ChartLabel();
-    //$chartLabels->setRotation($options['xaxis_labels_rotation']);
+    $chartLabels->setRotation($options['xaxis_labels_rotation']);
     $chartXaxis->setCategories($categories);
     $chartTitle->setText($options['title']);
     $chartXaxis->setTitle($chartTitle);
@@ -53,7 +53,7 @@ function renderHigchartsCharts($options, $categories = array(), $seriesData = ar
     $yAxisTitle = new YaxisTitle();
     $yAxisTitle->setText($options['yaxis_title']);
     $chartYaxis->setMin($options['yaxis_min']);
-    //$chartYaxis->max = $options['yaxis_max'];
+    $chartYaxis->max = $options['yaxis_max'];
     $chartYaxis->setTitle($yAxisTitle);
     $dLabels = new DataLabelStatus();
     $dataLabels = new DataLabels();

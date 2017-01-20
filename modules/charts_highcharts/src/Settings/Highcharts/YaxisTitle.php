@@ -3,25 +3,26 @@
 namespace Drupal\charts_highcharts\Settings\Highcharts;
 
 
-class YaxisTitle extends ChartTitle implements \JsonSerializable
-{
-    private $align = 'high';
+class YaxisTitle extends ChartTitle implements \JsonSerializable {
+
+    private $text;
 
     /**
      * @return string
      */
-    public function getAlign()
+    public function getText()
     {
-        return $this->align;
+        return $this->text;
     }
 
     /**
-     * @param string $align
+     * @param string $text
      */
-    public function setAlign($align)
+    public function setText($text)
     {
-        $this->align = $align;
+        $this->text = $text;
     }
+
     public function jsonSerialize()
     {
         $vars = get_object_vars($this);

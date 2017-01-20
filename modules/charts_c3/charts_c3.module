@@ -20,11 +20,11 @@ function charts_c3_charts_info() {
 
 function renderC3Charts($options, $categories = array(), $seriesData = array()){
 
-    $cthreedata = array();
+    $c3Data = array();
     for($i = 0; $i < count($seriesData); $i++ ) {
-        $cthreedatatemp = $seriesData[$i]['data'];
-        array_unshift($cthreedatatemp, $seriesData[$i]['name']);
-        array_push($cthreedata, $cthreedatatemp);
+        $c3DataTemp = $seriesData[$i]['data'];
+        array_unshift($c3DataTemp, $seriesData[$i]['name']);
+        array_push($c3Data, $c3DataTemp);
     }
 
     $c3Chart = new ChartType();
@@ -36,7 +36,7 @@ function renderC3Charts($options, $categories = array(), $seriesData = array()){
     $c3 = new C3();
     $c3->setChart($c3Chart);
     $c3->setTitle($c3ChartTitle);
-    $c3->setSeries($cthreedata);
+    $c3->setSeries($c3Data);
 
     $seriesColors = array();
     for ($i = 0; $i < count($seriesData); $i++) {
