@@ -11,7 +11,7 @@
             var c3ChartData = JSON.parse(c3Chart);
             var formattedType = c3ChartData.chart.type;
             var c3ChartDataSeries = c3ChartData.series;
-
+            
             switch (formattedType) {
                  case 'bar':
                      formattedType = 'bar';
@@ -26,7 +26,8 @@
                 bindto: '#chart',
                 data: {
                     columns: c3ChartDataSeries,
-                    type: formattedType
+                    type: formattedType,
+                    labels: c3ChartData.labels
                 },
                 bar: {
                     width: {

@@ -13,124 +13,124 @@ class C3 implements \JsonSerializable
     private $legend;
     private $credits;
     private $pattern;
+    private $labels;
 
     /**
      * @return mixed
      */
-    public function getChart()
-    {
+    public function getChart() {
         return $this->chart;
     }
 
     /**
      * @param mixed $chart
      */
-    public function setChart($chart)
-    {
+    public function setChart($chart) {
         $this->chart = $chart;
     }
 
     /**
      * @return mixed
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
     /**
      * @param mixed $title
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
     }
 
     /**
      * @return mixed
      */
-    public function getXAxis()
-    {
+    public function getXAxis() {
         return $this->xAxis;
     }
 
     /**
      * @param mixed $xAxis
      */
-    public function setXAxis($xAxis)
-    {
+    public function setXAxis($xAxis) {
         $this->xAxis = $xAxis;
     }
 
     /**
      * @return mixed
      */
-    public function getYAxis()
-    {
+    public function getYAxis() {
         return $this->yAxis;
     }
 
     /**
      * @param mixed $yAxis
      */
-    public function setYAxis($yAxis)
-    {
+    public function setYAxis($yAxis) {
         $this->yAxis = $yAxis;
     }
 
     /**
      * @return mixed
      */
-    public function getTooltip()
-    {
+    public function getTooltip() {
         return $this->tooltip;
     }
 
     /**
      * @param mixed $tooltip
      */
-    public function setTooltip($tooltip)
-    {
+    public function setTooltip($tooltip) {
         $this->tooltip = $tooltip;
     }
 
     /**
      * @return mixed
      */
-    public function getPlotOptions()
-    {
+    public function getLabels() {
+        return $this->labels;
+    }
+
+    /**
+     * @param mixed $labels
+     */
+    public function setLabels($labels) {
+        $this->labels = strtolower($labels);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlotOptions() {
         return $this->plotOptions;
     }
 
     /**
      * @param mixed $plotOptions
      */
-    public function setPlotOptions($plotOptions)
-    {
+    public function setPlotOptions($plotOptions) {
         $this->plotOptions = $plotOptions;
     }
 
     /**
      * @return mixed
      */
-    public function getLegend()
-    {
+    public function getLegend() {
         return $this->legend;
     }
 
     /**
      * @param mixed $legend
      */
-    public function setLegend($legend)
-    {
+    public function setLegend($legend) {
         $this->legend = $legend;
     }
 
     /**
      * @return mixed
      */
-    public function getCredits()
-    {
+    public function getCredits() {
         return $this->credits;
     }
 
@@ -153,8 +153,7 @@ class C3 implements \JsonSerializable
     /**
      * @param mixed $series
      */
-    public function setSeries($series)
-    {
+    public function setSeries($series) {
         $this->series = $series;
     }
     private $series;
@@ -162,21 +161,18 @@ class C3 implements \JsonSerializable
     /**
      * @return mixed
      */
-    public function getPattern()
-    {
+    public function getPattern() {
         return $this->pattern;
     }
 
     /**
      * @param mixed $pattern
      */
-    public function setPattern($pattern)
-    {
+    public function setPattern($pattern) {
         $this->pattern = $pattern;
     }
 
-    public function jsonSerialize()
-    {
+    public function jsonSerialize() {
         $vars = get_object_vars($this);
 
         return $vars;

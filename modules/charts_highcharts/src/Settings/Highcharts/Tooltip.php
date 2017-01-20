@@ -3,27 +3,24 @@
 namespace Drupal\charts_highcharts\Settings\Highcharts;
 
 
-class Tooltip implements \JsonSerializable
-{
+class Tooltip implements \JsonSerializable {
     private $valueSuffix = '';
 
     /**
      * @return string
      */
-    public function getValueSuffix()
-    {
+    public function getValueSuffix() {
         return $this->valueSuffix;
     }
 
     /**
      * @param string $valueSuffix
      */
-    public function setValueSuffix($valueSuffix)
-    {
+    public function setValueSuffix($valueSuffix) {
         $this->valueSuffix = $valueSuffix;
     }
-    public function jsonSerialize()
-    {
+
+    public function jsonSerialize() {
         $vars = get_object_vars($this);
 
         return $vars;
