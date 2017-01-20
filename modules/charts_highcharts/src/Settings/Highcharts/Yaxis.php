@@ -7,7 +7,7 @@ class Yaxis implements \JsonSerializable {
     private $min;
     //private $max;
     private $title;
-    private $labels;
+    private $labels ='';
 
     /**
      * @return mixed

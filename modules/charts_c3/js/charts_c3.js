@@ -12,9 +12,9 @@
             var formattedType = c3ChartData.chart.type;
             var c3ChartDataSeries = c3ChartData.series;
             if(c3ChartData.labels !== 'true') {
-                var labels = null;
+                var c3ChartLabels = null;
             } else {
-                labels = JSON.parse(c3ChartData.labels);
+                c3ChartLabels = JSON.parse(c3ChartData.labels);
             }
 
             switch (formattedType) {
@@ -32,7 +32,7 @@
                 data: {
                     columns: c3ChartDataSeries,
                     type: formattedType,
-                    labels: labels
+                    labels: c3ChartLabels
                  //   names: c3ChartData.labels
                 },
                 // size: {
