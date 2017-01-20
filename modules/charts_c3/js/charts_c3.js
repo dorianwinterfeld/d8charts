@@ -11,7 +11,12 @@
             var c3ChartData = JSON.parse(c3Chart);
             var formattedType = c3ChartData.chart.type;
             var c3ChartDataSeries = c3ChartData.series;
-            
+            if(c3ChartData.labels !== 'true') {
+                var labels = null;
+            } else {
+                labels = JSON.parse(c3ChartData.labels);
+            }
+
             switch (formattedType) {
                  case 'bar':
                      formattedType = 'bar';
@@ -27,8 +32,13 @@
                 data: {
                     columns: c3ChartDataSeries,
                     type: formattedType,
-                    labels: c3ChartData.labels
+                    labels: labels
+                 //   names: c3ChartData.labels
                 },
+                // size: {
+                //     width: 600,
+                //     height:400,
+                // },
                 bar: {
                     width: {
                         ratio: 0.5
