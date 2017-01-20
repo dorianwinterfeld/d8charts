@@ -135,32 +135,18 @@ class ChartsPluginStyleChart extends StylePluginBase {
    * Empty array if the display is valid; an array of error strings if it is not.
    */
   public function validate() {
-    $errors = array();
-    $field_handlers = $this->displayHandler->getHandlers('field');
+      $errors = parent::validate();
 
-    // Don't execute validation on the new view page.
-    //if ($_GET['q'] === 'admin/structure/views/add') {
- //   return;
- // }
-    // Make sure that all chart extensions first have a parent chart selected.
-    // was plugin_name instead of view->style_plugin
-//    if ($this->view->style_plugin === 'chart_extension' && $this->get_parent_chart_display() === FALSE) {
-//    if ($this->view->style_plugin === 'chart' && $this->get_parent_chart_display() === FALSE) {
-//      $errors[] = t('This chart add-on must have a parent chart selected under the chart settings.');
-//    }
-//    // Make sure that at least one data column has been selected.
-//    elseif (count($field_handlers)) {
-//      $data_field_key = !empty($this->options['data_fields'][$field_name]) ? current($this->options['data_fields'][$field_name]) : NULL;
-//      if (empty($data_field_key)) {
-//        $errors[] = t('At least one data field must be selected in the chart configuration before this chart may be shown');
-//      }
-//      else {
-//        $data_field = isset($field_handlers[$data_field_key]) ? $field_handlers[$data_field_key] : NULL;
-//        if (!isset($data_field)) {
-//          $errors[] = t('A field you have specified as a data field in your chart settings no longer exists. Edit the chart settings and select at least one data field.');
-//        }
-//      }
-//    }
+      $plugin = $this->options['data_fields'];
+
+      foreach($plugin as $value) {
+          if (count(array_unique($plugin)) === 1 && end($plugin) === 0) {
+              $errors[] = $this->t('At least one data field must be selected in the chart configuration before this chart may be shown');
+          }
+      }
+
+      // @todo: $errors[] = t('This chart add-on must have a parent chart selected under the chart settings.');
+      // @todo: $errors[] = t('A field you have specified as a data field in your chart settings no longer exists. Edit the chart settings and select at least one data field.');
 
     return $errors;
   }
