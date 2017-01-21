@@ -282,18 +282,15 @@ function charts_type_info()
  * @param $chart_type
  * @return bool
  */
-function chart_get_type($chart_type)
-{
+function chart_get_type($chart_type) {
   $types = charts_type_info();
-
   return ($types[$chart_type])? $types[$chart_type]: FALSE;
 }
 
 /**
  * Implements hook_charts_type_info().
  */
-function charts_charts_type_info()
-{
+function charts_charts_type_info() {
   $chart_types['pie'] = array(
     'label' => t('Pie'),
     'axis' => CHARTS_SINGLE_AXIS,
@@ -328,8 +325,7 @@ function charts_charts_type_info()
 /**
  * Default colors used in all libraries.
  */
-function charts_default_colors()
-{
+function charts_default_colors() {
   return array(
     '#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#1aadce',
     '#492970', '#f28f43', '#77a1e5', '#c42525', '#a6c96a',
@@ -340,8 +336,7 @@ function charts_default_colors()
  * Recursive function to trim out empty options that aren't used.
  * @param $array
  */
-function charts_trim_array(&$array)
-{
+function charts_trim_array(&$array) {
   foreach ($array as $key => &$value) {
     if (is_array($value)) {
       charts_trim_array($value);

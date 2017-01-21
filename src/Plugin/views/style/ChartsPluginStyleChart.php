@@ -98,25 +98,25 @@ class ChartsPluginStyleChart extends StylePluginBase {
     $form = charts_settings_form($form, $this->options, $field_options, array('style_options'));
 
     // Reduce the options if this is a chart extension.
-    if ($parent_display = $this->get_parent_chart_display()) {
-      $parent_chart_type = chart_get_type($parent_display->display_options['style_options']['type']);
-      if (empty($form['type']['#default_value'])) {
-        $form['type']['#default_value'] = $parent_display->display_options['style_options']['type'];
-      }
-
-      $form['type']['#description'] = empty($form['type']['#description']) ? '' : $form['type']['#description'] . ' ';
-      $form['type']['#description'] .= t('This chart will be combined with the parent display "@display_title", which is a "@type" chart. Not all chart types may be combined. Selecting a different chart type than the parent may cause errors.', array('@display_title' => $parent_display->display_title, '@type' => $parent_chart_type['label']));
-      $form['fields']['label_field']['#disabled'] = TRUE;
-      $form['display']['#access'] = FALSE;
-      $form['xaxis']['#access'] = FALSE;
-      if ($this->displayHandler->options['inherit_yaxis']) {
-        $form['yaxis']['#access'] = FALSE;
-      }
-      else {
-        $form['yaxis']['#title'] = t('Secondary axis');
-        $form['yaxis']['#attributes']['class'] = array();
-      }
-    }
+//    if ($parent_display = $this->get_parent_chart_display()) {
+//      $parent_chart_type = chart_get_type($parent_display->display_options['style_options']['type']);
+//      if (empty($form['type']['#default_value'])) {
+//        $form['type']['#default_value'] = $parent_display->display_options['style_options']['type'];
+//      }
+//
+//      $form['type']['#description'] = empty($form['type']['#description']) ? '' : $form['type']['#description'] . ' ';
+//      $form['type']['#description'] .= t('This chart will be combined with the parent display "@display_title", which is a "@type" chart. Not all chart types may be combined. Selecting a different chart type than the parent may cause errors.', array('@display_title' => $parent_display->display_title, '@type' => $parent_chart_type['label']));
+//      $form['fields']['label_field']['#disabled'] = TRUE;
+//      $form['display']['#access'] = FALSE;
+//      $form['xaxis']['#access'] = FALSE;
+//      if ($this->displayHandler->options['inherit_yaxis']) {
+//        $form['yaxis']['#access'] = FALSE;
+//      }
+//      else {
+//        $form['yaxis']['#title'] = t('Secondary axis');
+//        $form['yaxis']['#attributes']['class'] = array();
+//      }
+//    }
   }
 
   /**
@@ -299,11 +299,16 @@ class ChartsPluginStyleChart extends StylePluginBase {
 
     // Check if this display has any children charts that should be applied
     // on top of it.
-    $parent_display_id = $this->displayHandler->current_display;
+    if($this->pluginDefinition['id'] === 'chart'
+          && $this->displayHandler->pluginDefinition['id'] !== 'chart_extension') {
+        $parent_display_id = $this->displayHandler->display['id'];
+    }
     $children_displays = $this->get_children_chart_displays();
+
     foreach ($children_displays as $child_display_id => $child_display) {
       // If the user doesn't have access to the child display, skip.
       if (!$this->view->access($child_display_id)) {
+
         continue;
       }
 
@@ -312,7 +317,6 @@ class ChartsPluginStyleChart extends StylePluginBase {
       // a display.
       $subview = $this->view->createDuplicate();
       $subview->setDisplay($child_display_id);
-
       // Copy the settings for our axes over to the child view.
       foreach ($this->options as $option_name => $option_value) {
         if (strpos($option_name, 'yaxis') === 0 && $child_display->handler->getOption('inherit_yaxis')) {
@@ -368,16 +372,20 @@ class ChartsPluginStyleChart extends StylePluginBase {
   function get_parent_chart_display() {
     $parent_display = FALSE;
 
-    if ($this->view->style_plugin === 'chart' && $this->displayHandler->display && $this->displayHandler->options['parent_display']) {
-      $parent_display_name = $this->displayHandler->options['parent_display'];
-      if (isset($this->view->display_handler->display[$parent_display_name])) {
-        $parent_display = $this->view->display_handler->display[$parent_display_name];
-      }
-    }
-    // Ensure the parent is a chart.
-    if ($parent_display && $parent_display->display_options['style_plugin'] !== 'chart') {
-      $parent_display = FALSE;
-    }
+//    if ($this->view->style_plugin === 'chart'
+//        && $this->displayHandler->display && $this->displayHandler->options['parent_display']) {
+//      $parent_display_name = $this->displayHandler->options['parent_display'];
+//      if (isset($this->view->display_handler->display[$parent_display_name])) {
+//        $parent_display = $this->view->display_handler->display[$parent_display_name];
+//      }
+//    }
+//    // Ensure the parent is a chart.
+//    if ($parent_display && $parent_display->display_options['style_plugin'] !== 'chart') {
+//      $parent_display = FALSE;
+//    }
+
+
+
     return $parent_display;
   }
 
@@ -385,16 +393,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
    * Utility function to check if this chart has children displays.
    */
   function get_children_chart_displays() {
-    $children_displays = array();
-    foreach ($this->displayHandler->display as $display_name => $display) { //was display
-      $display_enabled = $this->displayHandler->getOption('enabled');
-      if ($display->display_plugin === 'chart' && $display->display_options['parent_display'] && empty($display->deleted) && $display_enabled) {
-        $parent_display_name = $display->display_options['parent_display'];
-        if ($parent_display_name === $this->view->current_display) {
-          $children_displays[$display_name] = $this->displayHandler->display[$display_name];
-        }
-      }
-    }
+    $children_displays = $this->displayHandler->getAttachedDisplays();
     return $children_displays;
   }
 }
