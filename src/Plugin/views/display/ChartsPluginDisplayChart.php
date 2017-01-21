@@ -59,6 +59,16 @@ class ChartsPluginDisplayChart extends Attachment  {
         '#weight' => -10,
       ],
     ];
+    $displays = array_filter($this->getOption('displays'));
+    if (count($displays) > 1) {
+        $attach_to = $this->t('Multiple displays');
+    }
+    elseif (count($displays) == 1) {
+        $display = array_shift($displays);
+        if ($display = $this->view->storage->getDisplay($display)) {
+            $attach_to = $display['display_title'];
+        }
+    }
     if (!isset($attach_to)) {
         $attach_to = $this->t('Not defined');
     }
