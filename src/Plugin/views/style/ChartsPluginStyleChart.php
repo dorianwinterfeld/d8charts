@@ -135,27 +135,31 @@ class ChartsPluginStyleChart extends StylePluginBase {
    * Empty array if the display is valid; an array of error strings if it is not.
    */
   public function validate() {
+
       $errors = parent::validate();
-      $plugin = $this->options['data_fields'];
-      $fieldValueState = array();
-      $fieldsCounter = 0;
-      foreach($plugin as $key => $value) {
+      $dataFields = $this->options['data_fields'];
+      $dataFieldsValueState = array();
+      $dataFieldsCounter = 0;
+
+      foreach($dataFields as $key => $value) {
           /*if (count(array_unique($plugin)) === 1 && end($plugin) === 0) {
               $errors[] = $this->t('At least one data field must be selected in the chart configuration before this chart may be shown');
           }*/
-          //Skip title field no need to validate it
-          if ($fieldsCounter > 0){
+          /*Skip title field no need to validate it and if data field is set add to dataFieldsValueState array state 1
+          otherwise add to same array state 0*/
+          if ($dataFieldsCounter > 0){
               if (empty($value)){
-                  array_push($fieldValueState, 0);
+                  array_push($dataFieldsValueState, 0);
               }
               else{
-                  array_push($fieldValueState, 1);
+                  array_push($dataFieldsValueState, 1);
               }
           }
-          $fieldsCounter++;
+          $dataFieldsCounter++;
       }
-
-      if (array_sum($fieldValueState) < 1)
+      /*If total sum of dataFieldsValueState is less than 1, then no dataFields were selected otherwise 1 or more selected
+      total sum will be greater than 1*/
+      if (array_sum($dataFieldsValueState) < 1)
           $errors[] = $this->t('At least one data field must be selected in the chart configuration before this chart may be shown');
       return $errors;
   }
