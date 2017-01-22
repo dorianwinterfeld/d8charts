@@ -136,19 +136,28 @@ class ChartsPluginStyleChart extends StylePluginBase {
    */
   public function validate() {
       $errors = parent::validate();
-
       $plugin = $this->options['data_fields'];
-
-      foreach($plugin as $value) {
-          if (count(array_unique($plugin)) === 1 && end($plugin) === 0) {
+      $fieldValueState = array();
+      $fieldsCounter = 0;
+      foreach($plugin as $key => $value) {
+          /*if (count(array_unique($plugin)) === 1 && end($plugin) === 0) {
               $errors[] = $this->t('At least one data field must be selected in the chart configuration before this chart may be shown');
+          }*/
+          //Skip title field no need to validate it
+          if ($fieldsCounter > 0){
+              if (empty($value)){
+                  array_push($fieldValueState, 0);
+              }
+              else{
+                  array_push($fieldValueState, 1);
+              }
           }
+          $fieldsCounter++;
       }
 
-      // @todo: $errors[] = t('This chart add-on must have a parent chart selected under the chart settings.');
-      // @todo: $errors[] = t('A field you have specified as a data field in your chart settings no longer exists. Edit the chart settings and select at least one data field.');
-
-    return $errors;
+      if (array_sum($fieldValueState) < 1)
+          $errors[] = $this->t('At least one data field must be selected in the chart configuration before this chart may be shown');
+      return $errors;
   }
 
   /**
