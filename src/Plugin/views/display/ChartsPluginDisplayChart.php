@@ -32,7 +32,6 @@ class ChartsPluginDisplayChart extends Attachment  {
      */
     protected function defineOptions() {
         $options = parent::defineOptions();
-
         return $options;
 
     }
@@ -78,6 +77,18 @@ class ChartsPluginDisplayChart extends Attachment  {
         'value' => $attach_to,
     );
 
+    $options['attachment_position'] = array(
+        'disabled' => TRUE
+    );
+
+    $options['inherit_pager'] = array(
+        'disabled' => TRUE
+    );
+
+    $options['render_pager'] = array(
+        'disabled' => TRUE
+    );
+
   }
 
     /**
@@ -91,8 +102,9 @@ class ChartsPluginDisplayChart extends Attachment  {
     switch ($form_state->get('section')) {
       case 'displays':
         $form['#title'] .= t('Parent display');
-
     }
+
+
   }
 
     /**
