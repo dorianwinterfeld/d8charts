@@ -98,25 +98,25 @@ class ChartsPluginStyleChart extends StylePluginBase {
     $form = charts_settings_form($form, $this->options, $field_options, array('style_options'));
 
     // Reduce the options if this is a chart extension.
-//    if ($parent_display = $this->get_parent_chart_display()) {
-//      $parent_chart_type = chart_get_type($parent_display->display_options['style_options']['type']);
-//      if (empty($form['type']['#default_value'])) {
-//        $form['type']['#default_value'] = $parent_display->display_options['style_options']['type'];
-//      }
-//
-//      $form['type']['#description'] = empty($form['type']['#description']) ? '' : $form['type']['#description'] . ' ';
-//      $form['type']['#description'] .= t('This chart will be combined with the parent display "@display_title", which is a "@type" chart. Not all chart types may be combined. Selecting a different chart type than the parent may cause errors.', array('@display_title' => $parent_display->display_title, '@type' => $parent_chart_type['label']));
-//      $form['fields']['label_field']['#disabled'] = TRUE;
-//      $form['display']['#access'] = FALSE;
-//      $form['xaxis']['#access'] = FALSE;
-//      if ($this->displayHandler->options['inherit_yaxis']) {
-//        $form['yaxis']['#access'] = FALSE;
-//      }
-//      else {
-//        $form['yaxis']['#title'] = t('Secondary axis');
-//        $form['yaxis']['#attributes']['class'] = array();
-//      }
-//    }
+    if (empty($this->displayHandler->getAttachedDisplays())) {
+      $form['type']['#description'] = empty($form['type']['#description']) ? '' : $form['type']['#description'] . ' ';
+      $form['type']['#description'] .= t('This chart will be combined with the parent display "@display_title",
+          which is a "@type" chart. Not all chart types may be combined. Selecting a different chart type than
+          the parent may cause errors.' //,
+      //    array('@display_title' => $parent_display->display_title, '@type' => $parent_chart_type['label'])
+      );
+      $form['fields']['label_field']['#disabled'] = TRUE;
+      $form['display']['#access'] = FALSE;
+      $form['xaxis']['#access'] = FALSE;
+      if ($this->displayHandler->options['inherit_yaxis']) {
+        $form['yaxis']['#access'] = FALSE;
+      }
+      else {
+        $form['yaxis']['#title'] = t('Secondary axis');
+        $form['yaxis']['#attributes']['class'] = array();
+      }
+      drupal_set_message(' how disabled');
+    }
   }
 
   /**
@@ -384,7 +384,6 @@ class ChartsPluginStyleChart extends StylePluginBase {
    */
   function get_parent_chart_display() {
     $parent_display = FALSE;
-
 //    if ($this->view->style_plugin === 'chart'
 //        && $this->displayHandler->display && $this->displayHandler->options['parent_display']) {
 //      $parent_display_name = $this->displayHandler->options['parent_display'];
