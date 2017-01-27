@@ -23,7 +23,7 @@ function charts_google_charts_info() {
  * Creates a JSON Object formatted for Google charts to use
  * @param array $categories
  * @param array $seriesData
- * @return string
+ * @return json object to be used by google visualization framework
  */
 function renderGoogleCharts($categories = array(), $seriesData = array()) {
 
@@ -55,7 +55,13 @@ function renderGoogleCharts($categories = array(), $seriesData = array()) {
     return json_encode($dataTable);
 }
 
+/**
+ * @param $options
+ * @param array $seriesData
+ * @return GoogleOptions object with chart options or settings to be used by google visualization framework
+ */
 function createGoogleChartsOptions($options, $seriesData = array()){
+
     $googleOptions = new GoogleOptions();
     $googleOptions->setTitle($options['title']);
 
@@ -68,6 +74,7 @@ function createGoogleChartsOptions($options, $seriesData = array()){
     $googleOptions->setColors($seriesColors);
     return $googleOptions;
 }
+
 function createGoogleChartType($options){
     $googleChartType = new ChartType();
     $googleChartType->setChartType($options['type']);

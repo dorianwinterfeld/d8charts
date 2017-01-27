@@ -17,6 +17,7 @@ use \Drupal\Core\Template\Attribute;
 * @return array
 */
 function charts_theme($existing, $type, $theme, $path) {
+
   return array(
     'views_view_charts' => array(
       'variables' => array('view' => NULL, 'row' => NULL),
@@ -25,6 +26,7 @@ function charts_theme($existing, $type, $theme, $path) {
 }
 
 function theme_views_view_charts($variables){
+
     $options = $variables['view']->style_plugin->options;
 
     $view = $variables['view'];
@@ -91,7 +93,7 @@ function theme_views_view_charts($variables){
             );
             $attributes = new Attribute($googleAttributes);
             return '<div ' . $attributes . '></div>';
-            break;
+
         case 'highcharts':
             $highchart = renderHigchartsCharts($options, $categories, $seriesData);
             $highchartAttributes = array(
@@ -100,7 +102,7 @@ function theme_views_view_charts($variables){
             );
             $attributes = new Attribute($highchartAttributes);
             return '<div ' . $attributes . '></div>';
-            break;
+
         case 'c3':
             $c3 = renderC3Charts($options, $categories, $seriesData);
             $c3chartAttributes = array(
@@ -109,7 +111,8 @@ function theme_views_view_charts($variables){
             );
             $c3attributes = new Attribute($c3chartAttributes);
             return '<div ' . $c3attributes . ' id="chart"></div>';
-            break;
+
         default:
+            //Not handled
     }
 }

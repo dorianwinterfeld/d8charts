@@ -8,7 +8,7 @@
 
 namespace Drupal\charts\Services;
 /**
- * Service class necessary for getting state of the currently selected Library.
+ * Service class necessary for getting and setting the state of the currently selected Library.
  *
  * Class ChartService
  * @package Drupal\charts\Services
@@ -20,11 +20,12 @@ class ChartService
 
     public function __construct()
     {
-        $this->librarySelected = 'highcharts'; //to be removed
+        /*Currently set to default library Highcharts but might need to be changed*/
+        $this->librarySelected = 'highcharts';
     }
 
     /**
-     * Gets the currently enabled Library
+     * Gets the currently selected Library
      * @return string
      */
     public function getLibrarySelected()
@@ -33,7 +34,7 @@ class ChartService
     }
 
     /**
-     * Sets currently enabled Library with a new value
+     * Sets the previously set Library with the newly selected library value
      * @param string $librarySelected
      */
     public function setLibrarySelected($librarySelected)

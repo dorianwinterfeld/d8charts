@@ -35,7 +35,7 @@ function charts_highcharts_charts_info() {
  * @param $options
  * @param array $categories
  * @param array $seriesData
- * @return Highcharts
+ * @return Highcharts object to be used by highcharts javascripts visualization framework
  */
 function renderHigchartsCharts($options, $categories = array(), $seriesData = array()){
     $chart = new ChartType();

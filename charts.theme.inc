@@ -17,6 +17,9 @@ function charts_page_attachments(&$attachments)
     $library = $service->getLibrarySelected();
     $attachments['#attached']['library'][] = 'charts/charts';
 
+    /*Depending on the library selected, javescript files associated to the selected library will only be attached to
+    the template.*/
+
     switch($library){
         case 'google':
             $attachments['#attached']['library'][] = 'charts_google/charts_google';
@@ -30,5 +33,8 @@ function charts_page_attachments(&$attachments)
             $attachments['#attached']['library'][] = 'charts_c3/charts_c3';
             $attachments['#attached']['library'][] = 'charts_c3/c3';
             break;
+
+        default:
+            //Not handled
     }
 }
