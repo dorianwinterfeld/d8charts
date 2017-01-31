@@ -168,8 +168,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
    * Render the entire view from the view result.
    */
   public function render() {
-    $field_handlers = $this->displayHandler->getHandlers('field');
-
+    $field_handlers = $this->view->getHandlers('field');
 
     // Calculate the labels field alias.
     $label_field = FALSE;
@@ -187,6 +186,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
         $data_fields[$field_key] = $field_handlers[$field_key];
       }
     }
+
     // Do not allow the label field to be used as a data field.
     if (isset($data_fields[$label_field_key])) {
       unset($data_fields[$label_field_key]);
@@ -316,12 +316,12 @@ class ChartsPluginStyleChart extends StylePluginBase {
           && $this->displayHandler->pluginDefinition['id'] !== 'chart_extension') {
         $parent_display_id = $this->displayHandler->display['id'];
     }
+
     $children_displays = $this->get_children_chart_displays();
 
-    foreach ($children_displays as $child_display_id => $child_display) {
+    foreach ($children_displays as $child_display) {
       // If the user doesn't have access to the child display, skip.
-      if (!$this->view->access($child_display_id)) {
-
+      if (!$this->view->access($child_display)) {
         continue;
       }
 
@@ -329,10 +329,17 @@ class ChartsPluginStyleChart extends StylePluginBase {
       // view here to avoid collisions in shifting the current display while in
       // a display.
       $subview = $this->view->createDuplicate();
-      $subview->setDisplay($child_display_id);
+      $subview->setDisplay($child_display);
       // Copy the settings for our axes over to the child view.
+
+//$theyaxis = $this->view->storage->getDisplay($child_display);
+//drupal_set_message(json_encode($theyaxis['display_options']['inherit_yaxis']).'display ops');
+// drupal_set_message(json_encode($this->view->storage->getDisplay($child_display)['display_options']['inherit_yaxis']) . '---yaxis');
+
+
       foreach ($this->options as $option_name => $option_value) {
-        if (strpos($option_name, 'yaxis') === 0 && $child_display->handler->getOption('inherit_yaxis')) {
+        if (strpos($option_name, 'yaxis') === 0
+        && $this->view->storage->getDisplay($child_display)['display_options']['inherit_yaxis']) {
           $subview->display_handler->options['style_options'][$option_name] = $option_value;
         }
         elseif (strpos($option_name, 'xaxis') === 0) {
@@ -349,30 +356,33 @@ class ChartsPluginStyleChart extends StylePluginBase {
         continue;
       }
 
-      $subchart = $subview->render($subview->result); //$subview->style_plugin->render($subview->result);
+      $subchart = $subview->style_plugin->render(); //$subview->style_plugin->render($subview->result);
+
       $subview->postExecute();
       unset($subview);
 
       // Create a secondary axis if needed.
-      if (!$child_display->handler->get_option('inherit_yaxis') && isset($subchart['yaxis'])) {
+      if ($this->view->storage->getDisplay($child_display)['display_options']['inherit_yaxis'] !== '1'
+      && isset($subchart['yaxis'])) {
         $chart['secondary_yaxis'] = $subchart['yaxis'];
         $chart['secondary_yaxis']['#opposite'] = TRUE;
+        drupal_set_message(json_encode($subchart['yaxis']).'tttttttttttttt');
       }
 
-      // Merge in the child chart data.
-      foreach (\Drupal::state()->getMultiple($subchart) as $key) {  //element_children or Element::children()
-        if ($subchart[$key]['#type'] === 'chart_data') {
-          $chart[$key] = $subchart[$key];
-          // If the subchart is a different type than the parent chart, set
-          // the #chart_type property on the individual chart data elements.
-          if ($subchart['#chart_type'] !== $chart['#chart_type']) {
-            $chart[$key]['#chart_type'] = $subchart['#chart_type'];
-          }
-          if (!$child_display->handler->getOption('inherit_yaxis')) {
-            $chart[$key]['#target_axis'] = 'secondary_yaxis';
-          }
-        }
-      }
+//      // Merge in the child chart data.
+//      foreach (\Drupal::state()->getMultiple($subchart) as $key) {  //element_children or Element::children()
+//        if ($subchart[$key]['#type'] === 'chart_data') {
+//          $chart[$key] = $subchart[$key];
+//          // If the subchart is a different type than the parent chart, set
+//          // the #chart_type property on the individual chart data elements.
+//          if ($subchart['#chart_type'] !== $chart['#chart_type']) {
+//            $chart[$key]['#chart_type'] = $subchart['#chart_type'];
+//          }
+//          if (!$child_display->handler->getOption('inherit_yaxis')) {
+//            $chart[$key]['#target_axis'] = 'secondary_yaxis';
+//          }
+//        }
+//      }
     }
 
     // Print the chart.

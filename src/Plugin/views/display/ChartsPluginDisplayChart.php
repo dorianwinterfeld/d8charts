@@ -32,6 +32,9 @@ class ChartsPluginDisplayChart extends Attachment  {
      */
     protected function defineOptions() {
         $options = parent::defineOptions();
+        $options['style_plugin']['default'] = 'chart';
+        $options['inherit_yaxis'] = array('default' => '1');
+
         return $options;
 
     }
@@ -77,6 +80,12 @@ class ChartsPluginDisplayChart extends Attachment  {
         'value' => $attach_to,
     );
 
+    $options['inherit_yaxis'] = array(
+        'category' => 'attachment',
+        'title' => $this->t('Axis settings'),
+        'value' => $this->getOption('inherit_yaxis') ? t('Use primary Y-axis') : t('Create secondary axis'),
+    );
+
     $options['attachment_position'] = array(
         'disabled' => TRUE
     );
@@ -102,6 +111,20 @@ class ChartsPluginDisplayChart extends Attachment  {
     switch ($form_state->get('section')) {
       case 'displays':
         $form['#title'] .= t('Parent display');
+        break;
+      case 'inherit_yaxis':
+          $form['#title'] .= t('Axis settings');
+          $form['inherit_yaxis'] = array(
+              '#title' => t('Y-Axis settings'),
+              '#type' => 'radios',
+              '#options' => array(
+                  1 => t('Inherit primary of parent display'),
+                  0 => t('Create a secondary axis'),
+              ),
+              '#default_value' => $this->getOption('inherit_yaxis'),
+              '#description' => t('In most charts, the X and Y axis from the parent display are both shared with each attached child chart. However, if this chart is going to use a different unit of measurement, a secondary axis may be added on the opposite side of the normal Y-axis.'),
+          );
+          break;
     }
 
 
@@ -116,6 +139,17 @@ class ChartsPluginDisplayChart extends Attachment  {
   public function submitOptionsForm(&$form, FormStateInterface $form_state) {
     // It is very important to call the parent function here:
     parent::submitOptionsForm($form, $form_state);
+    $section = $form_state->get('section');
+    switch ($section) {
+        case 'displays':
+            $form_state->setValue($section, array_filter($form_state->getValue($section)));
+            break;
+        case 'inherit_arguments':
+        case 'inherit_exposed_filters':
+        case 'inherit_yaxis':
+            $this->setOption($section, $form_state->getValue($section));
+            break;
+    }
 
   }
 
