@@ -329,56 +329,56 @@ class ChartsPluginStyleChart extends StylePluginBase {
       // Generate the subchart by executing the child display. We load a fresh
       // view here to avoid collisions in shifting the current display while in
       // a display.
-      $subview = $this->view->createDuplicate();
-      $subview->setDisplay($child_display);
+//      $subview = $this->view->createDuplicate();
+//      $subview->setDisplay($child_display);
       // Copy the settings for our axes over to the child view.
 drupal_set_message(json_encode($this->view->storage->getDisplay($child_display)).'beacon for michael');
-      foreach ($this->options as $option_name => $option_value) {
-        if (strpos($option_name, 'yaxis') === 0
-        && $this->view->storage->getDisplay($child_display)['display_options']['inherit_yaxis']) {
-          $subview->display_handler->options['style_options'][$option_name] = $option_value;
-        }
-        elseif (strpos($option_name, 'xaxis') === 0) {
-          $subview->display_handler->options['style_options'][$option_name] = $option_value;
-        }
-      }
-
-      // Execute the subview and get the result.
-      $subview->preExecute();
-      $subview->execute();
-
-      // If there's no results, don't attach the subview.
-      if (empty($subview->result)) {
-        continue;
-      }
-
-      $subchart = $subview->style_plugin->render(); //$subview->style_plugin->render($subview->result);
-
-      $subview->postExecute();
-      unset($subview);
+//      foreach ($this->options as $option_name => $option_value) {
+//        if (strpos($option_name, 'yaxis') === 0
+//        && $this->view->storage->getDisplay($child_display)['display_options']['inherit_yaxis']) {
+//          $subview->display_handler->options['style_options'][$option_name] = $option_value;
+//        }
+//        elseif (strpos($option_name, 'xaxis') === 0) {
+//          $subview->display_handler->options['style_options'][$option_name] = $option_value;
+//        }
+//      }
+//
+//      // Execute the subview and get the result.
+//      $subview->preExecute();
+//      $subview->execute();
+//
+//      // If there's no results, don't attach the subview.
+//      if (empty($subview->result)) {
+//        continue;
+//      }
+//
+//      $subchart = $subview->style_plugin->render(); //$subview->style_plugin->render($subview->result);
+//
+//      $subview->postExecute();
+//      unset($subview);
 
       // Create a secondary axis if needed.
-      if ($this->view->storage->getDisplay($child_display)['display_options']['inherit_yaxis'] !== '1'
-      && isset($subchart['yaxis'])) {
-        $chart['secondary_yaxis'] = $subchart['yaxis'];
-        $chart['secondary_yaxis']['#opposite'] = TRUE;
-      }
+//      if ($this->view->storage->getDisplay($child_display)['display_options']['inherit_yaxis'] !== '1'
+//      && isset($subchart['yaxis'])) {
+//        $chart['secondary_yaxis'] = $subchart['yaxis'];
+//        $chart['secondary_yaxis']['#opposite'] = TRUE;
+//      }
 
       // Merge in the child chart data.
      // foreach (\Drupal::state()->getMultiple($subchart) as $key) {
-      foreach (Element::children($subchart) as $key) {
-        if ($subchart[$key]['#type'] === 'chart_data') {
-          $chart[$key] = $subchart[$key];
-          // If the subchart is a different type than the parent chart, set
-          // the #chart_type property on the individual chart data elements.
-          if ($subchart['#chart_type'] !== $chart['#chart_type']) {
-            $chart[$key]['#chart_type'] = $subchart['#chart_type'];
-          }
-          if ($this->view->storage->getDisplay($child_display)['display_options']['inherit_yaxis'] !== '1') {
-            $chart[$key]['#target_axis'] = 'secondary_yaxis';
-          }
-        }
-      }
+//      foreach (Element::children($subchart) as $key) {
+//        if ($subchart[$key]['#type'] === 'chart_data') {
+//          $chart[$key] = $subchart[$key];
+//          // If the subchart is a different type than the parent chart, set
+//          // the #chart_type property on the individual chart data elements.
+//          if ($subchart['#chart_type'] !== $chart['#chart_type']) {
+//            $chart[$key]['#chart_type'] = $subchart['#chart_type'];
+//          }
+//          if ($this->view->storage->getDisplay($child_display)['display_options']['inherit_yaxis'] !== '1') {
+//            $chart[$key]['#target_axis'] = 'secondary_yaxis';
+//          }
+//        }
+//      }
     }
 
     // Print the chart.
