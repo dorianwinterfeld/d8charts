@@ -248,6 +248,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
         '#data' => $data,
         '#title' => $data_field->options['label'],
       );
+
     }
     else {
       $chart['xaxis'] = array(
@@ -331,7 +332,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
       $subview = $this->view->createDuplicate();
       $subview->setDisplay($child_display);
       // Copy the settings for our axes over to the child view.
-        
+
       foreach ($this->options as $option_name => $option_value) {
         if (strpos($option_name, 'yaxis') === 0
         && $this->view->storage->getDisplay($child_display)['display_options']['inherit_yaxis']) {

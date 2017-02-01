@@ -109,7 +109,6 @@ function hook_chart_definition_alter(&$definition, $chart) {
         $definition['options']['titleTextStyle']['fontSize'] = 20;
     }
   elseif ($chart['#chart_library'] === 'highcharts') {
-    /** @var TYPE_NAME $definition */
     $definition['title']['style']['fontSize'] = 20;
   }
 }
@@ -141,7 +140,7 @@ function hook_charts_info() {
     // Specify the chart types your library is capable of providing.
     'types' => array('area', 'bar', 'column', 'line', 'pie', 'scatter'),
     // If your callback function is in a separate file, specify it's location.
-    'file' => 'includes/my_charting_library.inc',
+   // 'file' => 'includes/my_charting_library.inc',
   );
   return $info;
 }

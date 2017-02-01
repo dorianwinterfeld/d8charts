@@ -4,6 +4,7 @@
  * Provides elements for rendering charts and Views integration.
  */
 
+use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Element\RenderElement;
 
 
@@ -149,12 +150,11 @@ function charts_permission()
  * @param $element
  * @return
  */
-function preRenderChart($element)
-{
-//function charts_pre_render_element($element) {
+//function preRenderChart($element)
+//{
+function charts_pre_render_element($element) {
   $charts_info = charts_info();
   $chart_library = isset($element['#chart_library']) ? $element['#chart_library'] : NULL;
-
   // Use the first charting library if the requested library is not available.
   if (isset($chart_library) && isset($charts_info[$chart_library])) {
     $chart_library_info = $charts_info[$chart_library];
@@ -171,9 +171,13 @@ function preRenderChart($element)
 
   // Ensure there's an x and y axis to provide defaults.
   $chart_type = chart_get_type($element['#chart_type']);
+
   if ($chart_type['axis'] === CHARTS_DUAL_AXIS) {
-    foreach (\Drupal::state()->getMultiple($element) as $key) { //element_children
+//    foreach (\Drupal::state()->getMultiple($element) as $key) { //element_children
+      foreach (Element::children($element) as $key) {
+
       $children_types[] = $element[$key]['#type'];
+
     }
     if (!in_array('chart_xaxis', $children_types)) {
       $element['xaxis'] = array('#type' => 'chart_xaxis');
@@ -219,7 +223,6 @@ function preRenderChart($element)
     // Set the element #chart_json property as a data-attribute.
     $element['#attributes']['data-chart'] = json_encode($chart_definition);
   }
-
   return $element;
 }
 
@@ -372,11 +375,13 @@ function charts_cast_element_integer_values(&$element)
     // Data options.
     '#decimal_count',
   );
+
   foreach ($element as $property_name => $value) {
     if (is_array($element[$property_name])) {
       charts_cast_element_integer_values($element[$property_name]);
     } elseif ($property_name && in_array($property_name, $integer_options)) {
-      $element[$property_name] = (is_null($element[$property_name]) || strlen($element[$property_name]) === 0) ? NULL : (int)$element[$property_name];
+      $element[$property_name] = (is_null($element[$property_name]) || strlen($element[$property_name]) === 0)
+      ? NULL : (int)$element[$property_name];
     }
   }
 }
