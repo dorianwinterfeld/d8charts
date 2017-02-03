@@ -28,6 +28,11 @@ function charts_theme($existing, $type, $theme, $path) {
 function theme_views_view_charts($variables){
 
     $options = $variables['view']->style_plugin->options;
+    foreach($variables['view']->element as $key => $value){
+        drupal_set_message(json_encode($key).'----keys->');
+        drupal_set_message(json_encode($value).'----values->');
+    }
+
 
     $view = $variables['view'];
     $library = $view->style_plugin->options['library'];
