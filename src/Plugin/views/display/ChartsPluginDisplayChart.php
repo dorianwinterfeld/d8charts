@@ -8,6 +8,7 @@ namespace Drupal\charts\Plugin\views\display;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\display\Attachment;
+use Drupal\views\Plugin\views\display\DisplayPluginBase;
 use Drupal\views\ViewExecutable;
 
 /**

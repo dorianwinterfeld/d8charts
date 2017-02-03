@@ -39,6 +39,8 @@ function theme_views_view_charts($variables){
     // get id of chart extension
     $attachmentId = $view->display_handler->getAttachedDisplays();
 
+
+
     // gets chart extension
     $attachmentDisplay = $view->storage->getDisplay($attachmentId[0]);
 
@@ -59,14 +61,8 @@ function theme_views_view_charts($variables){
         }
     }
 
-    /*drupal_set_message(json_encode($valueField).'----this is the original value field');
+    foreach($valueField as $fieldId => $rowDataValue) {
 
-    $combinedValueField = array_merge($valueField, $attachedValueField);
-
-    drupal_set_message(json_encode($combinedValueField).'----this is the combined value field');*/
-
-    foreach($combinedAttachmentPage as $fieldId => $rowDataValue) {
-        
         if($rowDataValue == '0')
             unset($valueField[$fieldId]);
     }
