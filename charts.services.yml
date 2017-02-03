@@ -1,3 +1,6 @@
 services:
   charts.charts_service:
     class: Drupal\charts\Services\ChartService
+
+  charts.charts_attachment:
+    class: Drupal\charts\Services\ChartAttachmentService

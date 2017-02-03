@@ -28,11 +28,10 @@ function charts_theme($existing, $type, $theme, $path) {
 function theme_views_view_charts($variables){
 
     $options = $variables['view']->style_plugin->options;
-    foreach($variables['view']->element as $key => $value){
-        drupal_set_message(json_encode($key).'----keys->');
-        drupal_set_message(json_encode($value).'----values->');
-    }
 
+    $service = \Drupal::service('charts.charts_attachment');
+    //$service->getAttachmentView();
+    drupal_set_message(json_encode($service->getAttachmentView()->style_plugin->options).' ****R');
 
     $view = $variables['view'];
     $library = $view->style_plugin->options['library'];

@@ -159,6 +159,9 @@ class ChartsPluginDisplayChart extends Attachment  {
      */
     public function attachTo(ViewExecutable $view, $display_id, array &$build)
     {
+        drupal_set_message(json_encode($view->style_plugin->options).' ****R');
+        $service = \Drupal::service('charts.charts_attachment');
+        $service->setAttachmentView($this->view);
         $displays = $this->getOption('displays');
 
         if (empty($displays[$display_id])) {
@@ -168,6 +171,7 @@ class ChartsPluginDisplayChart extends Attachment  {
         if (!$this->access()) {
             return;
         }
+
     }
 
 
