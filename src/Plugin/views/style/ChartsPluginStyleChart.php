@@ -332,7 +332,12 @@ class ChartsPluginStyleChart extends StylePluginBase {
 //      $subview = $this->view->createDuplicate();
 //      $subview->setDisplay($child_display);
       // Copy the settings for our axes over to the child view.
-drupal_set_message(json_encode($this->view->storage->getDisplay($child_display)).'beacon for michael');
+
+        $type = 'chart';
+        $id = 'page_2';
+        $index = 'field_first_num';
+
+     //   $this->view->storage->getDisplay()
 //      foreach ($this->options as $option_name => $option_value) {
 //        if (strpos($option_name, 'yaxis') === 0
 //        && $this->view->storage->getDisplay($child_display)['display_options']['inherit_yaxis']) {

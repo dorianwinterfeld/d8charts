@@ -33,8 +33,27 @@ function theme_views_view_charts($variables){
     $library = $view->style_plugin->options['library'];
     $variables['data'] = array();
 
+    //this view's id
+    $viewId = $view->display_handler->display['id'];
+
+    // get id of chart extension
+    $attachmentId = $view->display_handler->getAttachedDisplays();
+
+    // gets chart extension
+    $attachmentDisplay = $view->storage->getDisplay($attachmentId[0]);
+
+    // get attached valuefield
+    $attachedValueField = $attachmentDisplay['display_options']['style']['options']['data_fields'];
+
     $labelField = $view->style_plugin->options['label_field'];
     $valueField = $view->style_plugin->options['data_fields'];
+
+    drupal_set_message(json_encode($valueField).'----this is the original value field');
+
+    $combinedValueField = array_merge($valueField, $attachedValueField);
+
+    drupal_set_message(json_encode($combinedValueField).'----this is the combined value field');
+
     foreach($valueField as $fieldId => $rowDataValue) {
         
         if($rowDataValue == '0')
