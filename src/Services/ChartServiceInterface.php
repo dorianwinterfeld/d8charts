@@ -9,7 +9,7 @@
 namespace Drupal\charts\Services;
 
 
-interface ChartInterface
+interface ChartServiceInterface
 {
     public function getLibrarySelected();
     public function setLibrarySelected($librarySelected);

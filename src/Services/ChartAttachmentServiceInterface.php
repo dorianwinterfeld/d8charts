@@ -9,7 +9,7 @@
 namespace Drupal\charts\Services;
 
 
-interface ChartAttachmentInterface
+interface ChartAttachmentServiceInterface
 {
     public function getAttachmentView();
     public function setAttachmentView($view);
