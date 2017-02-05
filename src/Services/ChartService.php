@@ -14,7 +14,7 @@ namespace Drupal\charts\Services;
  * @package Drupal\charts\Services
  */
 
-class ChartService implements LibraryService
+class ChartService implements ChartInterface
 {
     private $librarySelected;
 
