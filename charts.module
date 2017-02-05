@@ -4,6 +4,7 @@
  * Charts module file that provides hook_theme.
  */
 use \Drupal\Core\Template\Attribute;
+use \Drupal\charts\util\Util;
 
 // Store Charts preprocess theme functions in a separate .inc file.
 \Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
@@ -30,8 +31,10 @@ function theme_views_view_charts($variables){
     $options = $variables['view']->style_plugin->options;
 
     $service = \Drupal::service('charts.charts_attachment');
+    $attachmentView = $service->getAttachmentView();
     //$service->getAttachmentView();
-    drupal_set_message(json_encode($service->getAttachmentView()->style_plugin->options).' ****R');
+
+
 
     $view = $variables['view'];
     $library = $view->style_plugin->options['library'];
@@ -46,34 +49,62 @@ function theme_views_view_charts($variables){
 
 
     // gets chart extension
-    $attachmentDisplay = $view->storage->getDisplay($attachmentId[0]);
+    //$attachmentDisplay = $view->storage->getDisplay($attachmentId[0]);
+    $attachmentDisplay = $attachmentView->storage->getDisplay($attachmentId[0]);
 
     // get attached valuefield
-    $combinedAttachmentPage = array();
+    //$combinedAttachmentPage = array();
     $attachedValueField = $attachmentDisplay['display_options']['style']['options']['data_fields'];
-    foreach($attachedValueField as $key => $value) {
+    $combinedAttachmentPage = Util::removeUnselectedFields($attachedValueField);
+
+   /* foreach($attachedValueField as $key => $value) {
         if (!empty($value)){
             $combinedAttachmentPage[$key] = $value;
         }
     }
+    */
+
 
     $labelField = $view->style_plugin->options['label_field'];
     $valueField = $view->style_plugin->options['data_fields'];
-    foreach($valueField as $key => $value) {
+
+    /*foreach($valueField as $key => $value) {
         if (!empty($value)){
             $combinedAttachmentPage[$key] = $value;
         }
-    }
+    }*/
 
-    foreach($valueField as $fieldId => $rowDataValue) {
+    /*foreach($valueField as $fieldId => $rowDataValue) {
 
         if($rowDataValue == '0')
             unset($valueField[$fieldId]);
-    }
+    }*/
+    $valueField = Util::removeUnselectedFields($valueField);
 
     $color = $view->style_plugin->options['field_colors'];
 
-    $data = array();
+    /*$dataAttachment = array();
+
+    foreach ($attachmentView->result as $id => $row) {
+        $numberFields = 0;
+        $rowData = array();
+        foreach($combinedAttachmentPage as $fieldId => $rowDataValue) {
+            $rowData[$numberFields] = array(
+                'value' => $attachmentView->field[$fieldId]->getValue($row),
+                'label_field' => $attachmentView->field[$labelField]->getValue($row),
+                'label' => $attachmentView->field[$fieldId]->label(),
+                'color' => $color[$fieldId],
+            );
+            $numberFields++;
+        }
+        $dataAttachment[$id] = $rowData;
+    }*/
+    $dataAttachment = Util::viewsData($attachmentView, $combinedAttachmentPage, $labelField, $color);
+    $dataAttachment = Util::createChartableData($dataAttachment);
+    $categoriesAttachment = $dataAttachment[0];
+    $seriesDataAttachment = $dataAttachment[1];
+
+    /*$data = array();
 
     foreach ($view->result as $id => $row) {
         $numberFields = 0;
@@ -88,9 +119,11 @@ function theme_views_view_charts($variables){
             $numberFields++;
         }
         $data[$id] = $rowData;
-    }
+    }*/
+    $data = Util::viewsData($view, $valueField, $labelField, $color);
 
-    $categories = array();
+    //$data = array_merge($data, $dataAttachment);
+    /*$categories = array();
     $seriesData = array();
 
     for ($i = 0; $i < count($data[0]); $i++){
@@ -103,8 +136,13 @@ function theme_views_view_charts($variables){
             array_push($seriesRowData['data'],((int)($data[$j][$i]['value'])));
         }
         array_push($seriesData, $seriesRowData);
-    }
+    }*/
+    $data = Util::createChartableData($data);
+    $categories = $data[0];
+    $seriesData = $data[1];
 
+    $seriesData = array_merge($seriesData, $seriesDataAttachment);
+    drupal_set_message(json_encode($seriesData).' Merged data');
     $service = \Drupal::service('charts.charts_service');
     $service->setLibrarySelected($view->style_plugin->options['library']);
 
