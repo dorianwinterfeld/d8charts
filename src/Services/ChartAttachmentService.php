@@ -9,7 +9,7 @@
 namespace Drupal\charts\Services;
 
 
-class ChartAttachmentService
+class ChartAttachmentService implements AttachmentService
 {
     private $attachmentView;
 
