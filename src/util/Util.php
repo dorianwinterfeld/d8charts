@@ -5,13 +5,14 @@
  * User: mmwebaze
  * Date: 2/4/2017
  * Time: 11:30 AM
+ * Utility class with various static functions for manipulating views related fields and values
  */
 namespace Drupal\charts\util;
 
 class Util
 {
     public static function viewsData($view, $labelValues, $labelField, $color){
-        $dataAttachment = array();
+        $data = array();
 
         foreach ($view->result as $id => $row) {
             $numberFields = 0;
@@ -25,11 +26,14 @@ class Util
                 );
                 $numberFields++;
             }
-            $dataAttachment[$id] = $rowData;
+            $data[$id] = $rowData;
         }
 
-        return $dataAttachment;
+        return $data;
     }
+    /*
+     * Removes unselected fields
+     */
     public static function removeUnselectedFields($valueField){
         $fieldValues = array();
         foreach($valueField as $key => $value) {
@@ -39,9 +43,11 @@ class Util
         }
         return $fieldValues;
     }
-
+    /*
+     * Creates chart data to be used later by visualization frameworks
+     */
     public static function createChartableData($data){
-        $temp = array();
+        $chartData = array();
         $categories = array();
         $seriesData = array();
 
@@ -56,9 +62,9 @@ class Util
             }
             array_push($seriesData, $seriesRowData);
         }
-        $temp[0] = $categories;
-        $temp[1] = $seriesData;
+        $chartData[0] = $categories;
+        $chartData[1] = $seriesData;
 
-        return $temp;
+        return $chartData;
     }
 }
