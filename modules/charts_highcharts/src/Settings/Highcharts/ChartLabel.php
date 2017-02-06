@@ -19,7 +19,7 @@ class ChartLabel implements \JsonSerializable
      */
     public function setRotation($rotation)
     {
-        $this->rotation = $rotation;
+        $this->rotation = (int)$rotation;
     }
     public function jsonSerialize()
     {
