@@ -157,10 +157,8 @@ class ChartsPluginDisplayChart extends Attachment  {
     /**
      * {@inheritdoc}
      */
-    public function attachTo(ViewExecutable $view, $display_id, array &$build)
-    {
-        $service = \Drupal::service('charts.charts_attachment');
-        $service->setAttachmentView($this->view);
+    public function attachTo(ViewExecutable $view, $display_id, array &$build){
+        
         if (empty($displays[$display_id])) {
             return;
         }

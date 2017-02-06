@@ -353,9 +353,10 @@ class ChartsPluginStyleChart extends StylePluginBase {
       }
 
       $subchart = $subview->style_plugin->render(); //$subview->style_plugin->render($subview->result);
-
-      $subview->postExecute();
-      unset($subview);
+        $service = \Drupal::service('charts.charts_attachment');
+        $service->setAttachmentView($subview);
+      /*$subview->postExecute();
+      unset($subview);*/
 
   //     Create a secondary axis if needed.
       if ($this->view->storage->getDisplay($child_display)['display_options']['inherit_yaxis'] !== '1'
