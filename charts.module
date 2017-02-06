@@ -141,7 +141,7 @@ function theme_views_view_charts($variables){
     $categories = $data[0];
     $seriesData = $data[1];
 
-    //$categories = array_merge($categories, $categoriesAttachment);
+    $categories = array_merge($categories, $categoriesAttachment);
     drupal_set_message(json_encode($categories).' categories');
     $seriesData = array_merge($seriesData, $seriesDataAttachment);
     drupal_set_message(json_encode($seriesData).' Merged data');
