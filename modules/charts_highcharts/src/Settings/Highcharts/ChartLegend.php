@@ -11,7 +11,7 @@ class ChartLegend implements \JsonSerializable
     private $y = 80;
     private $floating = true;
     private $borderWidth = 1;
-    private $backgroundColor = '((Highcharts.theme && Highcharts.theme.legendBackgroundColor) ||'. '#FFFFFF'.')';
+    private $backgroundColor = '#FCFFC5';
     private $shadow = true;
 
     /**

@@ -313,13 +313,13 @@ class ChartsPluginStyleChart extends StylePluginBase {
 
     // Check if this display has any children charts that should be applied
     // on top of it.
-    if($this->pluginDefinition['id'] === 'chart'
+    /*if($this->pluginDefinition['id'] === 'chart'
           && $this->displayHandler->pluginDefinition['id'] !== 'chart_extension') {
         $parent_display_id = $this->displayHandler->display['id'];
-    }
+    }*/
 
-    $children_displays = $this->get_children_chart_displays();
-
+    $children_displays = $this->getChildrenChartDisplays();
+    $attachments = array();
     foreach ($children_displays as $child_display) {
       // If the user doesn't have access to the child display, skip.
       if (!$this->view->access($child_display)) {
@@ -332,7 +332,6 @@ class ChartsPluginStyleChart extends StylePluginBase {
       $subview = $this->view->createDuplicate();
       $subview->setDisplay($child_display);
     //   Copy the settings for our axes over to the child view.
-
       foreach ($this->options as $option_name => $option_value) {
         if (strpos($option_name, 'yaxis') === 0
         && $this->view->storage->getDisplay($child_display)['display_options']['inherit_yaxis']) {
@@ -353,8 +352,10 @@ class ChartsPluginStyleChart extends StylePluginBase {
       }
 
       $subchart = $subview->style_plugin->render(); //$subview->style_plugin->render($subview->result);
+        array_push($attachments, $subview);
         $service = \Drupal::service('charts.charts_attachment');
-        $service->setAttachmentView($subview);
+        //$service->setAttachmentView($subview);
+        $service->setAttachmentView($attachments);
       /*$subview->postExecute();
       unset($subview);*/
 
@@ -412,7 +413,8 @@ class ChartsPluginStyleChart extends StylePluginBase {
   /**
    * Utility function to check if this chart has children displays.
    */
-  function get_children_chart_displays() {
+  function getChildrenChartDisplays() {
+
     $children_displays = $this->displayHandler->getAttachedDisplays();
     return $children_displays;
   }

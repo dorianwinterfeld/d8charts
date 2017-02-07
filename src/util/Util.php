@@ -7,7 +7,7 @@
  * Time: 11:30 AM
  * Utility class with various static functions for manipulating views related fields and values
  */
-namespace Drupal\charts\util;
+namespace Drupal\charts\Util;
 
 class Util
 {
@@ -56,7 +56,8 @@ class Util
             $seriesRowData = array('name' => '','color' => '', 'data' => array());
             for($j = 0; $j < count($data); $j++) {
                 $categories[$j] = $data[$j][$i]['label_field'];
-                $seriesRowData['name'] = $data[$j][$i]['label'];
+                //$seriesRowData['name'] = $data[$j][$i]['label'];
+                $seriesRowData['name'] = $data[$j][$i]['label_field'];
                 $seriesRowData['color'] = $data[$j][$i]['color'];
                 array_push($seriesRowData['data'],((int)($data[$j][$i]['value'])));
             }
