@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\charts_c3\Settings\C3;
+namespace Drupal\charts_c3\Settings\CThree;
 
 class ChartTitle implements \JsonSerializable
 {

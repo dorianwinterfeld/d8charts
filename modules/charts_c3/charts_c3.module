@@ -3,9 +3,9 @@
  * @file
  * Charts module integration with C3 library.
  */
-use Drupal\charts_c3\Settings\C3\ChartType;
-use Drupal\charts_c3\Settings\C3\C3;
-use Drupal\charts_c3\Settings\C3\ChartTitle;
+use Drupal\charts_c3\Settings\CThree\ChartType;
+use Drupal\charts_c3\Settings\CThree\CThree;
+use Drupal\charts_c3\Settings\CThree\ChartTitle;
 
 /**
 * Implements hook_charts_info().
@@ -32,7 +32,7 @@ function renderC3Charts($options, $categories = array(), $seriesData = array()){
     $c3ChartTitle = new ChartTitle();
     $c3ChartTitle->setText($options['title']);
 
-    $c3 = new C3();
+    $c3 = new CThree();
     $c3->setChart($c3Chart);
     $c3->setLabels($options['data_labels']);
     $c3->setTitle($c3ChartTitle);

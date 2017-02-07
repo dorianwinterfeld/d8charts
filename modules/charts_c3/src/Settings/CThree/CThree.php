@@ -1,8 +1,8 @@
 <?php
 
-namespace Drupal\charts_c3\Settings\C3;
+namespace Drupal\charts_c3\Settings\CThree;
 
-class C3 implements \JsonSerializable
+class CThree implements \JsonSerializable
 {
     private $chart;
     private $title;
