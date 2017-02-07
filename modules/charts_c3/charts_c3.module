@@ -6,6 +6,8 @@
 use Drupal\charts_c3\Settings\CThree\ChartType;
 use Drupal\charts_c3\Settings\CThree\CThree;
 use Drupal\charts_c3\Settings\CThree\ChartTitle;
+use Drupal\charts_c3\Settings\CThree\ChartData;
+use Drupal\charts_c3\Settings\CThree\ChartColor;
 
 /**
 * Implements hook_charts_info().
@@ -22,6 +24,7 @@ function renderC3Charts($options, $categories = array(), $seriesData = array()){
 
     $c3Data = array();
     for($i = 0; $i < count($seriesData); $i++ ) {
+        drupal_set_message(json_encode($seriesData[$i]['data']).' c3 data***');
         $c3DataTemp = $seriesData[$i]['data'];
         array_unshift($c3DataTemp, $seriesData[$i]['name']);
         array_push($c3Data, $c3DataTemp);
@@ -29,22 +32,27 @@ function renderC3Charts($options, $categories = array(), $seriesData = array()){
 
     $c3Chart = new ChartType();
     $c3Chart->setType($options['type']);
+    drupal_set_message(json_encode($options['type']).' option tyoe');
     $c3ChartTitle = new ChartTitle();
     $c3ChartTitle->setText($options['title']);
 
     $c3 = new CThree();
-    $c3->setChart($c3Chart);
-    $c3->setLabels($options['data_labels']);
-    $c3->setTitle($c3ChartTitle);
-    $c3->setSeries($c3Data);
+    //$c3->setChart($c3Chart);
+    //$c3->setLabels($options['data_labels']);
+    //$c3->setTitle($c3ChartTitle);
+    $chartData = new ChartData();
+    $chartData->setColumns($c3Data);
+    $chartData->setType($options['type']);
+    $chartColor = new ChartColor();
+    $c3->setData($chartData);
 
     $seriesColors = array();
     for ($i = 0; $i < count($seriesData); $i++) {
         $seriesColor = $seriesData[$i]['color'];
         array_push($seriesColors, $seriesColor);
     }
-
-    $c3->setPattern($seriesColors);
+    $chartColor->setPattern($seriesColors);
+    $c3->setColor($chartColor);
 
 
     return $c3;

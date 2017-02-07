@@ -108,6 +108,7 @@ function theme_views_view_charts($variables){
 
         case 'c3':
             $c3 = renderC3Charts($options, $categories, $seriesData);
+            drupal_set_message(json_encode($c3).' c3 data');
             $c3chartAttributes = array(
                 'class' => 'charts-c3',
                 'data-chart' => json_encode($c3)

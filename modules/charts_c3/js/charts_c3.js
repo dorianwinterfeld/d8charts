@@ -9,7 +9,8 @@
         attach: function(context, settings) {
             var c3Chart = $('.charts-c3').attr('data-chart');
             var c3ChartData = JSON.parse(c3Chart);
-            var formattedType = c3ChartData.chart.type;
+            var chart = c3.generate(c3ChartData);
+            /*var formattedType = c3ChartData.chart.type;
             var c3ChartDataSeries = c3ChartData.series;
             if(c3ChartData.labels !== 'true') {
                 var c3ChartLabels = null;
@@ -50,7 +51,7 @@
                 axis: {
                     rotated: rotatedAxis
                 }
-            });
+            });*/
         }
     }
 }(jQuery));
