@@ -351,11 +351,10 @@ class ChartsPluginStyleChart extends StylePluginBase {
         continue;
       }
 
-      $subchart = $subview->style_plugin->render(); //$subview->style_plugin->render($subview->result);
+      $subchart = $subview->style_plugin->render();
         array_push($attachments, $subview);
         $service = \Drupal::service('charts.charts_attachment');
-        //$service->setAttachmentView($subview);
-        $service->setAttachmentView($attachments);
+        $service->setAttachmentViews($attachments);
       /*$subview->postExecute();
       unset($subview);*/
 

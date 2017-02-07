@@ -31,8 +31,7 @@ function theme_views_view_charts($variables){
     $options = $variables['view']->style_plugin->options;
 
     $service = \Drupal::service('charts.charts_attachment');
-    $attachmentView = $service->getAttachmentView();
-    drupal_set_message(json_encode(count($attachmentView)).' No of subviews');
+    $attachmentView = $service->getAttachmentViews();
 
     $view = $variables['view'];
     $categoriesAttachment = array();

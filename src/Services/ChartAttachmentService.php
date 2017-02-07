@@ -11,13 +11,13 @@ namespace Drupal\charts\Services;
 
 class ChartAttachmentService implements ChartAttachmentServiceInterface
 {
-    private $attachmentView;
+    private $attachmentViews;
 
-    public function getAttachmentView(){
+    public function getAttachmentViews(){
 
-        return $this->attachmentView;
+        return $this->attachmentViews;
     }
-    public function setAttachmentView($view){
-        $this->attachmentView = $view;
+    public function setAttachmentViews($attachmentViews){
+        $this->attachmentViews = $attachmentViews;
     }
 }
