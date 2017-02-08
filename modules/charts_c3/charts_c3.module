@@ -25,7 +25,6 @@ function renderC3Charts($options, $categories = array(), $seriesData = array()){
 
     $c3Data = array();
     for($i = 0; $i < count($seriesData); $i++ ) {
-        drupal_set_message(json_encode($seriesData[$i]['data']).' c3 data***');
         $c3DataTemp = $seriesData[$i]['data'];
         array_unshift($c3DataTemp, $seriesData[$i]['name']);
         array_push($c3Data, $c3DataTemp);
@@ -33,7 +32,6 @@ function renderC3Charts($options, $categories = array(), $seriesData = array()){
 
     $c3Chart = new ChartType();
     $c3Chart->setType($options['type']);
-    drupal_set_message(json_encode($options['type']).' option tyoe');
     $c3ChartTitle = new ChartTitle();
     $c3ChartTitle->setText($options['title']);
     $chartAxis =  new ChartAxis();

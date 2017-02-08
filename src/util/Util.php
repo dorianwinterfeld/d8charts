@@ -58,7 +58,7 @@ class Util
             for($j = 0; $j < count($data); $j++) {
                 $categories[$j] = $data[$j][$i]['label_field'];
                 $seriesRowData['name'] = $data[$j][$i]['label'];
-                drupal_set_message(json_encode($data[$j][$i]['label']).' lable');
+
                 //$seriesRowData['name'] = $data[$j][$i]['label_field'];
                 $seriesRowData['color'] = $data[$j][$i]['color'];
                 array_push($seriesRowData['data'],((int)($data[$j][$i]['value'])));
