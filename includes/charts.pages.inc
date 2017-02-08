@@ -108,6 +108,11 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
             '#default_value' => $options['data_fields'][$field_name],
             '#return_value' => $field_name,
             '#weight' => -9,
+            '#states' => array(
+                'disabled' => array(
+                    ':input[name="style_options[label_field]"]' => array('value' => $field_name),
+                ),
+            ),
             '#parents' => array_merge($parents, array('data_fields', $field_name)),
             '#column' => 'two',
         );
