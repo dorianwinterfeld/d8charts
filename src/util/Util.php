@@ -21,7 +21,8 @@ class Util
                 $rowData[$numberFields] = array(
                     'value' => $view->field[$fieldId]->getValue($row),
                     'label_field' => $view->field[$labelField]->getValue($row),
-                    'label' => $view->field[$fieldId]->label(),
+                    //'label' => $view->field[$fieldId]->label(),
+                    'label' =>$view->display_handler->display['id'],
                     'color' => $color[$fieldId],
                 );
                 $numberFields++;
@@ -57,6 +58,7 @@ class Util
             for($j = 0; $j < count($data); $j++) {
                 $categories[$j] = $data[$j][$i]['label_field'];
                 $seriesRowData['name'] = $data[$j][$i]['label'];
+
                 //$seriesRowData['name'] = $data[$j][$i]['label_field'];
                 $seriesRowData['color'] = $data[$j][$i]['color'];
                 array_push($seriesRowData['data'],((int)($data[$j][$i]['value'])));

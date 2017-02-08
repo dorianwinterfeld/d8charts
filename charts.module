@@ -34,12 +34,14 @@ function theme_views_view_charts($variables){
     $attachmentView = $service->getAttachmentViews();
 
     $view = $variables['view'];
+
     $categoriesAttachment = array();
     $seriesDataAttachment = array();
 
     for ($i = 0; $i < count($attachmentView); $i++){
 
         $attachmentId = $attachmentView[$i]->display_handler->display['id'];
+
         $attachmentDisplay = $view->storage->getDisplay($attachmentId);
         $attachedValueField = $attachmentDisplay['display_options']['style']['options']['data_fields'];
 

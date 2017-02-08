@@ -4,173 +4,84 @@ namespace Drupal\charts_c3\Settings\CThree;
 
 class CThree implements \JsonSerializable
 {
-    private $chart;
+    private $color;
+    private $bindto = '#chart';
+    private $data;
+    private $axis;
     private $title;
-    private $xAxis;
-    private $yAxis;
-    private $tooltip;
-    private $plotOptions;
-    private $legend;
-    private $credits;
-    private $pattern;
-    private $labels;
 
     /**
      * @return mixed
      */
-    public function getChart() {
-        return $this->chart;
-    }
-
-    /**
-     * @param mixed $chart
-     */
-    public function setChart($chart) {
-        $this->chart = $chart;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
     }
 
     /**
      * @param mixed $title
      */
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
     }
 
     /**
      * @return mixed
      */
-    public function getXAxis() {
-        return $this->xAxis;
-    }
-
-    /**
-     * @param mixed $xAxis
-     */
-    public function setXAxis($xAxis) {
-        $this->xAxis = $xAxis;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getYAxis() {
-        return $this->yAxis;
-    }
-
-    /**
-     * @param mixed $yAxis
-     */
-    public function setYAxis($yAxis) {
-        $this->yAxis = $yAxis;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTooltip() {
-        return $this->tooltip;
-    }
-
-    /**
-     * @param mixed $tooltip
-     */
-    public function setTooltip($tooltip) {
-        $this->tooltip = $tooltip;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLabels() {
-        return $this->labels;
-    }
-
-    /**
-     * @param mixed $labels
-     */
-    public function setLabels($labels) {
-        $this->labels = strtolower($labels);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPlotOptions() {
-        return $this->plotOptions;
-    }
-
-    /**
-     * @param mixed $plotOptions
-     */
-    public function setPlotOptions($plotOptions) {
-        $this->plotOptions = $plotOptions;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLegend() {
-        return $this->legend;
-    }
-
-    /**
-     * @param mixed $legend
-     */
-    public function setLegend($legend) {
-        $this->legend = $legend;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCredits() {
-        return $this->credits;
-    }
-
-    /**
-     * @param mixed $credits
-     */
-    public function setCredits($credits)
+    public function getAxis()
     {
-        $this->credits = $credits;
+        return $this->axis;
     }
 
     /**
-     * @return mixed
+     * @param mixed $axis
      */
-    public function getSeries()
+    public function setAxis($axis)
     {
-        return $this->series;
+        $this->axis = $axis;
     }
-
-    /**
-     * @param mixed $series
-     */
-    public function setSeries($series) {
-        $this->series = $series;
-    }
-    private $series;
 
     /**
      * @return mixed
      */
-    public function getPattern() {
-        return $this->pattern;
+    public function getData()
+    {
+        return $this->data;
     }
 
     /**
-     * @param mixed $pattern
+     * @param mixed $data
      */
-    public function setPattern($pattern) {
-        $this->pattern = $pattern;
+    public function setData($data)
+    {
+        $this->data = $data;
     }
+
+    /**
+     * @return string
+     */
+    public function getBindto()
+    {
+        return $this->bindto;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param mixed $color
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+    }
+
 
     public function jsonSerialize() {
         $vars = get_object_vars($this);
