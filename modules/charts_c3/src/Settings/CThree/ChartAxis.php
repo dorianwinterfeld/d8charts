@@ -11,7 +11,8 @@ namespace Drupal\charts_c3\Settings\CThree;
 
 class ChartAxis implements \JsonSerializable
 {
-    private $rotated;
+    private $rotated = false;
+    private $x = array('type' => 'category');
 
     /**
      * @return mixed

@@ -7,22 +7,39 @@ class CThree implements \JsonSerializable
     private $color;
     private $bindto = '#chart';
     private $data;
-    private $type;
+    private $axis;
+    private $title;
 
     /**
      * @return mixed
      */
-    public function getType()
+    public function getTitle()
     {
-        return $this->type;
+        return $this->title;
     }
 
     /**
-     * @param mixed $type
+     * @param mixed $title
      */
-    public function setType($type)
+    public function setTitle($title)
     {
-        $this->type = $type;
+        $this->title = $title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAxis()
+    {
+        return $this->axis;
+    }
+
+    /**
+     * @param mixed $axis
+     */
+    public function setAxis($axis)
+    {
+        $this->axis = $axis;
     }
 
     /**

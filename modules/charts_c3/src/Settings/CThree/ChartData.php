@@ -14,6 +14,23 @@ class ChartData implements \JsonSerializable
     private $columns = array();
     private $type;
     private $labels = true;
+    private $x = 'x';
+
+    /**
+     * @return array
+     */
+    public function getX()
+    {
+        return $this->x;
+    }
+
+    /**
+     * @param array $x
+     */
+    public function setX($x)
+    {
+        $this->x = $x;
+    }
 
     /**
      * @return array
