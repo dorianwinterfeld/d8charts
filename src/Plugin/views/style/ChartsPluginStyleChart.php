@@ -392,19 +392,6 @@ class ChartsPluginStyleChart extends StylePluginBase {
    */
   function get_parent_chart_display() {
     $parent_display = FALSE;
-//    if ($this->view->style_plugin === 'chart'
-//        && $this->displayHandler->display && $this->displayHandler->options['parent_display']) {
-//      $parent_display_name = $this->displayHandler->options['parent_display'];
-//      if (isset($this->view->display_handler->display[$parent_display_name])) {
-//        $parent_display = $this->view->display_handler->display[$parent_display_name];
-//      }
-//    }
-//    // Ensure the parent is a chart.
-//    if ($parent_display && $parent_display->display_options['style_plugin'] !== 'chart') {
-//      $parent_display = FALSE;
-//    }
-
-
 
     return $parent_display;
   }

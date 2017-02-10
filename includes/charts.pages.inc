@@ -245,11 +245,11 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
     '#title' => t('Labels rotation'),
     '#type' => 'select',
     '#options' => array(
-      0 => '0°',
-      30 => '30°',
-      45 => '45°',
-      60 => '60°',
-      90 => '90°',
+      0 => t('0°'),
+      30 => t('30°'),
+      45 => t('45°'),
+      60 => t('60°'),
+      90 => t('90°'),
     ),
     // This is only shown on non-inverted charts.
     '#attributes' => array('class' => array('axis-inverted-hide')),
@@ -318,11 +318,11 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
     '#title' => t('Labels rotation'),
     '#type' => 'select',
     '#options' => array(
-      0 => '0°',
-      30 => '30°',
-      45 => '45°',
-      60 => '60°',
-      90 => '90°',
+      0 => t('0°'),
+      30 => t('30°'),
+      45 => t('45°'),
+      60 => t('60°'),
+      90 => t('90°'),
     ),
     // This is only shown on inverted charts.
     '#attributes' => array('class' => array('axis-inverted-show')),

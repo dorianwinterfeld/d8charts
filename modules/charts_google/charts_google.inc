@@ -226,7 +226,6 @@ function _charts_google_populate_chart_data(&$chart, $chart_definition) {
       // TODO: Convert this from PHP's date format to ICU format.
       // See https://developers.google.com/chart/interactive/docs/reference#dateformatter.
       //$series['_format']['dateFormat'] = $chart[$key]['#date_format'];
-
       // Conveniently only the axis that supports multiple axes is the one that
       // can receive formatting, so we know that the key will always be plural.
       $axis_type = $chart_type_info['axis_inverted'] ? 'hAxes' : 'vAxes';

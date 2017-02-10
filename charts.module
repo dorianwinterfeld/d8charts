@@ -62,24 +62,16 @@ function theme_views_view_charts($variables){
 
     $library = $view->style_plugin->options['library'];
     $variables['data'] = array();
-
-    //$viewId = $view->display_handler->display['id'];
-
     $labelField = $view->style_plugin->options['label_field'];
     $valueField = $view->style_plugin->options['data_fields'];
-
     $valueField = Util::removeUnselectedFields($valueField);
-
     $color = $view->style_plugin->options['field_colors'];
-
     $data = Util::viewsData($view, $valueField, $labelField, $color);
     $data = Util::createChartableData($data);
     $categories = $data[0];
     $seriesData = $data[1];
-
     $categories = array_merge($categories, $categoriesAttachment);
     $seriesData = array_merge($seriesData, $seriesDataAttachment);
-
     $service = \Drupal::service('charts.charts_service');
     $service->setLibrarySelected($view->style_plugin->options['library']);
 

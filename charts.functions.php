@@ -214,7 +214,6 @@ function charts_permission()
 //  }
 //  return $element;
 //}
-
 /**
  * Retrieve a list of all charting libraries available.
  *
