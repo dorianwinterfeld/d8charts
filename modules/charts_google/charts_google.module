@@ -25,7 +25,7 @@ function charts_google_charts_info() {
  * @param array $seriesData
  * @return json object to be used by google visualization framework
  */
-function renderGoogleCharts($categories = array(), $seriesData = array()) {
+function charts_google_render_charts($categories = array(), $seriesData = array()) {
 
     $dataTable = array();
 

@@ -21,7 +21,7 @@ function charts_c3_charts_info() {
     return $info;
 }
 
-function renderC3Charts($options, $categories = array(), $seriesData = array()){
+function charts_c3_render_charts($options, $categories = array(), $seriesData = array()){
 
     $c3Data = array();
     for($i = 0; $i < count($seriesData); $i++ ) {
