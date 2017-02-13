@@ -46,9 +46,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
  public function __construct(array $configuration, $plugin_id, $plugin_definition)
  {
      parent::__construct($configuration, $plugin_id, $plugin_definition);
-     drupal_set_message($this->chartService.' empty');
      $this->chartService = \Drupal::service('charts.charts_service');
-     drupal_set_message(json_encode($this->chartService).'not empty');
  }
 
     /**
@@ -82,7 +80,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
    */
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
     parent::buildOptionsForm($form, $form_state);
-      $this->chartService = \Drupal::service('charts.charts_service');
+
     $handlers = $this->displayHandler->getHandlers('field');
     if (empty($handlers)) {
       $form['error_markup'] = array(
@@ -146,9 +144,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
   public function validate() {
 
       $errors = parent::validate();
-
-      $this->chartService->setLibrarySelected($this->options['library']);
-      drupal_set_message(json_encode($this->options['library']).' charts plugin');
+      
       $dataFields = $this->options['data_fields'];
       $dataFieldsValueState = array();
       $dataFieldsCounter = 0;
@@ -324,7 +320,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
       }
     }
 
-      $this->chartService->setLibrarySelected($this->options['library']);
+     // $this->chartService->setLibrarySelected($this->options['library']);
     // Check if this display has any children charts that should be applied
     // on top of it.
     /*if($this->pluginDefinition['id'] === 'chart'
