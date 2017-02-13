@@ -14,23 +14,21 @@ use Drupal\Core\Url;
 use Drupal\Core\Link;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Config\ConfigFactory;
 
 
-class ChartsConfigForm extends ConfigFormBase
-{
+class ChartsConfigForm extends ConfigFormBase {
 
-    public function getFormId()
-    {
+    public function getFormId() {
         return 'charts_form';
     }
 
-    protected function getEditableConfigNames()
-    {
+    protected function getEditableConfigNames() {
         return ['charts.settings'];
     }
-    public function buildForm(array $form, FormStateInterface $form_state)
-    {
-        $config = \Drupal::service('config.factory')->getEditable('charts.settings');
+
+    public function buildForm(array $form, FormStateInterface $form_state) {
+        $config = $this->configFactory->getEditable('charts.settings');
 
         $parents = array('charts_default_settings');
         $default_config = $config->get('charts_default_settings');
@@ -49,14 +47,12 @@ class ChartsConfigForm extends ConfigFormBase
             '#markup' => '<p>' . t('The settings on this page are used to set <strong>default</strong> settings. They do not affect existing charts. To make a new chart, <a href="!views">create a new view</a> and select the display format of "Chart".', array('!views' => $link['url'])) . '</p>',
             '#weight' => -100,
         );
-
         // Reuse the global settings form for defaults, but remove JS classes.
         $form = $this->charts_settings_form($form, $defaults, $field_options, $parents);
         $form['xaxis']['#attributes']['class'] = array();
         $form['yaxis']['#attributes']['class'] = array();
         $form['display']['colors']['#prefix'] = NULL;
         $form['display']['colors']['#suffix'] = NULL;
-
         // Put settings into vertical tabs.
         $form['display']['#group'] = 'defaults';
         $form['xaxis']['#group'] = 'defaults';
@@ -64,7 +60,6 @@ class ChartsConfigForm extends ConfigFormBase
         $form['defaults'] = array(
             '#type' => 'vertical_tabs',
         );
-
         // Add submit buttons and normal saving behavior.
         $form['actions']['#type'] = 'actions';
         $form['actions']['submit'] = array(
@@ -311,11 +306,11 @@ class ChartsConfigForm extends ConfigFormBase
             '#title' => t('Labels rotation'),
             '#type' => 'select',
             '#options' => array(
-                0 => '0°',
-                30 => '30°',
-                45 => '45°',
-                60 => '60°',
-                90 => '90°',
+                0 => t('0°'),
+                30 => t('30°'),
+                45 => t('45°'),
+                60 => t('60°'),
+                90 => t('90°'),
             ),
             // This is only shown on non-inverted charts.
             '#attributes' => array('class' => array('axis-inverted-hide')),
@@ -384,11 +379,11 @@ class ChartsConfigForm extends ConfigFormBase
             '#title' => t('Labels rotation'),
             '#type' => 'select',
             '#options' => array(
-                0 => '0°',
-                30 => '30°',
-                45 => '45°',
-                60 => '60°',
-                90 => '90°',
+                0 => t('0°'),
+                30 => t('30°'),
+                45 => t('45°'),
+                60 => t('60°'),
+                90 => t('90°'),
             ),
             // This is only shown on inverted charts.
             '#attributes' => array('class' => array('axis-inverted-show')),

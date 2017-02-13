@@ -38,7 +38,7 @@ function charts_highcharts_charts_info() {
  * @param array $seriesData
  * @return Highcharts object to be used by highcharts javascripts visualization framework
  */
-function renderHigchartsCharts($options, $categories = array(), $seriesData = array()){
+function charts_highcharts_render_charts($options, $categories = array(), $seriesData = array()){
     $chart = new ChartType();
     $chart->setType($options['type']);
     $chartTitle = new ChartTitle();

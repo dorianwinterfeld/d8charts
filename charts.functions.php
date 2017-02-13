@@ -27,15 +27,8 @@ define('CHARTS_DUAL_AXIS', 'xy');
   /**
    * @return mixed
    */
-function getInfo()
-{
+function getInfo() {
 
-///**
-// * Implements hook_element_info().
-// *
-//  function charts_element_info()
-//  {
-    // Create the elements representing charts themselves.
     $info['chart'] = array(
       '#chart_type' => NULL, // Options: pie, bar, column, etc.
       '#chart_id' => NULL, // Machine name to alter this chart individually.
@@ -107,7 +100,6 @@ function getInfo()
       '#line_width' => 1, // Line chart only.
       '#marker_radius' => 3, // Line chart only. Size in pixels, e.g. 1, 5.
       '#target_axis' => NULL, // If using multiple axes, key for the matching y axis.
-
       // Formatting options.
       '#decimal_count' => NULL, // The number of digits after the decimal separator. e.g. 2
       '#date_format' => NULL, // A custom date format, e.g. %Y-%m-%d
@@ -122,8 +114,6 @@ function getInfo()
 
     return $info;
   }
-//}
-
 
 
 /**
@@ -142,7 +132,6 @@ function charts_permission()
     ),
   );
 }
-
 
 
 /**
@@ -225,14 +214,13 @@ function charts_permission()
 //  }
 //  return $element;
 //}
-
 /**
  * Retrieve a list of all charting libraries available.
  *
  * @see hook_charts_info()
  */
-function charts_info()
-{
+function charts_info() {
+
   $charts_info = array();
   $chart_modules = Drupal::moduleHandler()->getImplementations('charts_info');
   foreach ($chart_modules as $module) {
@@ -252,8 +240,8 @@ function charts_info()
  * @param $library
  * @return bool|mixed
  */
-function chart_get_library($library)
-{
+function chart_get_library($library) {
+
   $info = charts_info();
   return $info[$library] ? $info[$library] : FALSE;
 }
@@ -263,8 +251,8 @@ function chart_get_library($library)
  *
  * @see hook_charts_type_info()
  */
-function charts_type_info()
-{
+function charts_type_info() {
+
   $charts_type_info = Drupal::moduleHandler()->invokeAll('charts_type_info');
 
   foreach ($charts_type_info as $chart_type => $chart_type_info) {
@@ -353,8 +341,7 @@ function charts_trim_array(&$array) {
  * Recursive function to cast integer values.
  * @param $element
  */
-function charts_cast_element_integer_values(&$element)
-{
+function charts_cast_element_integer_values(&$element) {
   // Cast options to integers to avoid redundant library fixing problems.
   $integer_options = array(
     // Chart options.
@@ -364,14 +351,12 @@ function charts_cast_element_integer_values(&$element)
     '#legend_font_size',
     '#width',
     '#height',
-
     // Axis options.
     '#title_font_size',
     '#labels_font_size',
     '#labels_rotation',
     '#max',
     '#min',
-
     // Data options.
     '#decimal_count',
   );
