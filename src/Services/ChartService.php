@@ -21,7 +21,8 @@ class ChartService implements ChartServiceInterface
     public function __construct()
     {
         /*Currently set to default library Highcharts but might need to be changed*/
-        $this->librarySelected = 'highcharts';
+        //$this->librarySelected = 'c3';
+        drupal_set_message(' constructor called ***');
     }
 
     /**

@@ -81,11 +81,15 @@ function theme_views_view_charts($variables){
     $seriesData = array_merge($seriesData, $seriesDataAttachment);
 
     $service = \Drupal::service('charts.charts_service');
-    $service->setLibrarySelected($view->style_plugin->options['library']);
+    $library = $service->getLibrarySelected();
+    drupal_set_message($library.' charts.module');
+
+    //$service->setLibrarySelected($view->style_plugin->options['library']);
 
     //Handles the toggling from one library to another
     switch($library){
         case 'google':
+
             $googleData = renderGoogleCharts($categories, $seriesData);
             $googleOptions = createGoogleChartsOptions($options, $seriesData);
             $googleChartType = createGoogleChartType($options);
@@ -100,6 +104,7 @@ function theme_views_view_charts($variables){
             return '<div ' . $attributes . '></div>';
 
         case 'highcharts':
+
             $highchart = renderHigchartsCharts($options, $categories, $seriesData);
             $highchartAttributes = array(
                 'class' => 'charts-highchart',
@@ -109,12 +114,14 @@ function theme_views_view_charts($variables){
             return '<div ' . $attributes . '></div>';
 
         case 'c3':
+
             $c3 = renderC3Charts($options, $categories, $seriesData);
             $c3chartAttributes = array(
                 'class' => 'charts-c3',
                 'data-chart' => json_encode($c3)
             );
             $c3attributes = new Attribute($c3chartAttributes);
+
             return '<div ' . $c3attributes . ' id="chart"></div>';
 
         default:
