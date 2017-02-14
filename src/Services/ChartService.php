@@ -21,7 +21,7 @@ class ChartService implements ChartServiceInterface
     public function __construct()
     {
         /*Currently set to default library Highcharts but might need to be changed*/
-        $this->librarySelected = 'c3';
+        //$this->librarySelected = 'c3';
     }
 
     /**

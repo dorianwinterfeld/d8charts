@@ -41,13 +41,6 @@ class ChartsPluginStyleChart extends StylePluginBase {
   protected $usesGrouping = FALSE;
   protected $usesFields = TRUE;
   protected $usesRowPlugin = TRUE;
-    private $chartService;
-
- public function __construct(array $configuration, $plugin_id, $plugin_definition)
- {
-     parent::__construct($configuration, $plugin_id, $plugin_definition);
-     $this->chartService = \Drupal::service('charts.charts_service');
- }
 
     /**
    * Set default options.
@@ -144,7 +137,6 @@ class ChartsPluginStyleChart extends StylePluginBase {
   public function validate() {
 
       $errors = parent::validate();
-      
       $dataFields = $this->options['data_fields'];
       $dataFieldsValueState = array();
       $dataFieldsCounter = 0;
@@ -320,7 +312,6 @@ class ChartsPluginStyleChart extends StylePluginBase {
       }
     }
 
-     // $this->chartService->setLibrarySelected($this->options['library']);
     // Check if this display has any children charts that should be applied
     // on top of it.
     /*if($this->pluginDefinition['id'] === 'chart'

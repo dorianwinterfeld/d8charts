@@ -15,6 +15,7 @@ function charts_page_attachments(&$attachments)
 {
     $service = \Drupal::service('charts.charts_service');
     $library = $service->getLibrarySelected();
+    drupal_set_message($library.' charts_page_attachments');
     $attachments['#attached']['library'][] = 'charts/charts';
 
     /*Depending on the library selected, javescript files associated to the selected library will only be attached to
