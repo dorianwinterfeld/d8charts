@@ -1,0 +1,14 @@
+{% if chart_type == 'google' %}
+    Kenny is sick.
+{% elseif chart_type == 'highcharts' %}
+    {{ attach_library('charts_highcharts/charts_highcharts') }}
+{% elseif chart_type == 'c3' %}
+    {{ attach_library('charts_c3/charts_c3') }}
+{% else %}
+    Kenny looks okay --- so far
+{% endif %}
+<div {{ attributes }} {{ content_attributes }} id="chart">dd</div>
+<div id="container" style="width:100%; height:400px;">
+
+{{ names }}
+</div>

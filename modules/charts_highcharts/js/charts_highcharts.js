@@ -7,15 +7,21 @@
 
   Drupal.behaviors.chartsHighcharts = {
     attach: function(context, settings) {
-      var config = $('.charts-highchart').attr('data-chart');
-      $('.charts-highchart').highcharts(JSON.parse(config));
-      $('.charts-highchart').once('charts-highchart', function() {
-        if ($(this).attr('data-chart')) {
 
-          var config = JSON.parse($(this).attr('data-chart'));
-          $(this).highcharts(config);
-        }
-      })
+      var config = $('.charts-highchart').attr('data-chart');
+
+      if (config !== undefined){
+        var config = $('.charts-highchart').attr('data-chart');
+        $('.charts-highchart').highcharts(JSON.parse(config));
+        $('.charts-highchart', context).once('.charts-highchart', function() {
+          /*$(this).highcharts(config);
+          if ($(this).attr('data-chart')) {
+
+            var config = JSON.parse($(this).attr('data-chart'));
+            $(this).highcharts(config);
+          }*/
+        });
+      }
     }
   };
 } (jQuery));

@@ -11,17 +11,17 @@
  *
  * @param $attachments
  */
-function charts_page_attachments(&$attachments)
+/*function charts_page_attachments(&$attachments)
 {
     $service = \Drupal::service('charts.charts_service');
     $library = $service->getLibrarySelected();
     drupal_set_message($library.' charts_page_attachments');
-    $attachments['#attached']['library'][] = 'charts/charts';
+    $attachments['#attached']['library'][] = 'charts/charts';*/
 
     /*Depending on the library selected, javescript files associated to the selected library will only be attached to
     the template.*/
 
-    switch($library){
+/*    switch($library){
         case 'google':
             $attachments['#attached']['library'][] = 'charts_google/charts_google';
             $attachments['#attached']['library'][] = 'charts_google/google';
@@ -38,4 +38,4 @@ function charts_page_attachments(&$attachments)
         default:
             drupal_set_message($library.' default');
     }
-}
+}*/
