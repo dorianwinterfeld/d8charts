@@ -179,7 +179,7 @@ function template_preprocess_views_view_charts(&$variables){
                 'google-options'=> json_encode($googleOptions),
                 'google-chart-type' => json_encode($googleChartType),
             );
-            $attributes = new Attribute($googleAttributes);
+            //$attributes = new Attribute($googleAttributes);
             $variables['chart_type'] = 'google';
             //return '<div ' . $attributes . '></div>';
         break;
