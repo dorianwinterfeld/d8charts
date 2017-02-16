@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mmwebaze
- * Date: 12/28/2016
- * Time: 9:28 AM
- */
 
 namespace Drupal\charts\Services;
 /**
@@ -17,13 +11,6 @@ namespace Drupal\charts\Services;
 class ChartService implements ChartServiceInterface
 {
     private $librarySelected;
-
-    public function __construct()
-    {
-        /*Currently set to default library Highcharts but might need to be changed*/
-        //$this->librarySelected = 'c3';
-        drupal_set_message(' constructor called ***');
-    }
 
     /**
      * Gets the currently selected Library

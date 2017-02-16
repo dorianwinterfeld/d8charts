@@ -41,15 +41,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
   protected $usesGrouping = FALSE;
   protected $usesFields = TRUE;
   protected $usesRowPlugin = TRUE;
-    private $chartService;
 
- public function __construct(array $configuration, $plugin_id, $plugin_definition)
- {
-     parent::__construct($configuration, $plugin_id, $plugin_definition);
-     drupal_set_message($this->chartService.' empty');
-     $this->chartService = \Drupal::service('charts.charts_service');
-     drupal_set_message(json_encode($this->chartService).'not empty');
- }
 
     /**
    * Set default options.
@@ -82,7 +74,6 @@ class ChartsPluginStyleChart extends StylePluginBase {
    */
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
     parent::buildOptionsForm($form, $form_state);
-      $this->chartService = \Drupal::service('charts.charts_service');
     $handlers = $this->displayHandler->getHandlers('field');
     if (empty($handlers)) {
       $form['error_markup'] = array(
@@ -108,24 +99,24 @@ class ChartsPluginStyleChart extends StylePluginBase {
     $form = charts_settings_form($form, $this->options, $field_options, array('style_options'));
 
     // Reduce the options if this is a chart extension.
-    if (empty($this->displayHandler->getAttachedDisplays())) {
-      $form['type']['#description'] = empty($form['type']['#description']) ? '' : $form['type']['#description'] . ' ';
-      $form['type']['#description'] .= t('This chart will be combined with the parent display "@display_title",
-          which is a "@type" chart. Not all chart types may be combined. Selecting a different chart type than
-          the parent may cause errors.' //,
-      //    array('@display_title' => $parent_display->display_title, '@type' => $parent_chart_type['label'])
-      );
-      $form['fields']['label_field']['#disabled'] = TRUE;
-      $form['display']['#access'] = FALSE;
-      $form['xaxis']['#access'] = FALSE;
-      if ($this->displayHandler->options['inherit_yaxis']) {
-        $form['yaxis']['#access'] = FALSE;
-      }
-      else {
-        $form['yaxis']['#title'] = t('Secondary axis');
-        $form['yaxis']['#attributes']['class'] = array();
-      }
-    }
+//    if (empty($this->displayHandler->getAttachedDisplays())) {
+//      $form['type']['#description'] = empty($form['type']['#description']) ? '' : $form['type']['#description'] . ' ';
+//      $form['type']['#description'] .= t('This chart will be combined with the parent display "@display_title",
+//          which is a "@type" chart. Not all chart types may be combined. Selecting a different chart type than
+//          the parent may cause errors.' //,
+//      //    array('@display_title' => $parent_display->display_title, '@type' => $parent_chart_type['label'])
+//      );
+//      $form['fields']['label_field']['#disabled'] = TRUE;
+//      $form['display']['#access'] = FALSE;
+//      $form['xaxis']['#access'] = FALSE;
+//      if ($this->displayHandler->options['inherit_yaxis']) {
+//        $form['yaxis']['#access'] = FALSE;
+//      }
+//      else {
+//        $form['yaxis']['#title'] = t('Secondary axis');
+//        $form['yaxis']['#attributes']['class'] = array();
+//      }
+//    }
   }
 
   /**
@@ -144,11 +135,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
    * Empty array if the display is valid; an array of error strings if it is not.
    */
   public function validate() {
-
       $errors = parent::validate();
-
-      $this->chartService->setLibrarySelected($this->options['library']);
-      drupal_set_message(json_encode($this->options['library']).' charts plugin');
       $dataFields = $this->options['data_fields'];
       $dataFieldsValueState = array();
       $dataFieldsCounter = 0;
@@ -323,8 +310,8 @@ class ChartsPluginStyleChart extends StylePluginBase {
         }
       }
     }
-
-      $this->chartService->setLibrarySelected($this->options['library']);
+    $chartService = \Drupal::service('charts.charts_service');
+    $chartService->setLibrarySelected($this->options['library']);
     // Check if this display has any children charts that should be applied
     // on top of it.
     /*if($this->pluginDefinition['id'] === 'chart'
@@ -366,9 +353,9 @@ class ChartsPluginStyleChart extends StylePluginBase {
       }
 
       $subchart = $subview->style_plugin->render();
-        array_push($attachments, $subview); //add attachment views to attachments array
-        $service = \Drupal::service('charts.charts_attachment');
-        $service->setAttachmentViews($attachments);
+      array_push($attachments, $subview); //add attachment views to attachments array
+      $service = \Drupal::service('charts.charts_attachment');
+      $service->setAttachmentViews($attachments);
       /*$subview->postExecute();
       unset($subview);*/
 
