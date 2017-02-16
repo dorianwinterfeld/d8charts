@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: mmwebaze
- * Date: 2/4/2017
- * Time: 11:30 AM
- * Utility class with various static functions for manipulating views related fields and values
- */
 namespace Drupal\charts\Util;
 
 class Util

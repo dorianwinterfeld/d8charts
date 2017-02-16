@@ -163,8 +163,8 @@ function template_preprocess_views_view_charts(&$variables){
     $seriesData = $data[1];
     $categories = array_merge($categories, $categoriesAttachment);
     $seriesData = array_merge($seriesData, $seriesDataAttachment);
-    $service = \Drupal::service('charts.charts_service');
-    $service->setLibrarySelected($view->style_plugin->options['library']);
+    /*$service = \Drupal::service('charts.charts_service');
+    $service->setLibrarySelected($view->style_plugin->options['library']);*/
     $variables['names'] = 'Michael Mwebaze';
     //Handles the toggling from one library to another
     switch($library){
@@ -181,6 +181,10 @@ function template_preprocess_views_view_charts(&$variables){
             );
             //$attributes = new Attribute($googleAttributes);
             $variables['chart_type'] = 'google';
+            $variables['attributes']['class'][0] = 'chart-google';
+            $variables['content_attributes']['data-chart'][] = $googleData;
+            $variables['attributes']['google-options'][1] = json_encode($googleOptions);
+            $variables['attributes']['google-chart-type'][2] = json_encode($googleChartType);
             //return '<div ' . $attributes . '></div>';
         break;
 

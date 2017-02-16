@@ -1,5 +1,5 @@
 {% if chart_type == 'google' %}
-    Kenny is sick.
+    {{ attach_library('charts_google/charts_google') }}
 {% elseif chart_type == 'highcharts' %}
     {{ attach_library('charts_highcharts/charts_highcharts') }}
 {% elseif chart_type == 'c3' %}

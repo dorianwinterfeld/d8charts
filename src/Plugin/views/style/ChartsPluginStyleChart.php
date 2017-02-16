@@ -321,6 +321,8 @@ class ChartsPluginStyleChart extends StylePluginBase {
 
     $children_displays = $this->getChildrenChartDisplays();
     $attachments = array(); //contains the different subviews of the attachments
+      $service = \Drupal::service('charts.charts_attachment');
+
     foreach ($children_displays as $child_display) {
       // If the user doesn't have access to the child display, skip.
       if (!$this->view->access($child_display)) {
@@ -354,8 +356,8 @@ class ChartsPluginStyleChart extends StylePluginBase {
 
       $subchart = $subview->style_plugin->render();
         array_push($attachments, $subview); //add attachment views to attachments array
-        $service = \Drupal::service('charts.charts_attachment');
-        $service->setAttachmentViews($attachments);
+
+
       /*$subview->postExecute();
       unset($subview);*/
 
@@ -383,7 +385,8 @@ class ChartsPluginStyleChart extends StylePluginBase {
         }
       }
     }
-
+      $service->setAttachmentViews($attachments);
+      drupal_set_message(json_encode($attachments));
     // Print the chart.
     return $chart;
   }
