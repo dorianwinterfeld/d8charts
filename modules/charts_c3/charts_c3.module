@@ -51,6 +51,13 @@ function charts_c3_render_charts($options, $categories = array(), $seriesData = 
         array_push($c3Data, $categories);
         $chartData->setColumns($c3Data);
     }
+    else if ($options['type'] == 'column'){
+      $chartData->setType('bar');
+      $chartAxis->setRotated(false);
+      array_unshift($categories, 'x');
+      array_push($c3Data, $categories);
+      $chartData->setColumns($c3Data);
+    }
     else
         $chartData->setColumns($c3Data);
 

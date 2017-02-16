@@ -72,8 +72,8 @@ function theme_views_view_charts($variables){
     $seriesData = $data[1];
     $categories = array_merge($categories, $categoriesAttachment);
     $seriesData = array_merge($seriesData, $seriesDataAttachment);
-    $service = \Drupal::service('charts.charts_service');
-    $service->setLibrarySelected($view->style_plugin->options['library']);
+    /*$service = \Drupal::service('charts.charts_service');
+    $service->setLibrarySelected($view->style_plugin->options['library']);*/
 
     //Handles the toggling from one library to another
     switch($library){
