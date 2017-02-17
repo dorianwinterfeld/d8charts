@@ -8,20 +8,12 @@
   Drupal.behaviors.chartsHighcharts = {
     attach: function(context, settings) {
 
-      var config = $('.charts-highchart').attr('data-chart');
-
-      if (config !== undefined){
-        var config = $('.charts-highchart').attr('data-chart');
-        $('.charts-highchart').highcharts(JSON.parse(config));
-        $('.charts-highchart', context).once('.charts-highchart', function() {
-          /*$(this).highcharts(config);
-          if ($(this).attr('data-chart')) {
-
-            var config = JSON.parse($(this).attr('data-chart'));
-            $(this).highcharts(config);
-          }*/
-        });
-      }
+      $('.charts-highchart').once().each(function(){
+        if ($(this).attr('data-chart')) {
+          var highcharts = $(this).attr('data-chart');
+          $(this).highcharts(JSON.parse(highcharts));
+        }
+      });
     }
   };
 } (jQuery));

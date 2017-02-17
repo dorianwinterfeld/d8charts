@@ -8,7 +8,7 @@
         attach: function(context, settings) {
             google.charts.load('current', {'packages':['corechart']});
 
-            var dataTable = 'dfkdgjdgd';
+            var dataTable;
             var googleChartOptions;
             var googleChartType;
 

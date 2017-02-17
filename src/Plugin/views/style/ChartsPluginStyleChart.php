@@ -99,7 +99,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
     $form = charts_settings_form($form, $this->options, $field_options, array('style_options'));
 
     // Reduce the options if this is a chart extension.
-    if (empty($this->displayHandler->getAttachedDisplays())) {
+    /*if (empty($this->displayHandler->getAttachedDisplays())) {
       $form['type']['#description'] = empty($form['type']['#description']) ? '' : $form['type']['#description'] . ' ';
       $form['type']['#description'] .= t('This chart will be combined with the parent display "@display_title",
           which is a "@type" chart. Not all chart types may be combined. Selecting a different chart type than
@@ -116,7 +116,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
         $form['yaxis']['#title'] = t('Secondary axis');
         $form['yaxis']['#attributes']['class'] = array();
       }
-    }
+    }*/
   }
 
   /**
