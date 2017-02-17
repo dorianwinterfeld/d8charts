@@ -386,7 +386,6 @@ class ChartsPluginStyleChart extends StylePluginBase {
       }
     }
       $service->setAttachmentViews($attachments);
-      drupal_set_message(json_encode($attachments));
     // Print the chart.
     return $chart;
   }

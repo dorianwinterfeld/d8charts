@@ -5,6 +5,7 @@
  */
 use Drupal\charts_google\Settings\Google\GoogleOptions;
 use Drupal\charts_google\Settings\Google\ChartType;
+use Drupal\charts_google\Settings\Google\ChartArea;
 
 /**
  * Implements hook_charts_info().
@@ -64,6 +65,9 @@ function createGoogleChartsOptions($options, $seriesData = array()){
 
     $googleOptions = new GoogleOptions();
     $googleOptions->setTitle($options['title']);
+    $chartArea = new ChartArea();
+    $chartArea->setWidth(400);
+    //$googleOptions->setChartArea($chartArea);
 
     $seriesColors = array();
     for ($i = 0; $i < count($seriesData); $i++) {

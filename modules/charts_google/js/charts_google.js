@@ -8,35 +8,23 @@
         attach: function(context, settings) {
             google.charts.load('current', {'packages':['corechart']});
 
-            $('.chart-google', context).once('chartsGooglecharts', function() {
-                var data = $(this).data();
-                var myDataArray = [];
-                $.each(data, function(key, val){
-                    myDataArray[key] = val;
-                });
-                console.log(data);
-            });
-            var str = $('.chart-google', context).once('chartsGooglecharts').attr('data-chart');
-            console.log(str);
-            //google.charts.setOnLoadCallback(drawChart);
-          /*  var dataTable = $('.chart-google').attr('data-chart');
-            var googleChartOptions = $('.chart-google').attr('google-options');
-            var googleChartType = $('.chart-google').attr('google-chart-type');
+            var dataTable = 'dfkdgjdgd';
+            var googleChartOptions;
+            var googleChartType;
 
-            if (dataTable !== undefined){
-                console.debug(dataTable+' dataTable')
-                $('.chart-google', context).once('.chart-google', function() {});
-            }
-            if (googleChartOptions !== undefined){
-                console.debug(googleChartOptions+' googleChartOptions')
-            }
-            if (googleChartType !== undefined){
-                console.debug(googleChartType+' googleChartType')
-            }
-*/
+            $('.chart-google').once().each(function(){
+                if ($(this).attr('data-chart')) {
+                    dataTable = $(this).attr('data-chart');
+                    googleChartOptions = $(this).attr('google-options');
+                    googleChartType = $(this).attr('google-chart-type');
+                    google.charts.setOnLoadCallback(drawChart);
+                }
+            });
+
 
             function drawChart() {
                 var data = google.visualization.arrayToDataTable(JSON.parse(dataTable));
+                console.debug(data)
                 var googleChartTypeObject = JSON.parse(googleChartType);
                 var googleChartTypeFormatted = googleChartTypeObject.type;
                 switch(googleChartTypeFormatted) {
@@ -59,7 +47,6 @@
                         var chart = new google.visualization.LineChart(document.getElementById('chart'));
                 }
                 chart.draw(data, JSON.parse(googleChartOptions));
-
             }
         }
     }
