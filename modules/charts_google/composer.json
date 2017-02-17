@@ -1,0 +1,40 @@
+{
+  "name": "charts/google",
+  "version": "0.0.1",
+  "require":{
+    "phpclasses/assets": "*",
+    "google/google": "*"
+  },
+  "repositories":[
+    {
+      "type": "composer",
+      "url": "https://www.phpclasses.org/"
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "google/google",
+        "version": "45",
+        "type": "google",
+        "dist": {
+          "url": "https://www.gstatic.com/charts/loader.js",
+          "type": "file"
+        }
+      }
+    }
+  ],
+  "extra": {
+    "assets": {
+      "actions": [
+        {
+          "type": "copy",
+          "target": "js",
+          "pattern": "\\.js$"
+        }
+      ],
+      "packages": {
+        "google/google":"*"
+      }
+    }
+  }
+}

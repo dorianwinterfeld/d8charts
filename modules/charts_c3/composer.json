@@ -1,0 +1,40 @@
+{
+  "name": "charts/cthree",
+  "version": "0.0.1",
+  "require":{
+    "phpclasses/assets": "*",
+    "cthree/cthree": "*"
+  },
+  "repositories":[
+    {
+      "type": "composer",
+      "url": "https://www.phpclasses.org/"
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "cthree/cthree",
+        "version": "0.4.11",
+        "type": "cthree",
+        "dist": {
+          "url": "https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js",
+          "type": "file"
+        }
+      }
+    }
+  ],
+  "extra": {
+    "assets": {
+      "actions": [
+        {
+          "type": "copy",
+          "target": "js",
+          "pattern": "\\.js$"
+        }
+      ],
+      "packages": {
+        "cthree/cthree":"*"
+      }
+    }
+  }
+}

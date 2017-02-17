@@ -1,0 +1,40 @@
+{
+  "name": "charts/highcharts",
+  "version": "0.0.1",
+  "require":{
+    "phpclasses/assets": "*",
+    "highcharts/highcharts": "*"
+  },
+  "repositories":[
+    {
+      "type": "composer",
+      "url": "https://www.phpclasses.org/"
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "highcharts/highcharts",
+        "version": "5.0.7",
+        "type": "highcharts",
+        "dist": {
+          "url": "https://code.highcharts.com/highcharts.js",
+          "type": "file"
+        }
+      }
+    }
+  ],
+  "extra": {
+    "assets": {
+      "actions": [
+        {
+          "type": "copy",
+          "target": "js",
+          "pattern": "\\.js$"
+        }
+      ],
+      "packages": {
+        "highcharts/highcharts": "*"
+      }
+    }
+  }
+}
