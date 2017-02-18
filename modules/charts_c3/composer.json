@@ -1,19 +1,28 @@
 {
-  "name": "charts/cthree",
+  "name": "charts_cthree",
   "version": "0.0.1",
   "require":{
-    "phpclasses/assets": "*",
-    "cthree/cthree": "*"
+    "dthree": "*",
+    "cthree": "*",
+    "cthree/css":"*"
   },
   "repositories":[
     {
-      "type": "composer",
-      "url": "https://www.phpclasses.org/"
+      "type": "package",
+      "package": {
+        "name": "dthree",
+        "version": "3",
+        "type": "dthree",
+        "dist": {
+          "url": "https://d3js.org/d3.v3.min.js",
+          "type": "file"
+        }
+      }
     },
     {
       "type": "package",
       "package": {
-        "name": "cthree/cthree",
+        "name": "cthree",
         "version": "0.4.11",
         "type": "cthree",
         "dist": {
@@ -21,19 +30,26 @@
           "type": "file"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "cthree/css",
+        "version": "0.4.11",
+        "type": "css",
+        "dist": {
+          "url": "https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css",
+          "type": "file"
+        }
+      }
     }
   ],
   "extra": {
     "assets": {
-      "actions": [
-        {
-          "type": "copy",
-          "target": "js",
-          "pattern": "\\.js$"
-        }
-      ],
       "packages": {
-        "cthree/cthree":"*"
+        "dthree":"*",
+        "cthree":"*",
+        "cthree/css":"*"
       }
     }
   }

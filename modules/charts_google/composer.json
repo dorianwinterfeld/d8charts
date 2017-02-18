@@ -1,19 +1,14 @@
 {
-  "name": "charts/google",
+  "name": "charts_google",
   "version": "0.0.1",
   "require":{
-    "phpclasses/assets": "*",
-    "google/google": "*"
+    "google": "*"
   },
   "repositories":[
     {
-      "type": "composer",
-      "url": "https://www.phpclasses.org/"
-    },
-    {
       "type": "package",
       "package": {
-        "name": "google/google",
+        "name": "google",
         "version": "45",
         "type": "google",
         "dist": {
@@ -33,7 +28,7 @@
         }
       ],
       "packages": {
-        "google/google":"*"
+        "google":"*"
       }
     }
   }

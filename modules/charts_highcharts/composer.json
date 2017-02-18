@@ -1,19 +1,14 @@
 {
-  "name": "charts/highcharts",
+  "name": "charts_highcharts",
   "version": "0.0.1",
   "require":{
-    "phpclasses/assets": "*",
-    "highcharts/highcharts": "*"
+    "highcharts": "*"
   },
   "repositories":[
     {
-      "type": "composer",
-      "url": "https://www.phpclasses.org/"
-    },
-    {
       "type": "package",
       "package": {
-        "name": "highcharts/highcharts",
+        "name": "highcharts",
         "version": "5.0.7",
         "type": "highcharts",
         "dist": {
@@ -33,7 +28,7 @@
         }
       ],
       "packages": {
-        "highcharts/highcharts": "*"
+        "highcharts": "*"
       }
     }
   }

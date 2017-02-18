@@ -24,7 +24,6 @@
 
             function drawChart() {
                 var data = google.visualization.arrayToDataTable(JSON.parse(dataTable));
-                console.debug(data)
                 var googleChartTypeObject = JSON.parse(googleChartType);
                 var googleChartTypeFormatted = googleChartTypeObject.type;
                 switch(googleChartTypeFormatted) {
