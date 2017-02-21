@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mmwebaze
- * Date: 2/7/2017
- * Time: 4:04 PM
- */
 
 namespace Drupal\charts_c3\Settings\CThree;
 
