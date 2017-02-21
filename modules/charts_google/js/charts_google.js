@@ -4,13 +4,24 @@
 (function ($) {
     'use strict';
 
-    Drupal.behaviors.chartsHighcharts = {
+    Drupal.behaviors.chartsGooglecharts = {
         attach: function(context, settings) {
             google.charts.load('current', {'packages':['corechart']});
-            google.charts.setOnLoadCallback(drawChart);
-            var dataTable = $('.chart-google').attr('data-chart');
-            var googleChartOptions = $('.chart-google').attr('google-options');
-            var googleChartType = $('.chart-google').attr('google-chart-type');
+
+            var dataTable;
+            var googleChartOptions;
+            var googleChartType;
+
+            $('.chart-google').once().each(function(){
+                if ($(this).attr('data-chart')) {
+                    dataTable = $(this).attr('data-chart');
+                    googleChartOptions = $(this).attr('google-options');
+                    googleChartType = $(this).attr('google-chart-type');
+                    google.charts.setOnLoadCallback(drawChart);
+                }
+            });
+
+
             function drawChart() {
                 var data = google.visualization.arrayToDataTable(JSON.parse(dataTable));
                 var googleChartTypeObject = JSON.parse(googleChartType);
@@ -35,7 +46,6 @@
                         var chart = new google.visualization.LineChart(document.getElementById('chart'));
                 }
                 chart.draw(data, JSON.parse(googleChartOptions));
-
             }
         }
     }
