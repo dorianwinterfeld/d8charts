@@ -39,12 +39,12 @@ class ChartsConfigForm extends ConfigFormBase {
 
         $field_options = array();
         $url = Url::fromRoute('views_ui.add');
-        $link = Link::fromTextAndUrl($this->$this->t('create a new view'), $url)->toRenderable();
+        $link = Link::fromTextAndUrl($this->t('create a new view'), $url)->toRenderable();
 
         // Add help.
         $form['help'] = array(
             '#type' => 'markup',
-            '#markup' => '<p>' . $this->$this->t('The settings on this page are used to set <strong>default</strong> settings. They do not affect existing charts. To make a new chart, <a href="!views">create a new view</a> and select the display format of "Chart".', array('!views' => $link['url'])) . '</p>',
+            '#markup' => '<p>' . $this->t('The settings on this page are used to set <strong>default</strong> settings. They do not affect existing charts. To make a new chart, <a href="!views">create a new view</a> and select the display format of "Chart".', array('!views' => $link['url'])) . '</p>',
             '#weight' => -100,
         );
         // Reuse the global settings form for defaults, but remove JS classes.
