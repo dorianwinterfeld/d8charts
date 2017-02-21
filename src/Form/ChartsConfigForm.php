@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mmwebaze
- * Date: 12/19/2016
- * Time: 1:07 PM
- */
 
 namespace Drupal\charts\Form;
 
