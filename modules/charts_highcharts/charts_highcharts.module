@@ -38,45 +38,45 @@ function charts_highcharts_charts_info() {
  * @param array $seriesData
  * @return Highcharts object to be used by highcharts javascripts visualization framework
  */
-function charts_highcharts_render_charts($options, $categories = array(), $seriesData = array()){
-    $chart = new ChartType();
-    $chart->setType($options['type']);
-    $chartTitle = new ChartTitle();
-    $chartTitle->setText($options['title']);
-    $chartXaxis = new Xaxis();
-    $chartLabels = new ChartLabel();
-    $chartLabels->setRotation($options['xaxis_labels_rotation']);
-    $chartXaxis->setCategories($categories);
-    $chartTitle->setText($options['title']);
-    $chartXaxis->setTitle($chartTitle);
-    $chartXaxis->setLabels($chartLabels);
-    $yaxisLabels = new YaxisLabel();
-    $chartYaxis = new Yaxis();
-    $yAxisTitle = new YaxisTitle();
-    $yAxisTitle->setText($options['yaxis_title']);
-    $chartYaxis->setMin($options['yaxis_min']);
-    $chartYaxis->max = $options['yaxis_max'];
-    $chartYaxis->setLabels($yaxisLabels);
-    $chartYaxis->setTitle($yAxisTitle);
-    $dataLabelStatus = new DataLabelStatus();
-    $dataLabels = new DataLabels();
-    $dataLabels->setDataLabels($dataLabelStatus);
-    $barPlotOptns = new PlotOptions();
-    $barPlotOptns->setBar($dataLabels);
-    $chartTooltip = new Tooltip();
-    $chartCredits = new ChartCredits();
-    $chartLegend = new ChartLegend();
+function charts_highcharts_render_charts($options, $categories = array(), $seriesData = array()) {
+  $chart = new ChartType();
+  $chart->setType($options['type']);
+  $chartTitle = new ChartTitle();
+  $chartTitle->setText($options['title']);
+  $chartXaxis = new Xaxis();
+  $chartLabels = new ChartLabel();
+  $chartLabels->setRotation($options['xaxis_labels_rotation']);
+  $chartXaxis->setCategories($categories);
+  $chartTitle->setText($options['title']);
+  $chartXaxis->setTitle($chartTitle);
+  $chartXaxis->setLabels($chartLabels);
+  $yaxisLabels = new YaxisLabel();
+  $chartYaxis = new Yaxis();
+  $yAxisTitle = new YaxisTitle();
+  $yAxisTitle->setText($options['yaxis_title']);
+  $chartYaxis->setMin($options['yaxis_min']);
+  $chartYaxis->max = $options['yaxis_max'];
+  $chartYaxis->setLabels($yaxisLabels);
+  $chartYaxis->setTitle($yAxisTitle);
+  $dataLabelStatus = new DataLabelStatus();
+  $dataLabels = new DataLabels();
+  $dataLabels->setDataLabels($dataLabelStatus);
+  $barPlotOptns = new PlotOptions();
+  $barPlotOptns->setBar($dataLabels);
+  $chartTooltip = new Tooltip();
+  $chartCredits = new ChartCredits();
+  $chartLegend = new ChartLegend();
 
-    $highchart = new Highcharts();
-    $highchart->setChart($chart);
-    $highchart->setTitle($chartTitle);
-    $highchart->setXAxis($chartXaxis);
-    $highchart->setYAxis($chartYaxis);
-    $highchart->setTooltip($chartTooltip);
-    $highchart->setPlotOptions($barPlotOptns);
-    $highchart->setCredits($chartCredits);
-    $highchart->setLegend($chartLegend);
-    $highchart->setSeries($seriesData);
+  $highchart = new Highcharts();
+  $highchart->setChart($chart);
+  $highchart->setTitle($chartTitle);
+  $highchart->setXAxis($chartXaxis);
+  $highchart->setYAxis($chartYaxis);
+  $highchart->setTooltip($chartTooltip);
+  $highchart->setPlotOptions($barPlotOptns);
+  $highchart->setCredits($chartCredits);
+  $highchart->setLegend($chartLegend);
+  $highchart->setSeries($seriesData);
 
-    return $highchart;
+  return $highchart;
 }

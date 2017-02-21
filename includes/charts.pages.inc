@@ -58,7 +58,12 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
     '#options' => $type_options,
     '#required' => TRUE,
     '#weight' => -20,
-    '#attributes' => array('class' => array('chart-type-radios', 'container-inline')),
+    '#attributes' => array(
+      'class' => array(
+        'chart-type-radios',
+        'container-inline'
+      )
+    ),
     '#parents' => array_merge($parents, array('type')),
   );
 
@@ -78,16 +83,16 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
     $form['#theme'] = 'charts_settings_fields';
 
     $form['fields'] = array(
-        '#title' => t('Charts fields'),
-        '#type' => 'fieldset',
+      '#title' => t('Charts fields'),
+      '#type' => 'fieldset',
     );
     $form['fields']['label_field'] = array(
-        '#type' => 'radios',
-        '#title' => t('Label field'),
-        '#options' => $field_options + array('' => t('No label field')),
-        '#default_value' => isset($options['label_field']) ? $options['label_field'] : $first_field,
-        '#weight' => -10,
-        '#parents' => array_merge($parents, array('label_field')),
+      '#type' => 'radios',
+      '#title' => t('Label field'),
+      '#options' => $field_options + array('' => t('No label field')),
+      '#default_value' => isset($options['label_field']) ? $options['label_field'] : $first_field,
+      '#weight' => -10,
+      '#parents' => array_merge($parents, array('label_field')),
     );
     $form['fields']['table'] = array(
       '#type' => 'table',
@@ -97,36 +102,36 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
 
     $field_count = 0;
     foreach ($field_options as $field_name => $field_label) {
-        $form['fields']['table'][$field_count]['label_label'] = array(
-            '#type' => 'label',
-            '#title' => $field_label,
-            '#column' => 'one',
-        );
-        $form['fields']['table'][$field_count]['data_fields'][$field_name] = array(
-            '#type' => 'checkbox',
-            '#title' => $field_name,
-            '#default_value' => $options['data_fields'][$field_name],
-            '#return_value' => $field_name,
-            '#weight' => -9,
-            '#states' => array(
-                'disabled' => array(
-                    ':input[name="style_options[label_field]"]' => array('value' => $field_name),
-                ),
-            ),
-            '#parents' => array_merge($parents, array('data_fields', $field_name)),
-            '#column' => 'two',
-        );
-        $form['fields']['table'][$field_count]['field_colors'][$field_name] = array(
-            '#type' => 'textfield',
-            '#attributes' => array('TYPE' => 'color'),
-            '#size' => 10,
-            '#maxlength' => 7,
-            '#theme_wrappers' => array(),
-            '#default_value' => !empty($options['field_colors'][$field_name]) ? $options['field_colors'][$field_name] : $options['colors'][$field_count],
-            '#parents' => array_merge($parents, array('field_colors', $field_name)),
-            '#column' => 'three',
-        );
-        $field_count++;
+      $form['fields']['table'][$field_count]['label_label'] = array(
+        '#type' => 'label',
+        '#title' => $field_label,
+        '#column' => 'one',
+      );
+      $form['fields']['table'][$field_count]['data_fields'][$field_name] = array(
+        '#type' => 'checkbox',
+        '#title' => $field_name,
+        '#default_value' => $options['data_fields'][$field_name],
+        '#return_value' => $field_name,
+        '#weight' => -9,
+        '#states' => array(
+          'disabled' => array(
+            ':input[name="style_options[label_field]"]' => array('value' => $field_name),
+          ),
+        ),
+        '#parents' => array_merge($parents, array('data_fields', $field_name)),
+        '#column' => 'two',
+      );
+      $form['fields']['table'][$field_count]['field_colors'][$field_name] = array(
+        '#type' => 'textfield',
+        '#attributes' => array('TYPE' => 'color'),
+        '#size' => 10,
+        '#maxlength' => 7,
+        '#theme_wrappers' => array(),
+        '#default_value' => !empty($options['field_colors'][$field_name]) ? $options['field_colors'][$field_name] : $options['colors'][$field_count],
+        '#parents' => array_merge($parents, array('field_colors', $field_name)),
+        '#column' => 'three',
+      );
+      $field_count++;
 
     }
 
@@ -211,7 +216,13 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
   );
   $form['display']['dimensions']['width'] = array(
     '#type' => 'textfield',
-    '#attributes' => array('TYPE' => 'number', 'step' => 1, 'min' => 0, 'max' => 9999, 'placeholder' => t('auto')),
+    '#attributes' => array(
+      'TYPE' => 'number',
+      'step' => 1,
+      'min' => 0,
+      'max' => 9999,
+      'placeholder' => t('auto')
+    ),
     '#default_value' => $options['width'],
     '#size' => 8,
     '#suffix' => ' x ',
@@ -220,7 +231,13 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
   );
   $form['display']['dimensions']['height'] = array(
     '#type' => 'textfield',
-    '#attributes' => array('TYPE' => 'number', 'step' => 1, 'min' => 0, 'max' => 9999, 'placeholder' => t('auto')),
+    '#attributes' => array(
+      'TYPE' => 'number',
+      'step' => 1,
+      'min' => 0,
+      'max' => 9999,
+      'placeholder' => t('auto')
+    ),
     '#default_value' => $options['height'],
     '#size' => 8,
     '#suffix' => ' px',
@@ -276,7 +293,11 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
   );
   $form['yaxis']['minmax']['min'] = array(
     '#type' => 'textfield',
-    '#attributes' => array('TYPE' => 'number', 'max' => 999999, 'placeholder' => t('Minimum')),
+    '#attributes' => array(
+      'TYPE' => 'number',
+      'max' => 999999,
+      'placeholder' => t('Minimum')
+    ),
     '#default_value' => $options['yaxis_min'],
     '#size' => 12,
     '#parents' => array_merge($parents, array('yaxis_min')),
@@ -285,7 +306,11 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
   );
   $form['yaxis']['minmax']['max'] = array(
     '#type' => 'textfield',
-    '#attributes' => array('TYPE' => 'number', 'max' => 999999, 'placeholder' => t('Maximum')),
+    '#attributes' => array(
+      'TYPE' => 'number',
+      'max' => 999999,
+      'placeholder' => t('Maximum')
+    ),
     '#default_value' => $options['yaxis_max'],
     '#size' => 12,
     '#parents' => array_merge($parents, array('yaxis_max')),
@@ -308,7 +333,13 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
   $form['yaxis']['decimal_count'] = array(
     '#title' => t('Decimal count'),
     '#type' => 'textfield',
-    '#attributes' => array('TYPE' => 'number', 'step' => 1, 'min' => 0, 'max' => 20, 'placeholder' => t('auto')),
+    '#attributes' => array(
+      'TYPE' => 'number',
+      'step' => 1,
+      'min' => 0,
+      'max' => 20,
+      'placeholder' => t('auto')
+    ),
     '#default_value' => $options['yaxis_decimal_count'],
     '#size' => 5,
     '#description' => t('Enforce a certain number of decimal-place digits in displayed values.'),
@@ -340,7 +371,8 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
  * @return mixed
  */
 function charts_default_settings_form($form, $form_state) {
-  $defaults = \Drupal::state()->get('charts_default_settings', array());  //was variable_get
+  $defaults = \Drupal::state()
+    ->get('charts_default_settings', array());  //was variable_get
   $defaults += charts_default_settings();
   $field_options = array();
   $parents = array('charts_default_settings');
@@ -383,7 +415,8 @@ function charts_default_settings_form($form, $form_state) {
  * @param $form_state
  */
 function charts_default_settings_form_submit($form, $form_state) {
-  \Drupal::state()->set('charts_default_settings', $form_state['values']['charts_default_settings']); //was variable_set
+  \Drupal::state()
+    ->set('charts_default_settings', $form_state['values']['charts_default_settings']); //was variable_set
 }
 
 

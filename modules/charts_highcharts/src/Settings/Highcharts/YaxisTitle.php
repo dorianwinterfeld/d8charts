@@ -5,28 +5,25 @@ namespace Drupal\charts_highcharts\Settings\Highcharts;
 
 class YaxisTitle extends ChartTitle implements \JsonSerializable {
 
-    private $text;
+  private $text;
 
-    /**
-     * @return string
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
+  /**
+   * @return string
+   */
+  public function getText() {
+    return $this->text;
+  }
 
-    /**
-     * @param string $text
-     */
-    public function setText($text)
-    {
-        $this->text = $text;
-    }
+  /**
+   * @param string $text
+   */
+  public function setText($text) {
+    $this->text = $text;
+  }
 
-    public function jsonSerialize()
-    {
-        $vars = get_object_vars($this);
+  public function jsonSerialize() {
+    $vars = get_object_vars($this);
 
-        return $vars;
-    }
+    return $vars;
+  }
 }

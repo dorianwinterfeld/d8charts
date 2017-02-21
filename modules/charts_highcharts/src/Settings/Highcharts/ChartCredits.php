@@ -2,29 +2,26 @@
 
 namespace Drupal\charts_highcharts\Settings\Highcharts;
 
-class ChartCredits implements \JsonSerializable
-{
-    private $enabled = false;
+class ChartCredits implements \JsonSerializable {
+  private $enabled = FALSE;
 
-    /**
-     * @return boolean
-     */
-    public function isEnabled()
-    {
-        return $this->enabled;
-    }
+  /**
+   * @return boolean
+   */
+  public function isEnabled() {
+    return $this->enabled;
+  }
 
-    /**
-     * @param boolean $enabled
-     */
-    public function setEnabled($enabled)
-    {
-        $this->enabled = $enabled;
-    }
-    public function jsonSerialize()
-    {
-        $vars = get_object_vars($this);
+  /**
+   * @param boolean $enabled
+   */
+  public function setEnabled($enabled) {
+    $this->enabled = $enabled;
+  }
 
-        return $vars;
-    }
+  public function jsonSerialize() {
+    $vars = get_object_vars($this);
+
+    return $vars;
+  }
 }

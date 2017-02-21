@@ -2,29 +2,26 @@
 
 namespace Drupal\charts_highcharts\Settings\Highcharts;
 
-class ChartLabel implements \JsonSerializable
-{
-    private $rotation;
+class ChartLabel implements \JsonSerializable {
+  private $rotation;
 
-    /**
-     * @return mixed
-     */
-    public function getRotation()
-    {
-        return $this->rotation;
-    }
+  /**
+   * @return mixed
+   */
+  public function getRotation() {
+    return $this->rotation;
+  }
 
-    /**
-     * @param mixed $rotation
-     */
-    public function setRotation($rotation)
-    {
-        $this->rotation = (int)$rotation;
-    }
-    public function jsonSerialize()
-    {
-        $vars = get_object_vars($this);
+  /**
+   * @param mixed $rotation
+   */
+  public function setRotation($rotation) {
+    $this->rotation = (int) $rotation;
+  }
 
-        return $vars;
-    }
+  public function jsonSerialize() {
+    $vars = get_object_vars($this);
+
+    return $vars;
+  }
 }

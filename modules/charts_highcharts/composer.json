@@ -1,10 +1,10 @@
 {
   "name": "charts_highcharts",
   "version": "0.0.1",
-  "require":{
+  "require": {
     "highcharts": "*"
   },
-  "repositories":[
+  "repositories": [
     {
       "type": "package",
       "package": {

@@ -28,32 +28,32 @@ function charts_google_charts_info() {
  */
 function charts_google_render_charts($categories = array(), $seriesData = array()) {
 
-    $dataTable = array();
+  $dataTable = array();
 
-    $dataTableHeader = array();
-    for($r = 0; $r < count($seriesData); $r++ ) {
-        array_push($dataTableHeader, $seriesData[$r]['name']);
+  $dataTableHeader = array();
+  for ($r = 0; $r < count($seriesData); $r++) {
+    array_push($dataTableHeader, $seriesData[$r]['name']);
+  }
+
+  for ($j = 0; $j < count($categories); $j++) {
+    $rowDataTable = [];
+    for ($i = 0; $i < count($seriesData); $i++) {
+      $rowDataTabletemp = $seriesData[$i]['data'][$j];
+      array_push($rowDataTable, $rowDataTabletemp);
     }
+    array_unshift($rowDataTable, $categories[$j]);
+    array_push($dataTable, $rowDataTable);
+  }
 
-    for ($j = 0; $j < count($categories); $j++) {
-        $rowDataTable = [];
-        for ($i = 0; $i < count($seriesData); $i++) {
-            $rowDataTabletemp = $seriesData[$i]['data'][$j];
-            array_push($rowDataTable, $rowDataTabletemp);
-        }
-        array_unshift($rowDataTable, $categories[$j]);
-        array_push($dataTable, $rowDataTable);
-    }
+  $dataTableHeader = array();
+  for ($r = 0; $r < count($seriesData); $r++) {
+    array_push($dataTableHeader, $seriesData[$r]['name']);
+  }
 
-    $dataTableHeader = array();
-    for($r = 0; $r < count($seriesData); $r++ ) {
-        array_push($dataTableHeader, $seriesData[$r]['name']);
-    }
+  array_unshift($dataTableHeader, 'label');
+  array_unshift($dataTable, $dataTableHeader);
 
-    array_unshift($dataTableHeader, 'label');
-    array_unshift($dataTable, $dataTableHeader);
-
-    return json_encode($dataTable);
+  return json_encode($dataTable);
 }
 
 /**
@@ -61,27 +61,27 @@ function charts_google_render_charts($categories = array(), $seriesData = array(
  * @param array $seriesData
  * @return GoogleOptions object with chart options or settings to be used by google visualization framework
  */
-function createGoogleChartsOptions($options, $seriesData = array()){
+function createGoogleChartsOptions($options, $seriesData = array()) {
 
-    $googleOptions = new GoogleOptions();
-    $googleOptions->setTitle($options['title']);
-    $chartArea = new ChartArea();
-    $chartArea->setWidth(400);
-    //$googleOptions->setChartArea($chartArea);
+  $googleOptions = new GoogleOptions();
+  $googleOptions->setTitle($options['title']);
+  $chartArea = new ChartArea();
+  $chartArea->setWidth(400);
+  //$googleOptions->setChartArea($chartArea);
 
-    $seriesColors = array();
-    for ($i = 0; $i < count($seriesData); $i++) {
-        $seriesColor = $seriesData[$i]['color'];
-        array_push($seriesColors, $seriesColor);
-    }
+  $seriesColors = array();
+  for ($i = 0; $i < count($seriesData); $i++) {
+    $seriesColor = $seriesData[$i]['color'];
+    array_push($seriesColors, $seriesColor);
+  }
 
-    $googleOptions->setColors($seriesColors);
-    return $googleOptions;
+  $googleOptions->setColors($seriesColors);
+  return $googleOptions;
 }
 
-function createGoogleChartType($options){
-    $googleChartType = new ChartType();
-    $googleChartType->setChartType($options['type']);
+function createGoogleChartType($options) {
+  $googleChartType = new ChartType();
+  $googleChartType->setChartType($options['type']);
 
-    return $googleChartType;
+  return $googleChartType;
 }

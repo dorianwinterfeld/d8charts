@@ -2,65 +2,66 @@
 
 namespace Drupal\charts\Util;
 
-class Util
-{
-    public static function viewsData($view, $labelValues, $labelField, $color){
-        $data = array();
+class Util {
+  public static function viewsData($view, $labelValues, $labelField, $color) {
+    $data = array();
 
-        foreach ($view->result as $id => $row) {
-            $numberFields = 0;
-            $rowData = array();
-            foreach($labelValues as $fieldId => $rowDataValue) {
-                $rowData[$numberFields] = array(
-                    'value' => $view->field[$fieldId]->getValue($row),
-                    'label_field' => $view->field[$labelField]->getValue($row),
-                    //'label' => $view->field[$fieldId]->label(),
-                    'label' =>$view->display_handler->display['id'],
-                    'color' => $color[$fieldId],
-                );
-                $numberFields++;
-            }
-            $data[$id] = $rowData;
-        }
-
-        return $data;
+    foreach ($view->result as $id => $row) {
+      $numberFields = 0;
+      $rowData = array();
+      foreach ($labelValues as $fieldId => $rowDataValue) {
+        $rowData[$numberFields] = array(
+          'value' => $view->field[$fieldId]->getValue($row),
+          'label_field' => $view->field[$labelField]->getValue($row),
+          //'label' => $view->field[$fieldId]->label(),
+          'label' => $view->display_handler->display['id'],
+          'color' => $color[$fieldId],
+        );
+        $numberFields++;
+      }
+      $data[$id] = $rowData;
     }
-    /*
-     * Removes unselected fields
-     */
-    public static function removeUnselectedFields($valueField){
-        $fieldValues = array();
-        foreach($valueField as $key => $value) {
-            if (!empty($value)){
-                $fieldValues[$key] = $value;
-            }
-        }
-        return $fieldValues;
+
+    return $data;
+  }
+
+  /*
+   * Removes unselected fields
+   */
+  public static function removeUnselectedFields($valueField) {
+    $fieldValues = array();
+    foreach ($valueField as $key => $value) {
+      if (!empty($value)) {
+        $fieldValues[$key] = $value;
+      }
     }
-    /*
-     * Creates chart data to be used later by visualization frameworks
-     */
-    public static function createChartableData($data){
-        $chartData = array();
-        $categories = array();
-        $seriesData = array();
+    return $fieldValues;
+  }
 
-        for ($i = 0; $i < count($data[0]); $i++){
+  /*
+   * Creates chart data to be used later by visualization frameworks
+   */
+  public static function createChartableData($data) {
+    $chartData = array();
+    $categories = array();
+    $seriesData = array();
 
-            $seriesRowData = array('name' => '','color' => '', 'data' => array());
-            for($j = 0; $j < count($data); $j++) {
-                $categories[$j] = $data[$j][$i]['label_field'];
-                $seriesRowData['name'] = $data[$j][$i]['label'];
+    for ($i = 0; $i < count($data[0]); $i++) {
 
-                //$seriesRowData['name'] = $data[$j][$i]['label_field'];
-                $seriesRowData['color'] = $data[$j][$i]['color'];
-                array_push($seriesRowData['data'],((int)($data[$j][$i]['value'])));
-            }
-            array_push($seriesData, $seriesRowData);
-        }
-        $chartData[0] = $categories;
-        $chartData[1] = $seriesData;
+      $seriesRowData = array('name' => '', 'color' => '', 'data' => array());
+      for ($j = 0; $j < count($data); $j++) {
+        $categories[$j] = $data[$j][$i]['label_field'];
+        $seriesRowData['name'] = $data[$j][$i]['label'];
 
-        return $chartData;
+        //$seriesRowData['name'] = $data[$j][$i]['label_field'];
+        $seriesRowData['color'] = $data[$j][$i]['color'];
+        array_push($seriesRowData['data'], ((int) ($data[$j][$i]['value'])));
+      }
+      array_push($seriesData, $seriesRowData);
     }
+    $chartData[0] = $categories;
+    $chartData[1] = $seriesData;
+
+    return $chartData;
+  }
 }

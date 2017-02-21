@@ -3,25 +3,25 @@
 namespace Drupal\charts_highcharts\Settings\Highcharts;
 
 class Label implements \JsonSerializable {
-    private $rotation;
+  private $rotation;
 
-    /**
-     * @return mixed
-     */
-    public function getRotation() {
-        return $this->rotation;
-    }
+  /**
+   * @return mixed
+   */
+  public function getRotation() {
+    return $this->rotation;
+  }
 
-    /**
-     * @param mixed $rotation
-     */
-    public function setRotation($rotation) {
-        $this->rotation = $rotation;
-    }
+  /**
+   * @param mixed $rotation
+   */
+  public function setRotation($rotation) {
+    $this->rotation = $rotation;
+  }
 
-    public function jsonSerialize() {
-        $vars = get_object_vars($this);
+  public function jsonSerialize() {
+    $vars = get_object_vars($this);
 
-        return $vars;
-    }
+    return $vars;
+  }
 }
