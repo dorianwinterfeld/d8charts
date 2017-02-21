@@ -31,7 +31,7 @@ class ChartsConfigForm extends ConfigFormBase {
         $config = $this->configFactory->getEditable('charts.settings');
 
         $parents = array('charts_default_settings');
-        $default_config = $config->ge$this->t('charts_default_settings');
+        $default_config = $config->get('charts_default_settings');
         if ($default_config == NULL)
             $defaults = [] + $this->charts_default_settings();
         else
@@ -128,7 +128,7 @@ class ChartsConfigForm extends ConfigFormBase {
             '#options' => $library_options,
             '#default_value' => $options['library'],
             '#required' => TRUE,
-            '#access' => coun$this->t($library_options) > 1,
+            '#access' => count($library_options) > 1,
             '#attributes' => array('class' => array('chart-library-select')),
             '#weight' => -15,
             '#parents' => array_merge($parents, array('library')),
@@ -171,7 +171,7 @@ class ChartsConfigForm extends ConfigFormBase {
                 '#type' => 'radios',
                 '#title' => $this->t('Label field'),
                 '#options' => $field_options + array('' => $this->t('No label field')),
-                '#default_value' => isse$this->t($options['label_field']) ? $options['label_field'] : $first_field,
+                '#default_value' => isset($options['label_field']) ? $options['label_field'] : $first_field,
                 '#weight' => -10,
                 '#parents' => array_merge($parents, array('label_field')),
             );
@@ -179,7 +179,7 @@ class ChartsConfigForm extends ConfigFormBase {
                 '#type' => 'checkboxes',
                 '#title' => $this->t('Data fields'),
                 '#options' => $field_options,
-                '#default_value' => isse$this->t($options['data_fields']) ? $options['data_fields'] : array_diff(array_keys($field_options), array($first_field)),
+                '#default_value' => isset($options['data_fields']) ? $options['data_fields'] : array_diff(array_keys($field_options), array($first_field)),
                 '#weight' => -9,
                 '#parents' => array_merge($parents, array('data_fields')),
             );
@@ -439,7 +439,7 @@ class ChartsConfigForm extends ConfigFormBase {
     }
     public function submitForm(array &$form, FormStateInterface $form_state) {
         $config = \Drupal::service('config.factory')->getEditable('charts.settings');
-        $config->se$this->t('charts_default_settings',$form_state->getValue('charts_default_settings'));
+        $config->set('charts_default_settings',$form_state->getValue('charts_default_settings'));
         $config->save();
     }
 }
