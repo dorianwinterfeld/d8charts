@@ -15,9 +15,6 @@ highcharts:
       url: https://creativecommons.org/licenses/by-nc/3.0/
       gpl-compatible: false
   js:
-    https://code.highcharts.com/highcharts.js: { type: external }
+    vendor/highcharts/highcharts.js: {}
   dependencies:
       - core/jquery
-      - core/jquery.once
-      - core/drupal
-      - charts_highcharts/charts_highcharts

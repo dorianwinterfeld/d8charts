@@ -3,11 +3,10 @@
  * @file
  * Charts module file that provides hook_theme.
  */
-use \Drupal\Core\Template\Attribute;
 use \Drupal\charts\Util\Util;
 
 // Store Charts preprocess theme functions in a separate .inc file.
-\Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
+//\Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
 
 /**
  * Implements hook_theme().
@@ -25,9 +24,12 @@ function charts_theme($existing, $type, $theme, $path) {
         )
     );
 }
-
-function theme_views_view_charts($variables){
-
+/**
+ * Hook attaches assests to pages depending on library selected
+ *
+ * @param $attachments
+ */
+function template_preprocess_views_view_charts(&$variables){
     $options = $variables['view']->style_plugin->options;
 
     $service = \Drupal::service('charts.charts_attachment');
@@ -74,40 +76,35 @@ function theme_views_view_charts($variables){
     $seriesData = array_merge($seriesData, $seriesDataAttachment);
     /*$service = \Drupal::service('charts.charts_service');
     $service->setLibrarySelected($view->style_plugin->options['library']);*/
-
+    $variables['names'] = 'Michael Mwebaze';
     //Handles the toggling from one library to another
     switch($library){
         case 'google':
             $googleData = charts_google_render_charts($categories, $seriesData);
             $googleOptions = createGoogleChartsOptions($options, $seriesData);
             $googleChartType = createGoogleChartType($options);
-            $googleAttributes = array(
-                'id'=>'chart',
-                'class' => 'chart-google',
-                'data-chart' => $googleData,
-                'google-options'=> json_encode($googleOptions),
-                'google-chart-type' => json_encode($googleChartType),
-            );
-            $attributes = new Attribute($googleAttributes);
-            return '<div ' . $attributes . '></div>';
+            $variables['chart_type'] = 'google';
+            $variables['attributes']['class'][0] = 'chart-google';
+            $variables['content_attributes']['data-chart'][] = $googleData;
+            $variables['attributes']['google-options'][1] = json_encode($googleOptions);
+            $variables['attributes']['google-chart-type'][2] = json_encode($googleChartType);
+
+        break;
 
         case 'highcharts':
             $highchart = charts_highcharts_render_charts($options, $categories, $seriesData);
-            $highchartAttributes = array(
-                'class' => 'charts-highchart',
-                'data-chart' => json_encode($highchart)
-            );
-            $attributes = new Attribute($highchartAttributes);
-            return '<div ' . $attributes . '></div>';
+            $variables['chart_type'] = 'highcharts';
+            $variables['content_attributes']['data-chart'][] = json_encode($highchart);
+            $variables['attributes']['class'][] = 'charts-highchart';
+
+            break;
 
         case 'c3':
             $c3 = charts_c3_render_charts($options, $categories, $seriesData);
-            $c3chartAttributes = array(
-                'class' => 'charts-c3',
-                'data-chart' => json_encode($c3)
-            );
-            $c3attributes = new Attribute($c3chartAttributes);
-            return '<div ' . $c3attributes . ' id="chart"></div>';
+            $variables['chart_type'] = 'c3';
+            $variables['content_attributes']['data-chart'][] = json_encode($c3);
+            $variables['attributes']['class'][] = 'charts-c3';
+            break;
 
         default:
             //Not handled

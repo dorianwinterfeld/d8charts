@@ -14,7 +14,7 @@ d3:
         url: https://en.wikipedia.org/wiki/BSD_licenses
         gpl-compatible: false
   js:
-    https://d3js.org/d3.v3.min.js: { type: external }
+    vendor/dthree/d3.v3.min.js: {}
 
 c3:
   remote: https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js
@@ -25,12 +25,11 @@ c3:
         gpl-compatible: true
   css:
     theme:
-      https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css: { type: external }
+      vendor/cthree/css/c3.min.css: {}
   js:
-    https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js: { type: external }
+    vendor/cthree/c3.min.js: {}
   dependencies:
         - core/jquery
         - core/jquery.once
         - core/drupal
-        - charts_c3/charts_c3
         - charts_c3/d3

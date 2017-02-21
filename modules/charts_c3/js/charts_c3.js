@@ -7,10 +7,13 @@
 
     Drupal.behaviors.chartsC3 = {
         attach: function(context, settings) {
-            var c3Chart = $('.charts-c3').attr('data-chart');
-            var c3ChartData = JSON.parse(c3Chart);
-            var chart = c3.generate(c3ChartData);
+
+            $('.charts-c3').once().each(function(){
+                if ($(this).attr('data-chart')) {
+                    var c3Chart = $('.charts-c3').attr('data-chart');
+                    c3.generate(JSON.parse(c3Chart))
+                }
+            });
         }
     }
 }(jQuery));
-

@@ -2,7 +2,7 @@
 
 namespace Drupal\charts_google\Settings\Google;
 
-class ChartArea
+class ChartArea implements \JsonSerializable
 {
     private $width;
 
@@ -21,5 +21,10 @@ class ChartArea
     {
         $this->width = $width;
     }
+    public function jsonSerialize()
+    {
+        $vars = get_object_vars($this);
 
+        return $vars;
+    }
 }

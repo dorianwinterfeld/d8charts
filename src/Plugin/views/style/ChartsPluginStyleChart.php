@@ -42,7 +42,6 @@ class ChartsPluginStyleChart extends StylePluginBase {
   protected $usesFields = TRUE;
   protected $usesRowPlugin = TRUE;
 
-
     /**
    * Set default options.
    */
@@ -99,24 +98,24 @@ class ChartsPluginStyleChart extends StylePluginBase {
     $form = charts_settings_form($form, $this->options, $field_options, array('style_options'));
 
     // Reduce the options if this is a chart extension.
-//    if (empty($this->displayHandler->getAttachedDisplays())) {
-//      $form['type']['#description'] = empty($form['type']['#description']) ? '' : $form['type']['#description'] . ' ';
-//      $form['type']['#description'] .= t('This chart will be combined with the parent display "@display_title",
-//          which is a "@type" chart. Not all chart types may be combined. Selecting a different chart type than
-//          the parent may cause errors.' //,
-//      //    array('@display_title' => $parent_display->display_title, '@type' => $parent_chart_type['label'])
-//      );
-//      $form['fields']['label_field']['#disabled'] = TRUE;
-//      $form['display']['#access'] = FALSE;
-//      $form['xaxis']['#access'] = FALSE;
-//      if ($this->displayHandler->options['inherit_yaxis']) {
-//        $form['yaxis']['#access'] = FALSE;
-//      }
-//      else {
-//        $form['yaxis']['#title'] = t('Secondary axis');
-//        $form['yaxis']['#attributes']['class'] = array();
-//      }
-//    }
+    /*if (empty($this->displayHandler->getAttachedDisplays())) {
+      $form['type']['#description'] = empty($form['type']['#description']) ? '' : $form['type']['#description'] . ' ';
+      $form['type']['#description'] .= t('This chart will be combined with the parent display "@display_title",
+          which is a "@type" chart. Not all chart types may be combined. Selecting a different chart type than
+          the parent may cause errors.' //,
+      //    array('@display_title' => $parent_display->display_title, '@type' => $parent_chart_type['label'])
+      );
+      $form['fields']['label_field']['#disabled'] = TRUE;
+      $form['display']['#access'] = FALSE;
+      $form['xaxis']['#access'] = FALSE;
+      if ($this->displayHandler->options['inherit_yaxis']) {
+        $form['yaxis']['#access'] = FALSE;
+      }
+      else {
+        $form['yaxis']['#title'] = t('Secondary axis');
+        $form['yaxis']['#attributes']['class'] = array();
+      }
+    }*/
   }
 
   /**
@@ -310,8 +309,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
         }
       }
     }
-    $chartService = \Drupal::service('charts.charts_service');
-    $chartService->setLibrarySelected($this->options['library']);
+
     // Check if this display has any children charts that should be applied
     // on top of it.
     /*if($this->pluginDefinition['id'] === 'chart'
@@ -321,6 +319,8 @@ class ChartsPluginStyleChart extends StylePluginBase {
 
     $children_displays = $this->getChildrenChartDisplays();
     $attachments = array(); //contains the different subviews of the attachments
+      $service = \Drupal::service('charts.charts_attachment');
+
     foreach ($children_displays as $child_display) {
       // If the user doesn't have access to the child display, skip.
       if (!$this->view->access($child_display)) {
@@ -354,8 +354,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
 
       $subchart = $subview->style_plugin->render();
       array_push($attachments, $subview); //add attachment views to attachments array
-      $service = \Drupal::service('charts.charts_attachment');
-      $service->setAttachmentViews($attachments);
+
       /*$subview->postExecute();
       unset($subview);*/
 
@@ -383,7 +382,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
         }
       }
     }
-
+      $service->setAttachmentViews($attachments);
     // Print the chart.
     return $chart;
   }
