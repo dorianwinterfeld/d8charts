@@ -9,19 +9,20 @@
 namespace Drupal\charts_highcharts\Settings\Highcharts;
 
 
-class YaxisLabel implements \JsonSerializable
-{
-    private $overflow = 'justify';
+class YaxisLabel implements \JsonSerializable {
+  private $overflow = 'justify';
 
-    public function setOverflow($overflow){
-        $this->overflow = $overflow;
-    }
-    public function getOverflow(){
-        return $this->overflow;
-    }
-    public function jsonSerialize() {
-        $vars = get_object_vars($this);
+  public function setOverflow($overflow) {
+    $this->overflow = $overflow;
+  }
 
-        return $vars;
-    }
+  public function getOverflow() {
+    return $this->overflow;
+  }
+
+  public function jsonSerialize() {
+    $vars = get_object_vars($this);
+
+    return $vars;
+  }
 }

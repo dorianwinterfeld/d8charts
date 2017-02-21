@@ -1,12 +1,12 @@
 {
   "name": "charts_cthree",
   "version": "0.0.1",
-  "require":{
+  "require": {
     "dthree": "*",
     "cthree": "*",
-    "cthree/css":"*"
+    "cthree/css": "*"
   },
-  "repositories":[
+  "repositories": [
     {
       "type": "package",
       "package": {
@@ -47,9 +47,9 @@
   "extra": {
     "assets": {
       "packages": {
-        "dthree":"*",
-        "cthree":"*",
-        "cthree/css":"*"
+        "dthree": "*",
+        "cthree": "*",
+        "cthree/css": "*"
       }
     }
   }

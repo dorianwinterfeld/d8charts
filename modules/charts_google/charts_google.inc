@@ -134,10 +134,16 @@ function _charts_google_populate_chart_axes($chart, $chart_definition) {
       $chart_type_info = chart_get_type($chart['#chart_type']);
       $axis_index = $chart[$key]['#opposite'] ? 1 : 0;
       if ($chart[$key]['#type'] === 'chart_xaxis') {
-        $axis_keys = !$chart_type_info['axis_inverted'] ? array('hAxis') : array('vAxes', $axis_index);
+        $axis_keys = !$chart_type_info['axis_inverted'] ? array('hAxis') : array(
+          'vAxes',
+          $axis_index
+        );
       }
       else {
-        $axis_keys = !$chart_type_info['axis_inverted'] ? array('vAxes', $axis_index) : array('hAxis');
+        $axis_keys = !$chart_type_info['axis_inverted'] ? array(
+          'vAxes',
+          $axis_index
+        ) : array('hAxis');
       }
       $axis_drilldown = &$chart_definition['options'];
       foreach ($axis_keys as $key) {

@@ -1,10 +1,10 @@
 {
   "name": "charts_google",
   "version": "0.0.1",
-  "require":{
+  "require": {
     "google": "*"
   },
-  "repositories":[
+  "repositories": [
     {
       "type": "package",
       "package": {
@@ -28,7 +28,7 @@
         }
       ],
       "packages": {
-        "google":"*"
+        "google": "*"
       }
     }
   }

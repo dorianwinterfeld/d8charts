@@ -9,28 +9,26 @@
 namespace Drupal\charts_c3\Settings\CThree;
 
 
-class ChartColor implements \JsonSerializable
-{
-    private $pattern = array();
+class ChartColor implements \JsonSerializable {
+  private $pattern = array();
 
-    /**
-     * @return mixed
-     */
-    public function getPattern()
-    {
-        return $this->pattern;
-    }
+  /**
+   * @return mixed
+   */
+  public function getPattern() {
+    return $this->pattern;
+  }
 
-    /**
-     * @param mixed $pattern
-     */
-    public function setPattern($pattern)
-    {
-        $this->pattern = $pattern;
-    }
-    public function jsonSerialize() {
-        $vars = get_object_vars($this);
+  /**
+   * @param mixed $pattern
+   */
+  public function setPattern($pattern) {
+    $this->pattern = $pattern;
+  }
 
-        return $vars;
-    }
+  public function jsonSerialize() {
+    $vars = get_object_vars($this);
+
+    return $vars;
+  }
 }

@@ -40,7 +40,10 @@ function _charts_highcharts_render($chart) {
     $chart['#id'] = Html::getUniqueId('highchart-render');
   }
 
-  $chart['#attached']['library'][] = array('charts_highcharts', 'charts_highcharts');
+  $chart['#attached']['library'][] = array(
+    'charts_highcharts',
+    'charts_highcharts'
+  );
   $chart['#attributes']['class'][] = 'charts-highchart';
   $chart['#chart_definition'] = $chart_definition;
 
@@ -79,7 +82,7 @@ function _charts_highcharts_populate_chart_options($chart, $chart_definition) {
   $chart_definition['title']['style']['fontStyle'] = $chart['#title_font_style'];
   $chart_definition['title']['style']['fontSize'] = $chart['#title_font_size'];
   $chart_definition['title']['verticalAlign'] = $chart['#title_position'] === 'in' ? 'top' : NULL;
-  $chart_definition['title']['y'] = $chart['#title_position'] === 'in' ? 24: NULL;
+  $chart_definition['title']['y'] = $chart['#title_position'] === 'in' ? 24 : NULL;
   $chart_definition['colors'] = $chart['#colors'];
   $chart_definition['chart']['style']['fontFamily'] = $chart['#font'];
   $chart_definition['chart']['style']['fontSize'] = $chart['#font_size'];
@@ -141,7 +144,8 @@ function _charts_highcharts_populate_chart_axes($chart, $chart_definition) {
     if ($chart[$key]['#type'] === 'chart_xaxis' || $chart[$key]['#type'] === 'chart_yaxis') {
       // Make sure defaults are loaded.
       if (empty($chart[$key]['#defaults_loaded'])) {
-        $chart[$key] += \Drupal::service('element_info')->getInfo($chart[$key]['#type']);
+        $chart[$key] += \Drupal::service('element_info')
+          ->getInfo($chart[$key]['#type']);
       }
 
       // Populate the chart data.
@@ -211,7 +215,8 @@ function _charts_highcharts_populate_chart_data(&$chart, $chart_definition) {
 
       // Make sure defaults are loaded.
       if (empty($chart[$key]['#defaults_loaded'])) {
-        $chart[$key] += \Drupal::service('element_info')->getInfo($chart[$key]['#type']);
+        $chart[$key] += \Drupal::service('element_info')
+          ->getInfo($chart[$key]['#type']);
       }
 
       // Convert target named axis keys to integers.
@@ -284,7 +289,8 @@ function _charts_highcharts_populate_chart_data(&$chart, $chart_definition) {
 
           // Make sure defaults are loaded.
           if (empty($chart[$key][$sub_key]['#defaults_loaded'])) {
-            $chart[$key][$sub_key] += \Drupal::service('element_info')->getInfo($chart[$key][$sub_key]['#type']);
+            $chart[$key][$sub_key] += \Drupal::service('element_info')
+              ->getInfo($chart[$key][$sub_key]['#type']);
           }
 
           $data_item = $chart[$key][$sub_key];

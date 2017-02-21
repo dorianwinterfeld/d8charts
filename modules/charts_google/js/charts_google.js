@@ -5,14 +5,14 @@
     'use strict';
 
     Drupal.behaviors.chartsGooglecharts = {
-        attach: function(context, settings) {
-            google.charts.load('current', {'packages':['corechart']});
+        attach: function (context, settings) {
+            google.charts.load('current', {'packages': ['corechart']});
 
             var dataTable;
             var googleChartOptions;
             var googleChartType;
 
-            $('.chart-google').once().each(function(){
+            $('.chart-google').once().each(function () {
                 if ($(this).attr('data-chart')) {
                     dataTable = $(this).attr('data-chart');
                     googleChartOptions = $(this).attr('google-options');
@@ -26,7 +26,7 @@
                 var data = google.visualization.arrayToDataTable(JSON.parse(dataTable));
                 var googleChartTypeObject = JSON.parse(googleChartType);
                 var googleChartTypeFormatted = googleChartTypeObject.type;
-                switch(googleChartTypeFormatted) {
+                switch (googleChartTypeFormatted) {
                     case 'BarChart':
                         var chart = new google.visualization.BarChart(document.getElementById('chart'));
                         break;

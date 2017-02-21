@@ -24,103 +24,127 @@ define('CHARTS_DUAL_AXIS', 'xy');
 // Store Charts preprocess theme functions in a separate .inc file.
 \Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
 
-  /**
-   * @return mixed
-   */
+/**
+ * @return mixed
+ */
 function getInfo() {
 
-    $info['chart'] = array(
-      '#chart_type' => NULL, // Options: pie, bar, column, etc.
-      '#chart_id' => NULL, // Machine name to alter this chart individually.
-      '#title' => NULL,
-      '#title_color' => '#000',
-      '#title_font_weight' => 'normal', // Options: normal, bold
-      '#title_font_style' => 'normal', // Options: normal, italic
-      '#title_font_size' => 14, // Font size in pixels, e.g. 12.
-      '#title_position' => 'out', // Options: in, out.
-      '#colors' => charts_default_colors(),
-      '#font' => 'Arial',
-      '#font_size' => 12, // Font size in pixels, e.g. 12.
-      '#background' => 'transparent',
-      '#stacking' => NULL, // Bar chart only. Set to TRUE to stack.
-      '#pre_render' => array('charts_pre_render_element'),
-      '#tooltips' => TRUE,
-      '#tooltips_use_html' => FALSE,
-      '#data_labels' => FALSE,
-      '#legend' => TRUE,
-      '#legend_title' => NULL,
-      '#legend_title_font_weight' => 'bold', // Options: normal, bold
-      '#legend_title_font_style' => 'normal', // Options: normal, italic
-      '#legend_title_font_size' => NULL, // CSS value for font size, e.g. 1em or 12px.
-      '#legend_position' => 'right', // Options: top, right, bottom, left.
-      '#legend_font_weight' => 'normal', // Options: normal, bold
-      '#legend_font_style' => 'normal', // Options: normal, italic
-      '#legend_font_size' => NULL, // CSS value for font size, e.g. 1em or 12px.
-      '#width' => NULL,
-      '#height' => NULL,
+  $info['chart'] = array(
+    '#chart_type' => NULL,
+    // Options: pie, bar, column, etc.
+    '#chart_id' => NULL,
+    // Machine name to alter this chart individually.
+    '#title' => NULL,
+    '#title_color' => '#000',
+    '#title_font_weight' => 'normal',
+    // Options: normal, bold
+    '#title_font_style' => 'normal',
+    // Options: normal, italic
+    '#title_font_size' => 14,
+    // Font size in pixels, e.g. 12.
+    '#title_position' => 'out',
+    // Options: in, out.
+    '#colors' => charts_default_colors(),
+    '#font' => 'Arial',
+    '#font_size' => 12,
+    // Font size in pixels, e.g. 12.
+    '#background' => 'transparent',
+    '#stacking' => NULL,
+    // Bar chart only. Set to TRUE to stack.
+    '#pre_render' => array('charts_pre_render_element'),
+    '#tooltips' => TRUE,
+    '#tooltips_use_html' => FALSE,
+    '#data_labels' => FALSE,
+    '#legend' => TRUE,
+    '#legend_title' => NULL,
+    '#legend_title_font_weight' => 'bold',
+    // Options: normal, bold
+    '#legend_title_font_style' => 'normal',
+    // Options: normal, italic
+    '#legend_title_font_size' => NULL,
+    // CSS value for font size, e.g. 1em or 12px.
+    '#legend_position' => 'right',
+    // Options: top, right, bottom, left.
+    '#legend_font_weight' => 'normal',
+    // Options: normal, bold
+    '#legend_font_style' => 'normal',
+    // Options: normal, italic
+    '#legend_font_size' => NULL,
+    // CSS value for font size, e.g. 1em or 12px.
+    '#width' => NULL,
+    '#height' => NULL,
 
-      '#attributes' => array(), // Applied to the wrapper, not the chart.
-      '#chart_library' => NULL, // If requiring a particular charting module.
-      '#raw_options' => array(), // Raw library-specific options passed directly.
-    );
+    '#attributes' => array(),
+    // Applied to the wrapper, not the chart.
+    '#chart_library' => NULL,
+    // If requiring a particular charting module.
+    '#raw_options' => array(),
+    // Raw library-specific options passed directly.
+  );
 
-    // Properties for x and y axes.
-    $axis_properties = array(
-      '#axis_type' => 'linear', // Options: linear, logarithmic, datetime, labels.
-      '#title' => '',
-      '#title_color' => '#000',
-      '#title_font_weight' => 'normal', // Options: normal, bold
-      '#title_font_style' => 'normal', // Options: normal, italic
-      '#title_font_size' => 12, // CSS value for font size, e.g. 1em or 12px.
-      '#labels' => NULL,
-      '#labels_color' => '#000',
-      '#labels_font_weight' => 'normal', // Options: normal, bold
-      '#labels_font_style' => 'normal', // Options: normal, italic
-      '#labels_font_size' => NULL, // CSS value for font size, e.g. 1em or 12px.
-      '#labels_rotation' => NULL, // Integer rotation value, e.g. 30, -60 or 90.
-      '#grid_line_color' => '#ccc',
-      '#base_line_color' => '#ccc',
-      '#minor_grid_line_color' => '#e0e0e0',
-      '#max' => NULL, // Integer max value on this axis.
-      '#min' => NULL, // Integer minimum value on this axis.
-      '#opposite' => FALSE, // Display axis on opposite normal side.
-    );
-    $info['chart_xaxis'] = array() + $axis_properties;
-    $info['chart_yaxis'] = array() + $axis_properties;
+  // Properties for x and y axes.
+  $axis_properties = array(
+    '#axis_type' => 'linear', // Options: linear, logarithmic, datetime, labels.
+    '#title' => '',
+    '#title_color' => '#000',
+    '#title_font_weight' => 'normal', // Options: normal, bold
+    '#title_font_style' => 'normal', // Options: normal, italic
+    '#title_font_size' => 12, // CSS value for font size, e.g. 1em or 12px.
+    '#labels' => NULL,
+    '#labels_color' => '#000',
+    '#labels_font_weight' => 'normal', // Options: normal, bold
+    '#labels_font_style' => 'normal', // Options: normal, italic
+    '#labels_font_size' => NULL, // CSS value for font size, e.g. 1em or 12px.
+    '#labels_rotation' => NULL, // Integer rotation value, e.g. 30, -60 or 90.
+    '#grid_line_color' => '#ccc',
+    '#base_line_color' => '#ccc',
+    '#minor_grid_line_color' => '#e0e0e0',
+    '#max' => NULL, // Integer max value on this axis.
+    '#min' => NULL, // Integer minimum value on this axis.
+    '#opposite' => FALSE, // Display axis on opposite normal side.
+  );
+  $info['chart_xaxis'] = array() + $axis_properties;
+  $info['chart_yaxis'] = array() + $axis_properties;
 
-    // And then the pieces of charts used within chart types.
-    $info['chart_data'] = array(
-      '#title' => NULL,
-      '#labels' => NULL,
-      '#data' => array(),
-      '#color' => NULL,
-      '#show_in_legend' => TRUE,
-      '#show_labels' => FALSE, // Show inline labels next to the data.
-      '#chart_type' => NULL, // If building multicharts. The chart type, e.g. pie.
-      '#line_width' => 1, // Line chart only.
-      '#marker_radius' => 3, // Line chart only. Size in pixels, e.g. 1, 5.
-      '#target_axis' => NULL, // If using multiple axes, key for the matching y axis.
-      // Formatting options.
-      '#decimal_count' => NULL, // The number of digits after the decimal separator. e.g. 2
-      '#date_format' => NULL, // A custom date format, e.g. %Y-%m-%d
-      '#prefix' => NULL,
-      '#suffix' => NULL,
-    );
-    $info['chart_data_item'] = array(
-      '#data' => NULL,
-      '#color' => NULL,
-      '#title' => NULL, // Often used as content of the tooltip.
-    );
+  // And then the pieces of charts used within chart types.
+  $info['chart_data'] = array(
+    '#title' => NULL,
+    '#labels' => NULL,
+    '#data' => array(),
+    '#color' => NULL,
+    '#show_in_legend' => TRUE,
+    '#show_labels' => FALSE,
+    // Show inline labels next to the data.
+    '#chart_type' => NULL,
+    // If building multicharts. The chart type, e.g. pie.
+    '#line_width' => 1,
+    // Line chart only.
+    '#marker_radius' => 3,
+    // Line chart only. Size in pixels, e.g. 1, 5.
+    '#target_axis' => NULL,
+    // If using multiple axes, key for the matching y axis.
+    // Formatting options.
+    '#decimal_count' => NULL,
+    // The number of digits after the decimal separator. e.g. 2
+    '#date_format' => NULL,
+    // A custom date format, e.g. %Y-%m-%d
+    '#prefix' => NULL,
+    '#suffix' => NULL,
+  );
+  $info['chart_data_item'] = array(
+    '#data' => NULL,
+    '#color' => NULL,
+    '#title' => NULL, // Often used as content of the tooltip.
+  );
 
-    return $info;
-  }
+  return $info;
+}
 
 
 /**
  * Implements hook_permission().
  */
-function charts_permission()
-{
+function charts_permission() {
   return array(
     'administer charts' => array(
       'title' => t('Administer Charts'),
@@ -224,7 +248,8 @@ function charts_info() {
   $charts_info = array();
   $chart_modules = Drupal::moduleHandler()->getImplementations('charts_info');
   foreach ($chart_modules as $module) {
-    $module_charts_info = Drupal::moduleHandler()->invoke($module, 'charts_info');
+    $module_charts_info = Drupal::moduleHandler()
+      ->invoke($module, 'charts_info');
     foreach ($module_charts_info as $chart_library => $chart_library_info) {
       $module_charts_info[$chart_library]['module'] = $module;
     }
@@ -275,7 +300,7 @@ function charts_type_info() {
  */
 function chart_get_type($chart_type) {
   $types = charts_type_info();
-  return ($types[$chart_type])? $types[$chart_type]: FALSE;
+  return ($types[$chart_type]) ? $types[$chart_type] : FALSE;
 }
 
 /**
@@ -318,8 +343,16 @@ function charts_charts_type_info() {
  */
 function charts_default_colors() {
   return array(
-    '#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#1aadce',
-    '#492970', '#f28f43', '#77a1e5', '#c42525', '#a6c96a',
+    '#2f7ed8',
+    '#0d233a',
+    '#8bbc21',
+    '#910000',
+    '#1aadce',
+    '#492970',
+    '#f28f43',
+    '#77a1e5',
+    '#c42525',
+    '#a6c96a',
   );
 }
 
@@ -331,7 +364,8 @@ function charts_trim_array(&$array) {
   foreach ($array as $key => &$value) {
     if (is_array($value)) {
       charts_trim_array($value);
-    } elseif (is_null($value) || (is_array($value) && count($value) === 0)) {
+    }
+    elseif (is_null($value) || (is_array($value) && count($value) === 0)) {
       unset($array[$key]);
     }
   }
@@ -364,9 +398,10 @@ function charts_cast_element_integer_values(&$element) {
   foreach ($element as $property_name => $value) {
     if (is_array($element[$property_name])) {
       charts_cast_element_integer_values($element[$property_name]);
-    } elseif ($property_name && in_array($property_name, $integer_options)) {
+    }
+    elseif ($property_name && in_array($property_name, $integer_options)) {
       $element[$property_name] = (is_null($element[$property_name]) || strlen($element[$property_name]) === 0)
-      ? NULL : (int)$element[$property_name];
+        ? NULL : (int) $element[$property_name];
     }
   }
 }
