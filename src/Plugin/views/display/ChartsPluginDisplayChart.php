@@ -158,6 +158,7 @@ class ChartsPluginDisplayChart extends Attachment {
    */
   public function attachTo(ViewExecutable $view, $display_id, array &$build) {
 
+      $displays = $this->getOption('displays');
     if (empty($displays[$display_id])) {
       return;
     }
@@ -166,9 +167,7 @@ class ChartsPluginDisplayChart extends Attachment {
       return;
     }
 
-
   }
-
-
+    
 }
 

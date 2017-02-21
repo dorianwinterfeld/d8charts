@@ -49,8 +49,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
     $options = parent::defineOptions();
 
     // Get the default chart values
-    $defaults = \Drupal::state()
-      ->get('charts_default_settings', array());  // was variable_get()
+    $defaults = \Drupal::state()->get('charts_default_settings', array());
 
     $defaults += charts_default_settings();
     foreach ($defaults as $default_key => $default_value) {
@@ -142,7 +141,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
     $dataFieldsValueState = array();
     $dataFieldsCounter = 0;
 
-    foreach ($dataFields as $key => $value) {
+    foreach ($dataFields as $value) {
       /*if (count(array_unique($plugin)) === 1 && end($plugin) === 0) {
           $errors[] = $this->t('At least one data field must be selected in the chart configuration before this chart may be shown');
       }*/
@@ -360,8 +359,6 @@ class ChartsPluginStyleChart extends StylePluginBase {
 
       $subchart = $subview->style_plugin->render();
       array_push($attachments, $subview); //add attachment views to attachments array
-
-
       /*$subview->postExecute();
       unset($subview);*/
 
