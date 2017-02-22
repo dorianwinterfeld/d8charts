@@ -15,25 +15,24 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
 class ChartsConfigForm extends ConfigFormBase {
-    protected $moduleHandler;
+  protected $moduleHandler;
 
-    public function __construct(ConfigFactoryInterface $config_factory, ModuleHandlerInterface $module_handler)
-    {
-        parent::__construct($config_factory);
-        $this->moduleHandler = $module_handler;
-    }
+  public function __construct(ConfigFactoryInterface $config_factory, ModuleHandlerInterface $module_handler) {
+    parent::__construct($config_factory);
+    $this->moduleHandler = $module_handler;
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function create(ContainerInterface $container) {
-        return new static(
-            $container->get('config.factory'),
-            $container->get('module_handler')
-        );
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('config.factory'),
+      $container->get('module_handler')
+    );
+  }
 
-    public function getFormId() {
+  public function getFormId() {
     return 'charts_form';
   }
 
@@ -117,7 +116,7 @@ class ChartsConfigForm extends ConfigFormBase {
     $defaults['yaxis_labels_rotation'] = 0;
 
     //\Drupal::moduleHandler()->alter('charts_default_settings', $defaults);
-      $this->moduleHandler->alter('charts_default_settings', $defaults);
+    $this->moduleHandler->alter('charts_default_settings', $defaults);
     return $defaults;
   }
 
