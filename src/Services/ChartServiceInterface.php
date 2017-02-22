@@ -1,16 +1,22 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mmwebaze
- * Date: 2/5/2017
- * Time: 12:31 AM
- */
 
 namespace Drupal\charts\Services;
 
+/**
+ * Interface ChartServiceInterface
+ * @package Drupal\charts\Services
+ */
 
 interface ChartServiceInterface {
+    /**
+     * @return mixed
+     */
   public function getLibrarySelected();
 
+    /**
+     * @param $librarySelected
+     *
+     */
   public function setLibrarySelected($librarySelected);
+
 }

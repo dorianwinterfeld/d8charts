@@ -10,11 +10,12 @@ namespace Drupal\charts\Services;
  */
 
 class ChartService implements ChartServiceInterface {
+
   private $librarySelected;
 
   /**
    * Gets the currently selected Library
-   * @return string
+   * @return string $librarySelected.
    */
   public function getLibrarySelected() {
     return $this->librarySelected;
@@ -22,7 +23,7 @@ class ChartService implements ChartServiceInterface {
 
   /**
    * Sets the previously set Library with the newly selected library value
-   * @param string $librarySelected
+   * @param string $librarySelected.
    */
   public function setLibrarySelected($librarySelected) {
     $this->librarySelected = $librarySelected;
