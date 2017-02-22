@@ -178,7 +178,7 @@ class ChartsConfigForm extends ConfigFormBase {
 
     if ($field_options) {
       $first_field = key($field_options);
-      $field_keys = array_diff($field_options, array($first_field => NULL));
+      //$field_keys = array_diff($field_options, array($first_field => NULL));
       $form['fields']['#theme'] = 'charts_settings_fields';
       $form['fields']['label_field'] = array(
         '#type' => 'radios',

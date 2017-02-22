@@ -168,6 +168,6 @@ class ChartsPluginDisplayChart extends Attachment {
     }
 
   }
-    
+
 }
 
