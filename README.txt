@@ -10,10 +10,10 @@ chart data that would be used in more that one chart provider. Or users get
 binded to a solution forever or they have to rewrite all exported data again.
 
 Thats why Charts is so great. It uses a standard data scheme do describe charts
-data and thru filters, it converts automatically to each solution. You might
+data and through filters, it converts automatically to each solution. You might
 change to another solution at anytime.
 
-The Chart schema is very similiar to Drupal's Form API schema.
+The Chart schema is very similar to Drupal's Form API schema.
 
 Chart Providers
 ---------------

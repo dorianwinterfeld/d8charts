@@ -458,9 +458,9 @@ class ChartsConfigForm extends ConfigFormBase {
 
   public function charts_info() {
     $charts_info = array();
-    foreach (\Drupal::moduleHandler()
+    foreach ($this->moduleHandler
                ->getImplementations('charts_info') as $module) {
-      $module_charts_info = \Drupal::moduleHandler()
+      $module_charts_info = $this->moduleHandler
         ->invoke($module, 'charts_info');
       foreach ($module_charts_info as $chart_library => $chart_library_info) {
         $module_charts_info[$chart_library]['module'] = $module;
@@ -468,7 +468,7 @@ class ChartsConfigForm extends ConfigFormBase {
       $charts_info = array_merge($charts_info, $module_charts_info);
     }
 
-    \Drupal::moduleHandler()->alter('charts_info', $charts_info);
+      $this->moduleHandler->alter('charts_info', $charts_info);
     return $charts_info;
   }
 
@@ -505,8 +505,7 @@ class ChartsConfigForm extends ConfigFormBase {
   }
 
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $config = \Drupal::service('config.factory')
-      ->getEditable('charts.settings');
+    $config = $this->configFactory->getEditable('charts.settings');
     $config->set('charts_default_settings', $form_state->getValue('charts_default_settings'));
     $config->save();
   }

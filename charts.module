@@ -7,7 +7,6 @@ use \Drupal\charts\Util\Util;
 
 // Store Charts preprocess theme functions in a separate .inc file.
 //\Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
-
 /**
  * Implements hook_theme().
  * @param $existing
