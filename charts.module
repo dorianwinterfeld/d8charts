@@ -9,19 +9,18 @@ use \Drupal\charts\Util\Util;
 //\Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
 /**
  * Implements hook_theme().
+ *
  * @param $existing
  * @param $type
  * @param $theme
  * @param $path
+ *
  * @return array
  */
-function charts_theme($existing, $type, $theme, $path) {
+function charts_theme($existing, $type, $theme, $path)
+{
 
-  return array(
-    'views_view_charts' => array(
-      'variables' => array('view' => NULL, 'row' => NULL),
-    )
-  );
+  return array('views_view_charts' => array('variables' => array('view' => NULL, 'row' => NULL),));
 }
 
 /**
@@ -29,7 +28,8 @@ function charts_theme($existing, $type, $theme, $path) {
  *
  * @param $attachments
  */
-function template_preprocess_views_view_charts(&$variables) {
+function template_preprocess_views_view_charts(&$variables)
+{
 
   $options = $variables['view']->style_plugin->options;
 

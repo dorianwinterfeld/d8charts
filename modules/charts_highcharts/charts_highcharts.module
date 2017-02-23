@@ -21,24 +21,24 @@ use Drupal\charts_highcharts\Settings\Highcharts\Highcharts;
 /**
  * Implements hook_charts_info().
  */
-function charts_highcharts_charts_info() {
-  $info['highcharts'] = array(
-    'label' => t('Highcharts'),
-    'render' => '_charts_highcharts_render',
-    'types' => array('area', 'bar', 'column', 'line', 'pie', 'scatter'),
-    'file' => 'charts_highcharts.inc',
-  );
+function charts_highcharts_charts_info()
+{
+  $info['highcharts'] = array('label' => t('Highcharts'), 'render' => '_charts_highcharts_render', 'types' => array('area', 'bar', 'column', 'line', 'pie', 'scatter'), 'file' => 'charts_highcharts.inc',);
+
   return $info;
 }
 
 /**
  * Creates a JSON Object formatted for Highcharts to use
+ *
  * @param $options
  * @param array $categories
  * @param array $seriesData
+ *
  * @return Highcharts object to be used by highcharts javascripts visualization framework
  */
-function charts_highcharts_render_charts($options, $categories = array(), $seriesData = array()) {
+function charts_highcharts_render_charts($options, $categories = array(), $seriesData = array())
+{
   $chart = new ChartType();
   $chart->setType($options['type']);
   $chartTitle = new ChartTitle();

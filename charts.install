@@ -7,7 +7,8 @@
 /**
  * Implements hook_requirements().
  */
-function charts_requirements($phase) {
+function charts_requirements($phase)
+{
   $requirements = array();
   // if ($phase == 'runtime' && !charts_info()) {
   /* $requirements['charts'] = array(
@@ -16,6 +17,7 @@ function charts_requirements($phase) {
      'severity' => REQUIREMENT_ERROR,
      'description' => t('Charts core module only provides a a common set of functions. You must install a Charts provider module to create charts.'),
    );*/
+
   // }
   return $requirements;
 }
