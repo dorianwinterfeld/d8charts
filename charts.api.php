@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Documentation on hooks provided by the Charts module.
@@ -49,9 +50,8 @@
  *
  *
  * @see charts_element_info()
- */
-
-/**
+ *
+ *
  * Alter an individual chart before it is printed.
  *
  * @param $chart

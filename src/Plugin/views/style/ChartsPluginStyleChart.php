@@ -26,14 +26,6 @@ use Drupal\views\Plugin\views\style\StylePluginBase;
  */
 class ChartsPluginStyleChart extends StylePluginBase {
 
-  /**
-   * Does the style plugin for itself support to add fields to it's output.
-   *
-   * This option only makes sense on style plugins without row plugins, like
-   * for example table.
-   *
-   * @var bool
-   */
   protected $usesGrouping = FALSE;
   protected $usesFields = TRUE;
   protected $usesRowPlugin = TRUE;
@@ -44,7 +36,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
   protected function defineOptions() {
     $options = parent::defineOptions();
 
-    // Get the default chart values
+    // Get the default chart values.
     $defaults = \Drupal::state()->get('charts_default_settings', array());
 
     $defaults += charts_default_settings();
@@ -62,11 +54,9 @@ class ChartsPluginStyleChart extends StylePluginBase {
     return $options;
   }
 
-  /**
-   * Generate a form for setting options.
-   * @param $form
-   * @param FormStateInterface $form_state
-   */
+    /**
+     * {@inheritdoc}
+     */
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
     parent::buildOptionsForm($form, $form_state);
 
@@ -115,21 +105,17 @@ class ChartsPluginStyleChart extends StylePluginBase {
     }*/
   }
 
-  /**
-   * Generate a form for setting options.
-   * @param $form
-   * @param FormStateInterface $form_state
-   */
+    /**
+     * {@inheritdoc}
+     */
   public function submitOptionsForm(&$form, FormStateInterface $form_state) {
     parent::submitOptionsForm($form, $form_state);
   }
 
 
-  /**
-   * Make sure the display and all associated handlers are valid.
-   * @return array Empty array if the display is valid; an array of error strings if it is not.
-   * Empty array if the display is valid; an array of error strings if it is not.
-   */
+    /**
+     * {@inheritdoc}
+     */
   public function validate() {
 
     $errors = parent::validate();
@@ -161,9 +147,9 @@ class ChartsPluginStyleChart extends StylePluginBase {
     return $errors;
   }
 
-  /**
-   * Render the entire view from the view result.
-   */
+    /**
+     * {@inheritdoc}
+     */
   public function render() {
 
     $field_handlers = $this->view->getHandlers('field');
