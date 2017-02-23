@@ -8,15 +8,15 @@ namespace Drupal\charts\Services;
  */
 
 interface ChartServiceInterface {
-    /**
-     * @return mixed
-     */
+  /**
+   * @return mixed
+   */
   public function getLibrarySelected();
 
-    /**
-     * @param $librarySelected
-     *
-     */
+  /**
+   * @param $librarySelected
+   *
+   */
   public function setLibrarySelected($librarySelected);
 
 }

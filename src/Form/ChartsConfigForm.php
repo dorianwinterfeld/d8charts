@@ -468,7 +468,7 @@ class ChartsConfigForm extends ConfigFormBase {
       $charts_info = array_merge($charts_info, $module_charts_info);
     }
 
-      $this->moduleHandler->alter('charts_info', $charts_info);
+    $this->moduleHandler->alter('charts_info', $charts_info);
     return $charts_info;
   }
 
