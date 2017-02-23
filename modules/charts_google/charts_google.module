@@ -70,7 +70,6 @@ function createGoogleChartsOptions($options, $seriesData = array()) {
   $chartArea = new ChartArea();
   $chartArea->setWidth(400);
   //$googleOptions->setChartArea($chartArea);
-
   $seriesColors = array();
   for ($i = 0; $i < count($seriesData); $i++) {
     $seriesColor = $seriesData[$i]['color'];
