@@ -80,6 +80,7 @@ function createGoogleChartsOptions($options, $seriesData = array()) {
 }
 
 function createGoogleChartType($options) {
+
   $googleChartType = new ChartType();
   $googleChartType->setChartType($options['type']);
 
