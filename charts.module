@@ -31,7 +31,8 @@ function charts_theme($existing, $type, $theme, $path) {
  * @param $attachments
  */
 function template_preprocess_views_view_charts(&$variables) {
-  $options = $variables['view']->style_plugin->options;
+
+    $options = $variables['view']->style_plugin->options;
 
   $service = \Drupal::service('charts.charts_attachment');
   $attachmentView = $service->getAttachmentViews();
