@@ -8,3 +8,4 @@ modules/charts_highcharts/vendor/
 modules/charts_highcharts/composer.lock
 .gitattributes
 .gitignore
+.idea/
