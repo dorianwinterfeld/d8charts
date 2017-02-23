@@ -20,8 +20,3 @@ function charts_requirements($phase) {
   return $requirements;
 }
 
-/**
- * Implements hook_uninstall().
- */
-function charts_uninstall() {
-}

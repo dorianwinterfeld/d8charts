@@ -32,7 +32,8 @@ class ChartsPluginStyleChart extends StylePluginBase {
   /**
    * Set default options.
    */
-  protected function defineOptions() {
+  protected function defineOptions()
+  {
     $options = parent::defineOptions();
 
     // Get the default chart values.
@@ -53,17 +54,16 @@ class ChartsPluginStyleChart extends StylePluginBase {
     return $options;
   }
 
-    /**
-     * {@inheritdoc}
-     */
-  public function buildOptionsForm(&$form, FormStateInterface $form_state) {
+  /**
+   * {@inheritdoc}
+   */
+  public function buildOptionsForm(&$form, FormStateInterface $form_state)
+  {
     parent::buildOptionsForm($form, $form_state);
 
     $handlers = $this->displayHandler->getHandlers('field');
     if (empty($handlers)) {
-      $form['error_markup'] = array(
-        '#markup' => '<div class="error messages">' . t('You need at least one field before you can configure your table settings') . '</div>',
-      );
+      $form['error_markup'] = array('#markup' => '<div class="error messages">' . t('You need at least one field before you can configure your table settings') . '</div>',);
     }
 
     // Limit grouping options (we only support one grouping field).
@@ -104,18 +104,20 @@ class ChartsPluginStyleChart extends StylePluginBase {
     }*/
   }
 
-    /**
-     * {@inheritdoc}
-     */
-  public function submitOptionsForm(&$form, FormStateInterface $form_state) {
+  /**
+   * {@inheritdoc}
+   */
+  public function submitOptionsForm(&$form, FormStateInterface $form_state)
+  {
     parent::submitOptionsForm($form, $form_state);
   }
 
 
-    /**
-     * {@inheritdoc}
-     */
-  public function validate() {
+  /**
+   * {@inheritdoc}
+   */
+  public function validate()
+  {
 
     $errors = parent::validate();
     $dataFields = $this->options['data_fields'];
@@ -131,8 +133,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
       if ($dataFieldsCounter > 0) {
         if (empty($value)) {
           array_push($dataFieldsValueState, 0);
-        }
-        else {
+        } else {
           array_push($dataFieldsValueState, 1);
         }
       }
@@ -143,13 +144,15 @@ class ChartsPluginStyleChart extends StylePluginBase {
     if (array_sum($dataFieldsValueState) < 1) {
       $errors[] = $this->t('At least one data field must be selected in the chart configuration before this chart may be shown');
     }
+
     return $errors;
   }
 
-    /**
-     * {@inheritdoc}
-     */
-  public function render() {
+  /**
+   * {@inheritdoc}
+   */
+  public function render()
+  {
 
     $field_handlers = $this->view->getHandlers('field');
 
@@ -174,26 +177,8 @@ class ChartsPluginStyleChart extends StylePluginBase {
       unset($data_fields[$label_field_key]);
     }
     $chart_id = $this->view->id() . '__' . $this->view->current_display;
-    $chart = array(
-      '#type' => 'chart',
-      '#chart_type' => $this->options['type'],
-      '#chart_library' => $this->options['library'],
-      '#chart_id' => $chart_id,
-      '#id' => ('chart_' . $chart_id),
-      '#title' => $this->options['title_position'] ? $this->options['title'] : FALSE,
-      '#title_position' => $this->options['title_position'],
-      '#tooltips' => $this->options['tooltips'],
-      '#data_labels' => $this->options['data_labels'],
-      '#colors' => $this->options['colors'],
-      '#background' => $this->options['background'] ? $this->options['background'] : 'transparent',
-      '#legend' => $this->options['legend_position'] ? TRUE : FALSE,
-      '#legend_position' => $this->options['legend_position'] ? $this->options['legend_position'] : NULL,
-      '#width' => $this->options['width'],
-      '#height' => $this->options['height'],
-      '#view' => $this->view,
-      // pass info about the actual view results to allow further processing
-      '#theme' => 'views_view_charts',
-    );
+    $chart = array('#type' => 'chart', '#chart_type' => $this->options['type'], '#chart_library' => $this->options['library'], '#chart_id' => $chart_id, '#id' => ('chart_' . $chart_id), '#title' => $this->options['title_position'] ? $this->options['title'] : FALSE, '#title_position' => $this->options['title_position'], '#tooltips' => $this->options['tooltips'], '#data_labels' => $this->options['data_labels'], '#colors' => $this->options['colors'], '#background' => $this->options['background'] ? $this->options['background'] : 'transparent', '#legend' => $this->options['legend_position'] ? TRUE : FALSE, '#legend_position' => $this->options['legend_position'] ? $this->options['legend_position'] : NULL, '#width' => $this->options['width'], '#height' => $this->options['height'], '#view' => $this->view, // pass info about the actual view results to allow further processing
+      '#theme' => 'views_view_charts',);
     $chart_type_info = chart_get_type($this->options['type']);
     if ($chart_type_info['axis'] === CHARTS_SINGLE_AXIS) {
       $data_field_key = key($data_fields);
@@ -212,10 +197,9 @@ class ChartsPluginStyleChart extends StylePluginBase {
         // Convert empty strings to NULL.
         if ($value === '') {
           $value = NULL;
-        }
-        // Strip thousands placeholders if present, then cast to float.
+        } // Strip thousands placeholders if present, then cast to float.
         else {
-          $value = (float) str_replace(array(',', ' '), '', $value);
+          $value = (float)str_replace(array(',', ' '), '', $value);
         }
         $data_row[] = $value;
         $data[] = $data_row;
@@ -225,42 +209,19 @@ class ChartsPluginStyleChart extends StylePluginBase {
         $chart['#legend_title'] = $label_field->options['label'];
       }
 
-      $chart[$this->view->current_display . '_series'] = array(
-        '#type' => 'chart_data',
-        '#data' => $data,
-        '#title' => $data_field->options['label'],
-      );
+      $chart[$this->view->current_display . '_series'] = array('#type' => 'chart_data', '#data' => $data, '#title' => $data_field->options['label'],);
 
-    }
-    else {
-      $chart['xaxis'] = array(
-        '#type' => 'chart_xaxis',
-        '#title' => $this->options['xaxis_title'] ? $this->options['xaxis_title'] : FALSE,
-        '#labels_rotation' => $this->options['xaxis_labels_rotation'],
-      );
-      $chart['yaxis'] = array(
-        '#type' => 'chart_yaxis',
-        '#title' => $this->options['yaxis_title'] ? $this->options['yaxis_title'] : FALSE,
-        '#labels_rotation' => $this->options['yaxis_labels_rotation'],
-        '#max' => $this->options['yaxis_max'],
-        '#min' => $this->options['yaxis_min'],
-      );
+    } else {
+      $chart['xaxis'] = array('#type' => 'chart_xaxis', '#title' => $this->options['xaxis_title'] ? $this->options['xaxis_title'] : FALSE, '#labels_rotation' => $this->options['xaxis_labels_rotation'],);
+      $chart['yaxis'] = array('#type' => 'chart_yaxis', '#title' => $this->options['yaxis_title'] ? $this->options['yaxis_title'] : FALSE, '#labels_rotation' => $this->options['yaxis_labels_rotation'], '#max' => $this->options['yaxis_max'], '#min' => $this->options['yaxis_min'],);
 
       $sets = $this->renderGrouping($this->view->result, $this->options['grouping'], TRUE);
       foreach ($sets as $series_label => $data_set) {
         $series_index = isset($series_index) ? $series_index + 1 : 0;
         $series_key = $this->view->current_display . '__' . $field_key . '_' . $series_index;
         foreach ($data_fields as $field_key => $field_handler) {
-          $chart[$series_key] = array(
-            '#type' => 'chart_data',
-            '#data' => array(),
-            // If using a grouping field, inherit from the chart level colors.
-            '#color' => ($series_label === '' && isset($this->options['field_colors'][$field_key])) ? $this->options['field_colors'][$field_key] : NULL,
-            '#title' => $series_label ? $series_label : $field_handler->options['label'],
-            '#prefix' => $this->options['yaxis_prefix'] ? $this->options['yaxis_prefix'] : NULL,
-            '#suffix' => $this->options['yaxis_suffix'] ? $this->options['yaxis_suffix'] : NULL,
-            '#decimal_count' => $this->options['yaxis_decimal_count'] ? $this->options['yaxis_decimal_count'] : NULL,
-          );
+          $chart[$series_key] = array('#type' => 'chart_data', '#data' => array(), // If using a grouping field, inherit from the chart level colors.
+            '#color' => ($series_label === '' && isset($this->options['field_colors'][$field_key])) ? $this->options['field_colors'][$field_key] : NULL, '#title' => $series_label ? $series_label : $field_handler->options['label'], '#prefix' => $this->options['yaxis_prefix'] ? $this->options['yaxis_prefix'] : NULL, '#suffix' => $this->options['yaxis_suffix'] ? $this->options['yaxis_suffix'] : NULL, '#decimal_count' => $this->options['yaxis_decimal_count'] ? $this->options['yaxis_decimal_count'] : NULL,);
         }
 
         // Grouped results come back indexed by their original result number
@@ -281,10 +242,9 @@ class ChartsPluginStyleChart extends StylePluginBase {
             // Convert empty strings to NULL.
             if ($value === '') {
               $value = NULL;
-            }
-            // Strip thousands placeholders if present, then cast to float.
+            } // Strip thousands placeholders if present, then cast to float.
             else {
-              $value = (float) str_replace(array(',', ' '), '', $value);
+              $value = (float)str_replace(array(',', ' '), '', $value);
             }
             $chart[$series_key]['#data'][] = $value;
           }
@@ -317,12 +277,9 @@ class ChartsPluginStyleChart extends StylePluginBase {
       $subview->setDisplay($child_display);
       //   Copy the settings for our axes over to the child view.
       foreach ($this->options as $option_name => $option_value) {
-        if (strpos($option_name, 'yaxis') === 0
-          && $this->view->storage->getDisplay($child_display)['display_options']['inherit_yaxis']
-        ) {
+        if (strpos($option_name, 'yaxis') === 0 && $this->view->storage->getDisplay($child_display)['display_options']['inherit_yaxis']) {
           $subview->display_handler->options['style_options'][$option_name] = $option_value;
-        }
-        elseif (strpos($option_name, 'xaxis') === 0) {
+        } elseif (strpos($option_name, 'xaxis') === 0) {
           $subview->display_handler->options['style_options'][$option_name] = $option_value;
         }
       }
@@ -342,9 +299,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
       unset($subview);*/
 
       //     Create a secondary axis if needed.
-      if ($this->view->storage->getDisplay($child_display)['display_options']['inherit_yaxis'] !== '1'
-        && isset($subchart['yaxis'])
-      ) {
+      if ($this->view->storage->getDisplay($child_display)['display_options']['inherit_yaxis'] !== '1' && isset($subchart['yaxis'])) {
         $chart['secondary_yaxis'] = $subchart['yaxis'];
         $chart['secondary_yaxis']['#opposite'] = TRUE;
       }
@@ -367,6 +322,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
       }
     }
     $service->setAttachmentViews($attachments);
+
     // Print the chart.
     return $chart;
   }
@@ -374,7 +330,8 @@ class ChartsPluginStyleChart extends StylePluginBase {
   /**
    * Utility function to check if this chart has a parent display.
    */
-  function get_parent_chart_display() {
+  function get_parent_chart_display()
+  {
     $parent_display = FALSE;
 
     return $parent_display;
@@ -383,9 +340,11 @@ class ChartsPluginStyleChart extends StylePluginBase {
   /**
    * Utility function to check if this chart has children displays.
    */
-  function getChildrenChartDisplays() {
+  function getChildrenChartDisplays()
+  {
 
     $children_displays = $this->displayHandler->getAttachedDisplays();
+
     return $children_displays;
   }
 }
