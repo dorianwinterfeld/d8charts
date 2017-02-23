@@ -1,8 +1,10 @@
 <?php
+
 /**
  * @file
  * Charts module integration with Google Charts library.
  */
+
 use Drupal\charts_google\Settings\Google\GoogleOptions;
 use Drupal\charts_google\Settings\Google\ChartType;
 use Drupal\charts_google\Settings\Google\ChartArea;
