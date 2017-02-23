@@ -22,7 +22,6 @@ use Drupal\views\Plugin\views\style\StylePluginBase;
  *   theme = "views_view_charts",
  *   display_types = { "normal" }
  * )
- *
  */
 class ChartsPluginStyleChart extends StylePluginBase {
 
@@ -170,12 +169,10 @@ class ChartsPluginStyleChart extends StylePluginBase {
         $data_fields[$field_key] = $field_handlers[$field_key];
       }
     }
-
     // Do not allow the label field to be used as a data field.
     if (isset($data_fields[$label_field_key])) {
       unset($data_fields[$label_field_key]);
     }
-
     $chart_id = $this->view->id() . '__' . $this->view->current_display;
     $chart = array(
       '#type' => 'chart',
