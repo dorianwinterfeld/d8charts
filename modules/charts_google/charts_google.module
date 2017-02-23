@@ -76,8 +76,8 @@ function createGoogleChartsOptions($options, $seriesData = array()) {
     $seriesColor = $seriesData[$i]['color'];
     array_push($seriesColors, $seriesColor);
   }
-
   $googleOptions->setColors($seriesColors);
+
   return $googleOptions;
 }
 
