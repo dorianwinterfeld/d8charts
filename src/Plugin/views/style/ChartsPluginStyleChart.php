@@ -32,8 +32,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
   /**
    * Set default options.
    */
-  protected function defineOptions()
-  {
+  protected function defineOptions() {
     $options = parent::defineOptions();
 
     // Get the default chart values.
@@ -57,8 +56,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
   /**
    * {@inheritdoc}
    */
-  public function buildOptionsForm(&$form, FormStateInterface $form_state)
-  {
+  public function buildOptionsForm(&$form, FormStateInterface $form_state) {
     parent::buildOptionsForm($form, $form_state);
 
     $handlers = $this->displayHandler->getHandlers('field');
@@ -107,8 +105,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
   /**
    * {@inheritdoc}
    */
-  public function submitOptionsForm(&$form, FormStateInterface $form_state)
-  {
+  public function submitOptionsForm(&$form, FormStateInterface $form_state) {
     parent::submitOptionsForm($form, $form_state);
   }
 
@@ -116,8 +113,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
   /**
    * {@inheritdoc}
    */
-  public function validate()
-  {
+  public function validate() {
 
     $errors = parent::validate();
     $dataFields = $this->options['data_fields'];
@@ -151,8 +147,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
   /**
    * {@inheritdoc}
    */
-  public function render()
-  {
+  public function render() {
 
     $field_handlers = $this->view->getHandlers('field');
 
@@ -330,8 +325,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
   /**
    * Utility function to check if this chart has a parent display.
    */
-  function get_parent_chart_display()
-  {
+  function get_parent_chart_display() {
     $parent_display = FALSE;
 
     return $parent_display;
@@ -340,8 +334,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
   /**
    * Utility function to check if this chart has children displays.
    */
-  function getChildrenChartDisplays()
-  {
+  function getChildrenChartDisplays() {
 
     $children_displays = $this->displayHandler->getAttachedDisplays();
 

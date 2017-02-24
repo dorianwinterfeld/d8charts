@@ -1,11 +1,9 @@
 <?php
+
 /**
  * @file
  * Provides elements for rendering charts and Views integration.
  */
-
-use Drupal\Core\Render\Element;
-use Drupal\Core\Render\Element\RenderElement;
 
 
 /**
@@ -157,87 +155,6 @@ function charts_permission() {
   );
 }
 
-
-/**
- * Main #pre_render callback to expand a chart element.
- * @param $element
- * @return
- */
-//function preRenderChart($element)
-//{
-//function charts_pre_render_element($element) {
-//  $charts_info = charts_info();
-//  $chart_library = isset($element['#chart_library']) ? $element['#chart_library'] : NULL;
-//  // Use the first charting library if the requested library is not available.
-//  if (isset($chart_library) && isset($charts_info[$chart_library])) {
-//    $chart_library_info = $charts_info[$chart_library];
-//  } else {
-//    $chart_library = key($charts_info);
-//    $chart_library_info = $charts_info[$chart_library];
-//  }
-//
-//  if (!isset($chart_library_info)) {
-//    $element['#type'] = 'markup';
-//    $element['#markup'] = t('No charting library found. Enable a charting module such as Google Charts or Highcharts.');
-//    return $element;
-//  }
-//
-//  // Ensure there's an x and y axis to provide defaults.
-//  $chart_type = chart_get_type($element['#chart_type']);
-//
-//  if ($chart_type['axis'] === CHARTS_DUAL_AXIS) {
-////    foreach (\Drupal::state()->getMultiple($element) as $key) { //element_children
-//      foreach (Element::children($element) as $key) {
-//
-//      $children_types[] = $element[$key]['#type'];
-//
-//    }
-//    if (!in_array('chart_xaxis', $children_types)) {
-//      $element['xaxis'] = array('#type' => 'chart_xaxis');
-//    }
-//    if (!in_array('chart_yaxis', $children_types)) {
-//      $element['yaxis'] = array('#type' => 'chart_yaxis');
-//    }
-//  }
-//
-//  // Convert integer properties to save library modules the hassle.
-//  charts_cast_element_integer_values($element);
-//
-//  // Generic theme function assuming it will be suitable for most chart types.
-//  $element['#theme'] = 'charts_chart';
-//
-//  // Allow the chart to be altered.
-//  $alter_hooks = array('chart');
-//  if ($element['#chart_id']) {
-//    $alter_hooks[] = 'chart_' . $element['#chart_id'];
-//  }
-//  Drupal::moduleHandler()->alter($alter_hooks, $element, $element['#chart_id']);
-//
-//  // Include the library specific file and render via their callback.
-//  if (isset($chart_library_info['file'])) {
-//    $charting_module_name = $chart_library_info['module'];
-////    include_once $module_path . '/' . $chart_library_info['file'];
-//    module_load_include('inc', $charting_module_name, $charting_module_name);
-//  }
-//  $callback = $chart_library_info['render'];
-//  $element = $callback($element);
-//
-//  if (!empty($element['#chart_definition'])) {
-//    $chart_definition = $element['#chart_definition'];
-//    unset($element['#chart_definition']);
-//
-//    // Allow the chart definition to be altered.
-//    $alter_hooks = array('chart_definition');
-//    if ($element['#chart_id']) {
-//      $alter_hooks[] = 'chart_definition_' . $element['#chart_id'];
-//    }
-//    Drupal::moduleHandler()->alter($alter_hooks, $chart_definition, $element, $element['#chart_id']);
-//
-//    // Set the element #chart_json property as a data-attribute.
-//    $element['#attributes']['data-chart'] = json_encode($chart_definition);
-//  }
-//  return $element;
-//}
 /**
  * Retrieve a list of all charting libraries available.
  *
