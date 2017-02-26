@@ -3,6 +3,14 @@
 namespace Drupal\charts\Util;
 
 class Util {
+
+  /**
+   * @param $view
+   * @param $labelValues
+   * @param $labelField
+   * @param $color
+   * @return array
+   */
   public static function viewsData($view, $labelValues, $labelField, $color) {
     $data = array();
 
@@ -13,7 +21,7 @@ class Util {
         $rowData[$numberFields] = array(
           'value' => $view->field[$fieldId]->getValue($row),
           'label_field' => $view->field[$labelField]->getValue($row),
-          //'label' => $view->field[$fieldId]->label(),
+          // 'label' => $view->field[$fieldId]->label(),
           'label' => $view->display_handler->display['id'],
           'color' => $color[$fieldId],
         );
@@ -25,9 +33,10 @@ class Util {
     return $data;
   }
 
-  /*
+  /**
    * Removes unselected fields
    */
+
   public static function removeUnselectedFields($valueField) {
     $fieldValues = array();
     foreach ($valueField as $key => $value) {
@@ -38,9 +47,10 @@ class Util {
     return $fieldValues;
   }
 
-  /*
+  /**
    * Creates chart data to be used later by visualization frameworks
    */
+
   public static function createChartableData($data) {
     $chartData = array();
     $categories = array();
@@ -53,7 +63,7 @@ class Util {
         $categories[$j] = $data[$j][$i]['label_field'];
         $seriesRowData['name'] = $data[$j][$i]['label'];
 
-        //$seriesRowData['name'] = $data[$j][$i]['label_field'];
+        // $seriesRowData['name'] = $data[$j][$i]['label_field'];
         $seriesRowData['color'] = $data[$j][$i]['color'];
         array_push($seriesRowData['data'], ((int) ($data[$j][$i]['value'])));
       }
@@ -64,4 +74,5 @@ class Util {
 
     return $chartData;
   }
+
 }

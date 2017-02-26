@@ -5,7 +5,7 @@ namespace Drupal\charts\Services;
 /**
  * Class ChartAttachmentService
  *
- * @package Drupal\charts\Services
+ * @package Drupal\charts\Services.
  */
 
 class ChartAttachmentService implements ChartAttachmentServiceInterface {
@@ -21,7 +21,7 @@ class ChartAttachmentService implements ChartAttachmentServiceInterface {
   }
 
   /**
-   * @param $attachmentViews is an array of views
+   * @param $attachmentViews is an array of views.
    */
   public function setAttachmentViews($attachmentViews) {
     $this->attachmentViews = $attachmentViews;
