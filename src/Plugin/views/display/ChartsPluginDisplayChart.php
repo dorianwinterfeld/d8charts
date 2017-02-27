@@ -30,8 +30,7 @@ class ChartsPluginDisplayChart extends Attachment {
   /**
    * {@inheritdoc}
    */
-  protected function defineOptions()
-  {
+  protected function defineOptions() {
     $options = parent::defineOptions();
     $options['style_plugin']['default'] = 'chart';
     $options['inherit_yaxis'] = array('default' => '1');
@@ -40,8 +39,7 @@ class ChartsPluginDisplayChart extends Attachment {
 
   }
 
-  public function execute()
-  {
+  public function execute() {
     return $this->view->render($this->display['id']);
   }
 
@@ -53,16 +51,20 @@ class ChartsPluginDisplayChart extends Attachment {
    * @param $categories
    * @param $options
    */
-  public function optionsSummary(&$categories, &$options)
-  {
+  public function optionsSummary(&$categories, &$options) {
     // It is very important to call the parent function here:
     parent::optionsSummary($categories, $options);
 
-    $categories['attachment'] = ['title' => t('Chart settings'), 'column' => 'second', 'build' => ['#weight' => -10,],];
+    $categories['attachment'] = [
+      'title' => t('Chart settings'),
+      'column' => 'second',
+      'build' => ['#weight' => -10,],
+    ];
     $displays = array_filter($this->getOption('displays'));
     if (count($displays) > 1) {
       $attach_to = $this->t('Multiple displays');
-    } elseif (count($displays) == 1) {
+    }
+    elseif (count($displays) == 1) {
       $display = array_shift($displays);
       if ($display = $this->view->storage->getDisplay($display)) {
         $attach_to = $display['display_title'];
@@ -71,9 +73,17 @@ class ChartsPluginDisplayChart extends Attachment {
     if (!isset($attach_to)) {
       $attach_to = $this->t('Not defined');
     }
-    $options['displays'] = array('category' => 'attachment', 'title' => $this->t('Parent display'), 'value' => $attach_to,);
+    $options['displays'] = array(
+      'category' => 'attachment',
+      'title' => $this->t('Parent display'),
+      'value' => $attach_to,
+    );
 
-    $options['inherit_yaxis'] = array('category' => 'attachment', 'title' => $this->t('Axis settings'), 'value' => $this->getOption('inherit_yaxis') ? t('Use primary Y-axis') : t('Create secondary axis'),);
+    $options['inherit_yaxis'] = array(
+      'category' => 'attachment',
+      'title' => $this->t('Axis settings'),
+      'value' => $this->getOption('inherit_yaxis') ? t('Use primary Y-axis') : t('Create secondary axis'),
+    );
 
     $options['attachment_position'] = array('disabled' => TRUE);
 
@@ -89,8 +99,7 @@ class ChartsPluginDisplayChart extends Attachment {
    * @param $form
    * @param FormStateInterface $form_state
    */
-  public function buildOptionsForm(&$form, FormStateInterface $form_state)
-  {
+  public function buildOptionsForm(&$form, FormStateInterface $form_state) {
     parent::buildOptionsForm($form, $form_state);
 
     switch ($form_state->get('section')) {
@@ -99,7 +108,16 @@ class ChartsPluginDisplayChart extends Attachment {
         break;
       case 'inherit_yaxis':
         $form['#title'] .= t('Axis settings');
-        $form['inherit_yaxis'] = array('#title' => t('Y-Axis settings'), '#type' => 'radios', '#options' => array(1 => t('Inherit primary of parent display'), 0 => t('Create a secondary axis'),), '#default_value' => $this->getOption('inherit_yaxis'), '#description' => t('In most charts, the X and Y axis from the parent display are both shared with each attached child chart. However, if this chart is going to use a different unit of measurement, a secondary axis may be added on the opposite side of the normal Y-axis.'),);
+        $form['inherit_yaxis'] = array(
+          '#title' => t('Y-Axis settings'),
+          '#type' => 'radios',
+          '#options' => array(
+            1 => t('Inherit primary of parent display'),
+            0 => t('Create a secondary axis'),
+          ),
+          '#default_value' => $this->getOption('inherit_yaxis'),
+          '#description' => t('In most charts, the X and Y axis from the parent display are both shared with each attached child chart. However, if this chart is going to use a different unit of measurement, a secondary axis may be added on the opposite side of the normal Y-axis.'),
+        );
         break;
     }
 
@@ -113,8 +131,7 @@ class ChartsPluginDisplayChart extends Attachment {
    * @param $form
    * @param FormStateInterface $form_state
    */
-  public function submitOptionsForm(&$form, FormStateInterface $form_state)
-  {
+  public function submitOptionsForm(&$form, FormStateInterface $form_state) {
     // It is very important to call the parent function here:
     parent::submitOptionsForm($form, $form_state);
     $section = $form_state->get('section');
@@ -134,8 +151,7 @@ class ChartsPluginDisplayChart extends Attachment {
   /**
    * {@inheritdoc}
    */
-  public function attachTo(ViewExecutable $view, $display_id, array &$build)
-  {
+  public function attachTo(ViewExecutable $view, $display_id, array &$build) {
 
     $displays = $this->getOption('displays');
     if (empty($displays[$display_id])) {

@@ -7,8 +7,7 @@
 /**
  * Implements hook_requirements().
  */
-function charts_requirements($phase)
-{
+function charts_requirements($phase) {
   $requirements = array();
   // if ($phase == 'runtime' && !charts_info()) {
   /* $requirements['charts'] = array(

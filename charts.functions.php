@@ -5,7 +5,6 @@
  * Provides elements for rendering charts and Views integration.
  */
 
-
 /**
  * Constant used in hook_charts_type_info() to declare chart types with a single
  * axis. For example a pie chart only has a single dimension.

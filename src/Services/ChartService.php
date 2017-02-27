@@ -27,7 +27,7 @@ class ChartService implements ChartServiceInterface {
   /**
    * Sets the previously set Library with the newly selected library value.
    *
-   * @param String $librarySelected.
+   * @param String $librarySelected .
    */
   public function setLibrarySelected($librarySelected) {
     $this->librarySelected = $librarySelected;
