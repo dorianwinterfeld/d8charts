@@ -175,7 +175,7 @@ function _charts_highcharts_populate_chart_axes($chart, $chart_definition) {
       // Highcharts. We want the label to be reasonably positioned on the
       // outside of the chart when labels are rotated.
       if ($axis['labels']['rotation']) {
-        $chart_type = chart_get_type($chart['#chart_type']);
+        $chart_type = charts_get_type($chart['#chart_type']);
         if ($axisType === 'xAxis' && !$chart_type['axis_inverted']) {
           $axis['labels']['align'] = 'left';
         }

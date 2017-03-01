@@ -193,7 +193,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
       // Pass info about the actual view results to allow further processing
       '#theme' => 'views_view_charts',
     );
-    $chart_type_info = chart_get_type($this->options['type']);
+    $chart_type_info = charts_get_type($this->options['type']);
     if ($chart_type_info['axis'] === CHARTS_SINGLE_AXIS) {
       $data_field_key = key($data_fields);
       $data_field = $data_fields[$data_field_key];
@@ -292,13 +292,9 @@ class ChartsPluginStyleChart extends StylePluginBase {
 
     // Check if this display has any children charts that should be applied
     // on top of it.
-    /*if($this->pluginDefinition['id'] === 'chart'
-          && $this->displayHandler->pluginDefinition['id'] !== 'chart_extension') {
-        $parent_display_id = $this->displayHandler->display['id'];
-    }*/
-
     $children_displays = $this->getChildrenChartDisplays();
-    $attachments = array(); //contains the different subviews of the attachments
+    //contains the different subviews of the attachments
+    $attachments = array();
     $service = \Drupal::service('charts.charts_attachment');
 
     foreach ($children_displays as $child_display) {

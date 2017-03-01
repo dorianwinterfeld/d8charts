@@ -24,7 +24,7 @@ define('CHARTS_DUAL_AXIS', 'xy');
 /**
  * @return mixed
  */
-function getInfo() {
+function charts_get_info() {
 
   $info['chart'] = array(
     '#chart_type' => NULL,
@@ -181,7 +181,7 @@ function charts_info() {
  * @param $library
  * @return bool|mixed
  */
-function chart_get_library($library) {
+function charts_get_library($library) {
 
   $info = charts_info();
   return $info[$library] ? $info[$library] : FALSE;
@@ -214,7 +214,7 @@ function charts_type_info() {
  * @param $chart_type
  * @return bool
  */
-function chart_get_type($chart_type) {
+function charts_get_type($chart_type) {
   $types = charts_type_info();
   return ($types[$chart_type]) ? $types[$chart_type] : FALSE;
 }

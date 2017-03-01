@@ -63,7 +63,7 @@ function charts_google_render_charts($categories = array(), $seriesData = array(
  * @param array $seriesData
  * @return GoogleOptions object with chart options or settings to be used by google visualization framework
  */
-function createGoogleChartsOptions($options, $seriesData = array()) {
+function charts_google_create_charts_options($options, $seriesData = array()) {
 
   $googleOptions = new GoogleOptions();
   $googleOptions->setTitle($options['title']);
@@ -80,7 +80,7 @@ function createGoogleChartsOptions($options, $seriesData = array()) {
   return $googleOptions;
 }
 
-function createGoogleChartType($options) {
+function charts_google_create_chart_type($options) {
 
   $googleChartType = new ChartType();
   $googleChartType->setChartType($options['type']);

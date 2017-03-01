@@ -61,8 +61,8 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
     '#attributes' => array(
       'class' => array(
         'chart-type-radios',
-        'container-inline'
-      )
+        'container-inline',
+      ),
     ),
     '#parents' => array_merge($parents, array('type')),
   );
@@ -221,7 +221,7 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
       'step' => 1,
       'min' => 0,
       'max' => 9999,
-      'placeholder' => t('auto')
+      'placeholder' => t('auto'),
     ),
     '#default_value' => $options['width'],
     '#size' => 8,
@@ -236,7 +236,7 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
       'step' => 1,
       'min' => 0,
       'max' => 9999,
-      'placeholder' => t('auto')
+      'placeholder' => t('auto'),
     ),
     '#default_value' => $options['height'],
     '#size' => 8,
@@ -296,7 +296,7 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
     '#attributes' => array(
       'TYPE' => 'number',
       'max' => 999999,
-      'placeholder' => t('Minimum')
+      'placeholder' => t('Minimum'),
     ),
     '#default_value' => $options['yaxis_min'],
     '#size' => 12,
@@ -309,7 +309,7 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
     '#attributes' => array(
       'TYPE' => 'number',
       'max' => 999999,
-      'placeholder' => t('Maximum')
+      'placeholder' => t('Maximum'),
     ),
     '#default_value' => $options['yaxis_max'],
     '#size' => 12,
@@ -338,7 +338,7 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
       'step' => 1,
       'min' => 0,
       'max' => 20,
-      'placeholder' => t('auto')
+      'placeholder' => t('auto'),
     ),
     '#default_value' => $options['yaxis_decimal_count'],
     '#size' => 5,
@@ -366,13 +366,14 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
 
 /**
  * Menu callback; Configure the site-wide defaults for charts.
+ *
  * @param $form
  * @param $form_state
  * @return mixed
  */
 function charts_default_settings_form($form, $form_state) {
   $defaults = \Drupal::state()
-    ->get('charts_default_settings', array());  //was variable_get
+    ->get('charts_default_settings', array());
   $defaults += charts_default_settings();
   $field_options = array();
   $parents = array('charts_default_settings');

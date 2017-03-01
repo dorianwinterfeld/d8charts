@@ -86,8 +86,8 @@ function template_preprocess_views_view_charts(&$variables) {
   switch ($library) {
     case 'google':
       $googleData = charts_google_render_charts($categories, $seriesData);
-      $googleOptions = createGoogleChartsOptions($options, $seriesData);
-      $googleChartType = createGoogleChartType($options);
+      $googleOptions = charts_google_create_charts_options($options, $seriesData);
+      $googleChartType = charts_google_create_chart_type($options);
       $variables['chart_type'] = 'google';
       $variables['attributes']['class'][0] = 'chart-google';
       $variables['content_attributes']['data-chart'][] = $googleData;

@@ -131,7 +131,7 @@ function _charts_google_populate_chart_axes($chart, $chart_definition) {
       $axis['viewWindow']['min'] = strlen($chart[$key]['#min']) ? (int) $chart[$key]['#min'] : NULL;
 
       // Multi-axis support only applies to the major axis in Google charts.
-      $chart_type_info = chart_get_type($chart['#chart_type']);
+      $chart_type_info = charts_get_type($chart['#chart_type']);
       $axis_index = $chart[$key]['#opposite'] ? 1 : 0;
       if ($chart[$key]['#type'] === 'chart_xaxis') {
         $axis_keys = !$chart_type_info['axis_inverted'] ? array('hAxis') : array(
@@ -161,7 +161,7 @@ function _charts_google_populate_chart_axes($chart, $chart_definition) {
  */
 function _charts_google_populate_chart_data(&$chart, $chart_definition) {
   $chart_definition['options']['series'] = array();
-  $chart_type_info = chart_get_type($chart['#chart_type']);
+  $chart_type_info = charts_get_type($chart['#chart_type']);
   $series_number = 0;
   foreach (element_children($chart) as $key) {
     if ($chart[$key]['#type'] === 'chart_data') {

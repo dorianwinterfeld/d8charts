@@ -70,4 +70,5 @@ class ChartData implements \JsonSerializable {
 
     return $vars;
   }
+
 }
