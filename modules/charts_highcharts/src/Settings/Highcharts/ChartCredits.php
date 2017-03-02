@@ -19,9 +19,13 @@ class ChartCredits implements \JsonSerializable {
     $this->enabled = $enabled;
   }
 
+  /**
+   * @return array
+   */
   public function jsonSerialize() {
     $vars = get_object_vars($this);
 
     return $vars;
   }
+
 }

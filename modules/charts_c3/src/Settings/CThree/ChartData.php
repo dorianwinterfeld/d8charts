@@ -2,7 +2,6 @@
 
 namespace Drupal\charts_c3\Settings\CThree;
 
-
 class ChartData implements \JsonSerializable {
   private $columns = array();
   private $type;
@@ -65,6 +64,9 @@ class ChartData implements \JsonSerializable {
     $this->labels = $labels;
   }
 
+  /**
+   * @return array
+   */
   public function jsonSerialize() {
     $vars = get_object_vars($this);
 

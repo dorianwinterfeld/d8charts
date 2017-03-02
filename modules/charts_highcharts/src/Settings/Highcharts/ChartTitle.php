@@ -2,7 +2,6 @@
 
 namespace Drupal\charts_highcharts\Settings\Highcharts;
 
-
 class ChartTitle implements \JsonSerializable {
   private $text;
 
@@ -20,9 +19,13 @@ class ChartTitle implements \JsonSerializable {
     $this->text = $text;
   }
 
+  /**
+   * @return array
+   */
   public function jsonSerialize() {
     $vars = get_object_vars($this);
 
     return $vars;
   }
+
 }

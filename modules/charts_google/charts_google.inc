@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Callbacks and utility functions for rendering a Google Chart.
@@ -12,6 +13,7 @@
  *
  * @param array $chart
  *   The chart renderable.
+ *
  * @return
  *   The modified chart renderable, with necessary #attached, #theme, and
  *   similar properties prepared for rendering.
@@ -136,13 +138,13 @@ function _charts_google_populate_chart_axes($chart, $chart_definition) {
       if ($chart[$key]['#type'] === 'chart_xaxis') {
         $axis_keys = !$chart_type_info['axis_inverted'] ? array('hAxis') : array(
           'vAxes',
-          $axis_index
+          $axis_index,
         );
       }
       else {
         $axis_keys = !$chart_type_info['axis_inverted'] ? array(
           'vAxes',
-          $axis_index
+          $axis_index,
         ) : array('hAxis');
       }
       $axis_drilldown = &$chart_definition['options'];
@@ -314,4 +316,5 @@ function _charts_google_populate_chart_data(&$chart, $chart_definition) {
  */
 function _charts_google_escape_icu_characters($string) {
   return preg_replace('/([0-9@#\.\-,E\+;%\'\*])/', "'$1'", $string);
+
 }

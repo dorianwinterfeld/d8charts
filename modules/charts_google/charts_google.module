@@ -26,7 +26,8 @@ function charts_google_charts_info() {
  * Creates a JSON Object formatted for Google charts to use
  * @param array $categories
  * @param array $seriesData
- * @return json object to be used by google visualization framework
+ *
+ * @return json|string
  */
 function charts_google_render_charts($categories = array(), $seriesData = array()) {
 
@@ -69,7 +70,7 @@ function charts_google_create_charts_options($options, $seriesData = array()) {
   $googleOptions->setTitle($options['title']);
   $chartArea = new ChartArea();
   $chartArea->setWidth(400);
-  //$googleOptions->setChartArea($chartArea);
+  // $googleOptions->setChartArea($chartArea);
   $seriesColors = array();
   for ($i = 0; $i < count($seriesData); $i++) {
     $seriesColor = $seriesData[$i]['color'];
@@ -80,6 +81,10 @@ function charts_google_create_charts_options($options, $seriesData = array()) {
   return $googleOptions;
 }
 
+/**
+ * @param $options
+ * @return ChartType
+ */
 function charts_google_create_chart_type($options) {
 
   $googleChartType = new ChartType();

@@ -19,9 +19,13 @@ class ChartType implements \JsonSerializable {
     $this->type = $type;
   }
 
+  /**
+   * @return array
+   */
   public function jsonSerialize() {
     $vars = get_object_vars($this);
 
     return $vars;
   }
+
 }

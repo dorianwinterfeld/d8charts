@@ -2,7 +2,6 @@
 
 namespace Drupal\charts_highcharts\Settings\Highcharts;
 
-
 class Tooltip implements \JsonSerializable {
   private $valueSuffix = '';
 
@@ -20,9 +19,13 @@ class Tooltip implements \JsonSerializable {
     $this->valueSuffix = $valueSuffix;
   }
 
+  /**
+   * @return array
+   */
   public function jsonSerialize() {
     $vars = get_object_vars($this);
 
     return $vars;
   }
+
 }

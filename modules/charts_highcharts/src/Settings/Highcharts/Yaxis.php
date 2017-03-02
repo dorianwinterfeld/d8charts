@@ -2,10 +2,8 @@
 
 namespace Drupal\charts_highcharts\Settings\Highcharts;
 
-
 class Yaxis implements \JsonSerializable {
   private $min;
-  //private $max;
   private $title;
   private $labels = '';
 
@@ -51,9 +49,13 @@ class Yaxis implements \JsonSerializable {
     $this->labels = $labels;
   }
 
+  /**
+   * @return array
+   */
   public function jsonSerialize() {
     $vars = get_object_vars($this);
 
     return $vars;
   }
+
 }

@@ -2,7 +2,6 @@
 
 namespace Drupal\charts_highcharts\Settings\Highcharts;
 
-
 class DataLabelStatus implements \JsonSerializable {
   private $enabled = TRUE;
 
@@ -20,9 +19,13 @@ class DataLabelStatus implements \JsonSerializable {
     $this->enabled = $enabled;
   }
 
+  /**
+   * @return array
+   */
   public function jsonSerialize() {
     $vars = get_object_vars($this);
 
     return $vars;
   }
+
 }

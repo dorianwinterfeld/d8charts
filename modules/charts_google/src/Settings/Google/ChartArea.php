@@ -19,9 +19,13 @@ class ChartArea implements \JsonSerializable {
     $this->width = $width;
   }
 
+  /**
+   * @return array
+   */
   public function jsonSerialize() {
     $vars = get_object_vars($this);
 
     return $vars;
   }
+
 }

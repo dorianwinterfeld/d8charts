@@ -2,7 +2,6 @@
 
 namespace Drupal\charts_highcharts\Settings\Highcharts;
 
-
 class YaxisTitle extends ChartTitle implements \JsonSerializable {
 
   private $text;
@@ -21,9 +20,13 @@ class YaxisTitle extends ChartTitle implements \JsonSerializable {
     $this->text = $text;
   }
 
+  /**
+   * @return array
+   */
   public function jsonSerialize() {
     $vars = get_object_vars($this);
 
     return $vars;
   }
+
 }

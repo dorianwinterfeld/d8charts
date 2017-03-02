@@ -2,7 +2,6 @@
 
 namespace Drupal\charts_highcharts\Settings\Highcharts;
 
-
 class DataLabels implements \JsonSerializable {
   private $dataLabels;
 
@@ -20,9 +19,13 @@ class DataLabels implements \JsonSerializable {
     $this->dataLabels = $dataLabels;
   }
 
+  /**
+   * @return array
+   */
   public function jsonSerialize() {
     $vars = get_object_vars($this);
 
     return $vars;
   }
+
 }

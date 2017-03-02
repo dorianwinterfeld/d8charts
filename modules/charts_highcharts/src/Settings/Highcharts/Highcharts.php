@@ -140,9 +140,13 @@ class Highcharts implements \JsonSerializable {
 
   private $series;
 
+  /**
+   * @return array
+   */
   public function jsonSerialize() {
     $vars = get_object_vars($this);
 
     return $vars;
   }
+
 }

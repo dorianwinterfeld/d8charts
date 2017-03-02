@@ -79,9 +79,13 @@ class GoogleOptions implements \JsonSerializable {
     $this->colors = $colors;
   }
 
+  /**
+   * @return array
+   */
   public function jsonSerialize() {
     $vars = get_object_vars($this);
 
     return $vars;
   }
+
 }

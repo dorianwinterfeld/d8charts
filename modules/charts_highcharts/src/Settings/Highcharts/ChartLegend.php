@@ -139,9 +139,13 @@ class ChartLegend implements \JsonSerializable {
     $this->shadow = $shadow;
   }
 
+  /**
+   * @return array
+   */
   public function jsonSerialize() {
     $vars = get_object_vars($this);
 
     return $vars;
   }
+
 }

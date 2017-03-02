@@ -2,7 +2,6 @@
 
 namespace Drupal\charts_c3\Settings\CThree;
 
-
 class ChartDimensions implements \JsonSerializable {
   private $ratio;
 
@@ -20,9 +19,13 @@ class ChartDimensions implements \JsonSerializable {
     $this->ratio = $ratio;
   }
 
+  /**
+   * @return array
+   */
   public function jsonSerialize() {
     $vars = get_object_vars($this);
 
     return $vars;
   }
+
 }

@@ -19,9 +19,13 @@ class Label implements \JsonSerializable {
     $this->rotation = $rotation;
   }
 
+  /**
+   * @return array
+   */
   public function jsonSerialize() {
     $vars = get_object_vars($this);
 
     return $vars;
   }
+
 }

@@ -72,10 +72,13 @@ class CThree implements \JsonSerializable {
     $this->color = $color;
   }
 
-
+  /**
+   * @return array
+   */
   public function jsonSerialize() {
     $vars = get_object_vars($this);
 
     return $vars;
   }
+
 }
