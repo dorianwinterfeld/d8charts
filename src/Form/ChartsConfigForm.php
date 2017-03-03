@@ -178,7 +178,7 @@ class ChartsConfigForm extends ConfigFormBase {
       '#attributes' => array(
         'class' => array(
           'chart-type-radios',
-          'container-inline'
+          'container-inline',
         )
       ),
       '#parents' => array_merge($parents, array('type')),
@@ -225,7 +225,7 @@ class ChartsConfigForm extends ConfigFormBase {
           '#default_value' => !empty($options['field_colors'][$field_name]) ? $options['field_colors'][$field_name] : $options['colors'][$color_count],
           '#parents' => array_merge($parents, array(
             'field_colors',
-            $field_name
+            $field_name,
           )),
         );
         $color_count++;
@@ -311,7 +311,7 @@ class ChartsConfigForm extends ConfigFormBase {
         'step' => 1,
         'min' => 0,
         'max' => 9999,
-        'placeholder' => $this->t('auto')
+        'placeholder' => $this->t('auto'),
       ),
       '#default_value' => $options['width'],
       '#size' => 8,
@@ -326,7 +326,7 @@ class ChartsConfigForm extends ConfigFormBase {
         'step' => 1,
         'min' => 0,
         'max' => 9999,
-        'placeholder' => $this->t('auto')
+        'placeholder' => $this->t('auto'),
       ),
       '#default_value' => $options['height'],
       '#size' => 8,
@@ -385,7 +385,7 @@ class ChartsConfigForm extends ConfigFormBase {
       '#attributes' => array(
         'TYPE' => 'number',
         'max' => 999999,
-        'placeholder' => $this->t('Minimum')
+        'placeholder' => $this->t('Minimum'),
       ),
       '#default_value' => $options['yaxis_min'],
       '#size' => 12,
@@ -398,7 +398,7 @@ class ChartsConfigForm extends ConfigFormBase {
       '#attributes' => array(
         'TYPE' => 'number',
         'max' => 999999,
-        'placeholder' => $this->t('Maximum')
+        'placeholder' => $this->t('Maximum'),
       ),
       '#default_value' => $options['yaxis_max'],
       '#size' => 12,
@@ -427,7 +427,7 @@ class ChartsConfigForm extends ConfigFormBase {
         'step' => 1,
         'min' => 0,
         'max' => 20,
-        'placeholder' => $this->t('auto')
+        'placeholder' => $this->t('auto'),
       ),
       '#default_value' => $options['yaxis_decimal_count'],
       '#size' => 5,

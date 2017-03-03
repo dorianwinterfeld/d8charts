@@ -129,8 +129,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
       if ($dataFieldsCounter > 0) {
         if (empty($value)) {
           array_push($dataFieldsValueState, 0);
-        }
-        else {
+        } else {
           array_push($dataFieldsValueState, 1);
         }
       }
@@ -213,7 +212,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
           $value = NULL;
         } // Strip thousands placeholders if present, then cast to float.
         else {
-          $value = (float) str_replace(array(',', ' '), '', $value);
+          $value = (float)str_replace(array(',', ' '), '', $value);
         }
         $data_row[] = $value;
         $data[] = $data_row;
@@ -229,8 +228,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
         '#title' => $data_field->options['label'],
       );
 
-    }
-    else {
+    } else {
       $chart['xaxis'] = array(
         '#type' => 'chart_xaxis',
         '#title' => $this->options['xaxis_title'] ? $this->options['xaxis_title'] : FALSE,
@@ -282,7 +280,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
               $value = NULL;
             } // Strip thousands placeholders if present, then cast to float.
             else {
-              $value = (float) str_replace(array(',', ' '), '', $value);
+              $value = (float)str_replace(array(',', ' '), '', $value);
             }
             $chart[$series_key]['#data'][] = $value;
           }
@@ -313,8 +311,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
       foreach ($this->options as $option_name => $option_value) {
         if (strpos($option_name, 'yaxis') === 0 && $this->view->storage->getDisplay($child_display)['display_options']['inherit_yaxis']) {
           $subview->display_handler->options['style_options'][$option_name] = $option_value;
-        }
-        elseif (strpos($option_name, 'xaxis') === 0) {
+        } elseif (strpos($option_name, 'xaxis') === 0) {
           $subview->display_handler->options['style_options'][$option_name] = $option_value;
         }
       }
