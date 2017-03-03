@@ -244,6 +244,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
         '#min' => $this->options['yaxis_min'],
       );
 
+      // @todo incorporate this patch: https://www.drupal.org/files/issues/charts_grouping-2146927-6.patch.
       $sets = $this->renderGrouping($this->view->result, $this->options['grouping'], TRUE);
       foreach ($sets as $series_label => $data_set) {
         $series_index = isset($series_index) ? $series_index + 1 : 0;

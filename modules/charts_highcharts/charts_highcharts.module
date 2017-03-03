@@ -57,8 +57,12 @@ function charts_highcharts_render_charts($options, $categories = array(), $serie
   $chartYaxis = new Yaxis();
   $yAxisTitle = new YaxisTitle();
   $yAxisTitle->setText($options['yaxis_title']);
-  $chartYaxis->setMin($options['yaxis_min']);
-  $chartYaxis->max = $options['yaxis_max'];
+  if (!empty($options['yaxis_min'])){
+      $chartYaxis->min = $options['yaxis_min'];
+  }
+  if (!empty($options['yaxis_max'])){
+      $chartYaxis->max = $options['yaxis_max'];
+  }
   $chartYaxis->setLabels($yaxisLabels);
   $chartYaxis->setTitle($yAxisTitle);
   $dataLabelStatus = new DataLabelStatus();

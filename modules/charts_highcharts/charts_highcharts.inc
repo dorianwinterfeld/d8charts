@@ -1,8 +1,10 @@
 <?php
+
 /**
  * @file
  * Callbacks and utility functions for rendering a Highcharts Chart.
  */
+
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 
@@ -52,7 +54,9 @@ function _charts_highcharts_render($chart) {
 
 /**
  * Utility to convert a Drupal renderable type to a Google visualization type.
+ *
  * @param $renderable_type
+ *
  * @return bool|mixed
  */
 function _charts_highcharts_type($renderable_type) {

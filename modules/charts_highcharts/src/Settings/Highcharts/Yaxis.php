@@ -3,23 +3,23 @@
 namespace Drupal\charts_highcharts\Settings\Highcharts;
 
 class Yaxis implements \JsonSerializable {
-  private $min;
+//  private $min;
   private $title;
   private $labels = '';
 
   /**
    * @return mixed
    */
-  public function getMin() {
-    return $this->min;
-  }
+//  public function getMin() {
+//    return $this->min;
+//  }
 
   /**
    * @param mixed $min
    */
-  public function setMin($min) {
-    $this->min = $min;
-  }
+//  public function setMin($min) {
+//    $this->min = $min;
+//  }
 
   /**
    * @return mixed
