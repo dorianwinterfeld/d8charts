@@ -6,12 +6,16 @@
  */
 
 /**
+ * Used to define a single axis.
+ *
  * Constant used in hook_charts_type_info() to declare chart types with a single
  * axis. For example a pie chart only has a single dimension.
  */
 define('CHARTS_SINGLE_AXIS', 'y_only');
 
 /**
+ * Used to define a dual axis.
+ *
  * Constant used in hook_charts_type_info() to declare chart types with a dual
  * axes. Most charts use this type of data, meaning multiple categories each
  * have multiple values. This type of data is usually represented as a table.
@@ -20,139 +24,6 @@ define('CHARTS_DUAL_AXIS', 'xy');
 
 // Store Charts preprocess theme functions in a separate .inc file.
 \Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
-
-/**
- * @return mixed
- */
-function charts_get_info() {
-
-  $info['chart'] = array(
-    '#chart_type' => NULL,
-    // Options: pie, bar, column, etc.
-    '#chart_id' => NULL,
-    // Machine name to alter this chart individually.
-    '#title' => NULL,
-    '#title_color' => '#000',
-    '#title_font_weight' => 'normal',
-    // Options: normal, bold
-    '#title_font_style' => 'normal',
-    // Options: normal, italic
-    '#title_font_size' => 14,
-    // Font size in pixels, e.g. 12.
-    '#title_position' => 'out',
-    // Options: in, out.
-    '#colors' => charts_default_colors(),
-    '#font' => 'Arial',
-    '#font_size' => 12,
-    // Font size in pixels, e.g. 12.
-    '#background' => 'transparent',
-    '#stacking' => NULL,
-    // Bar chart only. Set to TRUE to stack.
-    '#pre_render' => array('charts_pre_render_element'),
-    '#tooltips' => TRUE,
-    '#tooltips_use_html' => FALSE,
-    '#data_labels' => FALSE,
-    '#legend' => TRUE,
-    '#legend_title' => NULL,
-    '#legend_title_font_weight' => 'bold',
-    // Options: normal, bold
-    '#legend_title_font_style' => 'normal',
-    // Options: normal, italic
-    '#legend_title_font_size' => NULL,
-    // CSS value for font size, e.g. 1em or 12px.
-    '#legend_position' => 'right',
-    // Options: top, right, bottom, left.
-    '#legend_font_weight' => 'normal',
-    // Options: normal, bold
-    '#legend_font_style' => 'normal',
-    // Options: normal, italic
-    '#legend_font_size' => NULL,
-    // CSS value for font size, e.g. 1em or 12px.
-    '#width' => NULL,
-    '#height' => NULL,
-
-    '#attributes' => array(),
-    // Applied to the wrapper, not the chart.
-    '#chart_library' => NULL,
-    // If requiring a particular charting module.
-    '#raw_options' => array(),
-    // Raw library-specific options passed directly.
-  );
-
-  // Properties for x and y axes.
-  $axis_properties = array(
-    '#axis_type' => 'linear', // Options: linear, logarithmic, datetime, labels.
-    '#title' => '',
-    '#title_color' => '#000',
-    '#title_font_weight' => 'normal', // Options: normal, bold
-    '#title_font_style' => 'normal', // Options: normal, italic
-    '#title_font_size' => 12, // CSS value for font size, e.g. 1em or 12px.
-    '#labels' => NULL,
-    '#labels_color' => '#000',
-    '#labels_font_weight' => 'normal', // Options: normal, bold
-    '#labels_font_style' => 'normal', // Options: normal, italic
-    '#labels_font_size' => NULL, // CSS value for font size, e.g. 1em or 12px.
-    '#labels_rotation' => NULL, // Integer rotation value, e.g. 30, -60 or 90.
-    '#grid_line_color' => '#ccc',
-    '#base_line_color' => '#ccc',
-    '#minor_grid_line_color' => '#e0e0e0',
-    '#max' => NULL, // Integer max value on this axis.
-    '#min' => NULL, // Integer minimum value on this axis.
-    '#opposite' => FALSE, // Display axis on opposite normal side.
-  );
-  $info['chart_xaxis'] = array() + $axis_properties;
-  $info['chart_yaxis'] = array() + $axis_properties;
-
-  // And then the pieces of charts used within chart types.
-  $info['chart_data'] = array(
-    '#title' => NULL,
-    '#labels' => NULL,
-    '#data' => array(),
-    '#color' => NULL,
-    '#show_in_legend' => TRUE,
-    '#show_labels' => FALSE,
-    // Show inline labels next to the data.
-    '#chart_type' => NULL,
-    // If building multicharts. The chart type, e.g. pie.
-    '#line_width' => 1,
-    // Line chart only.
-    '#marker_radius' => 3,
-    // Line chart only. Size in pixels, e.g. 1, 5.
-    '#target_axis' => NULL,
-    // If using multiple axes, key for the matching y axis.
-    // Formatting options.
-    '#decimal_count' => NULL,
-    // The number of digits after the decimal separator. e.g. 2
-    '#date_format' => NULL,
-    // A custom date format, e.g. %Y-%m-%d
-    '#prefix' => NULL,
-    '#suffix' => NULL,
-  );
-  $info['chart_data_item'] = array(
-    '#data' => NULL,
-    '#color' => NULL,
-    '#title' => NULL, // Often used as content of the tooltip.
-  );
-
-  return $info;
-}
-
-
-/**
- * Implements hook_permission().
- */
-function charts_permission() {
-  return array(
-    'administer charts' => array(
-      'title' => t('Administer Charts'),
-      //todo  'description' => t('Visit the <a href="!url">Default chart configuration</a> (used for Charts administration)', array('!url' => url('admin/config/content/charts'))),
-    ),
-    'access example charts' => array(
-      'title' => t('Access example charts'),
-      //todo    'description' => t('Visit the <a href="!url">Charts examples</a> (used for Charts testing and demo)', array('!url' => url('charts/examples'))),
-    ),
-  );
-}
 
 /**
  * Retrieve a list of all charting libraries available.
@@ -172,19 +43,8 @@ function charts_info() {
     $charts_info = array_merge($charts_info, $module_charts_info);
   }
   Drupal::moduleHandler()->alter('charts_info', $charts_info);
+
   return $charts_info;
-}
-
-
-/**
- * Retrieve a specific chart library.
- * @param $library
- * @return bool|mixed
- */
-function charts_get_library($library) {
-
-  $info = charts_info();
-  return $info[$library] ? $info[$library] : FALSE;
 }
 
 /**
@@ -211,8 +71,12 @@ function charts_type_info() {
 
 /**
  * Retrieve a specific chart type.
- * @param $chart_type
- * @return bool
+ *
+ * @param string $chart_type
+ * The type of chart selected for display.
+ *
+ * @return mixed
+ * If not false, returns an array of values from charts_charts_type_info.
  */
 function charts_get_type($chart_type) {
   $types = charts_type_info();
@@ -230,7 +94,7 @@ function charts_charts_type_info() {
   $chart_types['bar'] = array(
     'label' => t('Bar'),
     'axis' => CHARTS_DUAL_AXIS,
-    'axis_inverted' => TRUE, // Meaning x/y axis are flipped.
+    'axis_inverted' => TRUE,
     'stacking' => TRUE,
   );
   $chart_types['column'] = array(
@@ -274,7 +138,9 @@ function charts_default_colors() {
 
 /**
  * Recursive function to trim out empty options that aren't used.
- * @param $array
+ *
+ * @param array $array
+ * Array may contain empty options.
  */
 function charts_trim_array(&$array) {
   foreach ($array as $key => &$value) {
@@ -289,10 +155,11 @@ function charts_trim_array(&$array) {
 
 /**
  * Recursive function to cast integer values.
- * @param $element
+ *
+ * @param mixed $element
+ * Cast options to integers to avoid redundant library fixing problems.
  */
 function charts_cast_element_integer_values(&$element) {
-  // Cast options to integers to avoid redundant library fixing problems.
   $integer_options = array(
     // Chart options.
     '#title_font_size',
