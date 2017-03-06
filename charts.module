@@ -1,21 +1,14 @@
 <?php
+
 /**
  * @file
  * Charts module file that provides hook_theme.
  */
+
 use \Drupal\charts\Util\Util;
 
-// Store Charts preprocess theme functions in a separate .inc file.
-//\Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
 /**
- * Implements hook_theme().
- *
- * @param $existing
- * @param $type
- * @param $theme
- * @param $path
- *
- * @return array
+ * {@inheritdoc}
  */
 function charts_theme($existing, $type, $theme, $path) {
 
@@ -23,16 +16,14 @@ function charts_theme($existing, $type, $theme, $path) {
     'views_view_charts' => array(
       'variables' => array(
         'view' => NULL,
-        'row' => NULL
+        'row' => NULL,
       ),
-    )
+    ),
   );
 }
 
 /**
- * Hook attaches assests to pages depending on library selected
- *
- * @param $attachments
+ * {@inheritdoc}
  */
 function template_preprocess_views_view_charts(&$variables) {
 
@@ -80,9 +71,8 @@ function template_preprocess_views_view_charts(&$variables) {
   $seriesData = $data[1];
   $categories = array_merge($categories, $categoriesAttachment);
   $seriesData = array_merge($seriesData, $seriesDataAttachment);
-  /*$service = \Drupal::service('charts.charts_service');
-  $service->setLibrarySelected($view->style_plugin->options['library']);*/
-  //Handles the toggling from one library to another
+
+  // Handles the toggling from one library to another.
   switch ($library) {
     case 'google':
       $googleData = charts_google_render_charts($categories, $seriesData);
@@ -112,6 +102,6 @@ function template_preprocess_views_view_charts(&$variables) {
       break;
 
     default:
-      //Not handled
+      // Not handled.
   }
 }
