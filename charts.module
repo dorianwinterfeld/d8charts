@@ -33,7 +33,9 @@ function template_preprocess_views_view_charts(&$variables) {
   $attachmentView = $service->getAttachmentViews();
 
   $view = $variables['view'];
-
+  $viewId = $view->id();
+  $displayId = $view->display_handler->display['id'];
+  $chartId = $viewId . '__' . $displayId;
   $categoriesAttachment = array();
   $seriesDataAttachment = array();
 
@@ -79,7 +81,8 @@ function template_preprocess_views_view_charts(&$variables) {
       $googleOptions = charts_google_create_charts_options($options, $seriesData);
       $googleChartType = charts_google_create_chart_type($options);
       $variables['chart_type'] = 'google';
-      $variables['attributes']['class'][0] = 'chart-google';
+      $variables['attributes']['class'][0] = 'charts-google';
+      $variables['attributes']['id'][0] = $chartId;
       $variables['content_attributes']['data-chart'][] = $googleData;
       $variables['attributes']['google-options'][1] = json_encode($googleOptions);
       $variables['attributes']['google-chart-type'][2] = json_encode($googleChartType);
@@ -90,18 +93,21 @@ function template_preprocess_views_view_charts(&$variables) {
       $highchart = charts_highcharts_render_charts($options, $categories, $seriesData);
       $variables['chart_type'] = 'highcharts';
       $variables['content_attributes']['data-chart'][] = json_encode($highchart);
+      $variables['attributes']['id'][0] = $chartId;
       $variables['attributes']['class'][] = 'charts-highchart';
 
       break;
 
     case 'c3':
-      $c3 = charts_c3_render_charts($options, $categories, $seriesData);
+      $c3 = charts_c3_render_charts($options, $categories, $seriesData, $chartId);
       $variables['chart_type'] = 'c3';
       $variables['content_attributes']['data-chart'][] = json_encode($c3);
+      $variables['attributes']['id'][0] = $chartId;
       $variables['attributes']['class'][] = 'charts-c3';
       break;
 
     default:
       // Not handled.
   }
+
 }

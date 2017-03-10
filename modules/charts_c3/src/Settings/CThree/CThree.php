@@ -4,7 +4,7 @@ namespace Drupal\charts_c3\Settings\CThree;
 
 class CThree implements \JsonSerializable {
   private $color;
-  private $bindto = '#chart';
+  private $bindto;
   private $data;
   private $axis;
   private $title;
@@ -54,8 +54,15 @@ class CThree implements \JsonSerializable {
   /**
    * @return string
    */
-  public function getBindto() {
+  public function getBindTo() {
     return $this->bindto;
+  }
+
+  /**
+   * @param mixed $bindto
+   */
+  public function setBindTo($bindto) {
+    $this->bindto = $bindto;
   }
 
   /**

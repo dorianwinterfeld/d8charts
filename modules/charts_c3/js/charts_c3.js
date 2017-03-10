@@ -8,11 +8,14 @@
   Drupal.behaviors.chartsC3 = {
     attach: function (context, settings) {
 
-      $('.charts-c3').once().each(function () {
-        if ($(this).attr('data-chart')) {
-          var c3Chart = $('.charts-c3').attr('data-chart');
-          c3.generate(JSON.parse(c3Chart));
-        }
+      $('.charts-c3').each(function(param) {
+        var chartId = $(this).attr('id');
+        $('#'+chartId).once().each(function () {
+          if ($(this).attr('data-chart')) {
+            var c3Chart = $(this).attr('data-chart');
+            c3.generate(JSON.parse(c3Chart));
+          }
+        });
       });
     }
   };
