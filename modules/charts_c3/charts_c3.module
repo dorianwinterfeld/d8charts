@@ -62,6 +62,8 @@ function charts_c3_render_charts($options, $categories = array(), $seriesData = 
       $chartData->setColumns($c3Data);
     }
     else {
+      array_unshift($categories, 'x');
+      array_push($c3Data, $categories);
       $chartData->setColumns($c3Data);
     }
   }
