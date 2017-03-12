@@ -84,6 +84,7 @@ function charts_highcharts_render_charts($options, $categories = array(), $serie
   $highchart->setCredits($chartCredits);
   $highchart->setLegend($chartLegend);
   $highchart->setSeries($seriesData);
+  drupal_set_message(json_encode($seriesData).'---series data');
 
   return $highchart;
 }

@@ -11,7 +11,7 @@ class Util {
    * @param $color
    * @return array
    */
-  public static function viewsData($view, $labelValues, $labelField, $color) {
+  public static function viewsData($view, $labelValues, $labelField, $color, $attachmentChartTypeOption) {
     $data = array();
 
     foreach ($view->result as $id => $row) {
@@ -24,6 +24,7 @@ class Util {
           'label' => $view->field[$fieldId]->label(),
           // 'label' => $view->display_handler->display['id'], to use display_id
           'color' => $color[$fieldId],
+          'type' => $attachmentChartTypeOption,
         );
         $numberFields++;
       }
@@ -58,11 +59,12 @@ class Util {
 
     for ($i = 0; $i < count($data[0]); $i++) {
 
-      $seriesRowData = array('name' => '', 'color' => '', 'data' => array());
+      $seriesRowData = array('name' => '', 'color' => '', 'type' => '', 'data' => array());
       for ($j = 0; $j < count($data); $j++) {
         $categories[$j] = $data[$j][$i]['label_field'];
         $seriesRowData['name'] = $data[$j][$i]['label'];
         // $seriesRowData['name'] = $data[$j][$i]['label_field'];
+        $seriesRowData['type'] = $data[$j][$i]['type'];
         $seriesRowData['color'] = $data[$j][$i]['color'];
         array_push($seriesRowData['data'], ((int) ($data[$j][$i]['value'])));
       }
