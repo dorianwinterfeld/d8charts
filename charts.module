@@ -73,9 +73,8 @@ function template_preprocess_views_view_charts(&$variables) {
   if (0 < count($attachmentView)){
     $data = Util::viewsData($view, $valueField, $labelField, $color, $attachmentChartTypeOption[$i]);
   } else {
-    $data = Util::viewsData($view, $valueField, $labelField, $color);
+    $data = Util::viewsData($view, $valueField, $labelField, $color, $attachmentChartTypeOption[$i] = NULL);
   }
-  drupal_set_message(json_encode($data).'----data');
   $data = Util::createChartableData($data);
   $categories = $data[0];
   $seriesData = $data[1];
