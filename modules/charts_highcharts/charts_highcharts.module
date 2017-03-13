@@ -41,7 +41,8 @@ function charts_highcharts_charts_info() {
  *
  * @return Highcharts object to be used by highcharts javascripts visualization framework
  */
-function charts_highcharts_render_charts($options, $categories = array(), $seriesData = array()) {
+function charts_highcharts_render_charts($options, $categories = array(), $seriesData = array(), $attachmentOptions = []) {
+
   $chart = new ChartType();
   $chart->setType($options['type']);
   $chartTitle = new ChartTitle();
@@ -55,6 +56,7 @@ function charts_highcharts_render_charts($options, $categories = array(), $serie
   $chartXaxis->setLabels($chartLabels);
   $yaxisLabels = new YaxisLabel();
   $chartYaxis = new Yaxis();
+  $yAxes = [];
   $yAxisTitle = new YaxisTitle();
   $yAxisTitle->setText($options['yaxis_title']);
   if (!empty($options['yaxis_min'])){
@@ -63,8 +65,26 @@ function charts_highcharts_render_charts($options, $categories = array(), $serie
   if (!empty($options['yaxis_max'])){
       $chartYaxis->max = $options['yaxis_max'];
   }
+
   $chartYaxis->setLabels($yaxisLabels);
   $chartYaxis->setTitle($yAxisTitle);
+  array_push($yAxes, $chartYaxis);
+  if (count($attachmentOptions) > 0){
+    $chartYaxisSecondary = new Yaxis();
+    $yAxisTitleSecondary = new YaxisTitle();
+    $yAxisTitleSecondary->setText($attachmentOptions['yaxis_title']);
+    $chartYaxisSecondary->setTitle($yAxisTitleSecondary);
+    $chartYaxisSecondary->setLabels($yaxisLabels);
+    $chartYaxisSecondary->opposite = 'true';
+
+    if (!empty($attachmentOptions['yaxis_min'])){
+      $chartYaxisSecondary->min = $attachmentOptions['yaxis_min'];
+    }
+    if (!empty($attachmentOptions['yaxis_max'])){
+      $chartYaxisSecondary->max = $attachmentOptions['yaxis_max'];
+    }
+    array_push($yAxes, $chartYaxisSecondary);
+  }
   $dataLabelStatus = new DataLabelStatus();
   $dataLabels = new DataLabels();
   $dataLabels->setDataLabels($dataLabelStatus);
@@ -78,7 +98,8 @@ function charts_highcharts_render_charts($options, $categories = array(), $serie
   $highchart->setChart($chart);
   $highchart->setTitle($chartTitle);
   $highchart->setXAxis($chartXaxis);
-  $highchart->setYAxis($chartYaxis);
+  //$highchart->setYAxis($chartYaxis);
+  $highchart->yAxis = $yAxes;
   $highchart->setTooltip($chartTooltip);
   $highchart->setPlotOptions($barPlotOptns);
   $highchart->setCredits($chartCredits);

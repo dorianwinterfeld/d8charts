@@ -1,21 +1,14 @@
 <?php
+
 /**
  * @file
  * Charts module file that provides hook_theme.
  */
+
 use \Drupal\charts\Util\Util;
 
-// Store Charts preprocess theme functions in a separate .inc file.
-//\Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
 /**
- * Implements hook_theme().
- *
- * @param $existing
- * @param $type
- * @param $theme
- * @param $path
- *
- * @return array
+ * {@inheritdoc}
  */
 function charts_theme($existing, $type, $theme, $path) {
 
@@ -23,40 +16,44 @@ function charts_theme($existing, $type, $theme, $path) {
     'views_view_charts' => array(
       'variables' => array(
         'view' => NULL,
-        'row' => NULL
+        'row' => NULL,
       ),
-    )
+    ),
   );
 }
 
 /**
- * Hook attaches assests to pages depending on library selected
- *
- * @param $attachments
+ * {@inheritdoc}
  */
 function template_preprocess_views_view_charts(&$variables) {
 
   $options = $variables['view']->style_plugin->options;
+  $attachmentOptions = [];
 
   $service = \Drupal::service('charts.charts_attachment');
   $attachmentView = $service->getAttachmentViews();
 
   $view = $variables['view'];
-
+  $viewId = $view->id();
+  $displayId = $view->display_handler->display['id'];
+  $chartId = $viewId . '__' . $displayId;
   $categoriesAttachment = array();
   $seriesDataAttachment = array();
+  $attachmentChartTypeOption = array();
 
   for ($i = 0; $i < count($attachmentView); $i++) {
 
     $attachmentId = $attachmentView[$i]->display_handler->display['id'];
 
     $attachmentDisplay = $view->storage->getDisplay($attachmentId);
+    $attachmentChartType = $attachmentDisplay['display_options']['style']['options']['type'];
+    array_push($attachmentChartTypeOption, $attachmentChartType);
     $attachedValueField = $attachmentDisplay['display_options']['style']['options']['data_fields'];
 
     $combinedAttachmentPage = Util::removeUnselectedFields($attachedValueField);
     $attachmentColor = $attachmentView[$i]->style_plugin->options['field_colors'];
     $labelField = $attachmentView[$i]->style_plugin->options['label_field'];
-    $dataAttachment = Util::viewsData($attachmentView[$i], $combinedAttachmentPage, $labelField, $attachmentColor);
+    $dataAttachment = Util::viewsData($attachmentView[$i], $combinedAttachmentPage, $labelField, $attachmentColor, $attachmentChartTypeOption[$i]);
     $dataAttachmentFormatted = Util::createChartableData($dataAttachment);
 
     for ($j = 0; $j < count($dataAttachmentFormatted[0]); $j++) {
@@ -74,22 +71,37 @@ function template_preprocess_views_view_charts(&$variables) {
   $valueField = $view->style_plugin->options['data_fields'];
   $valueField = Util::removeUnselectedFields($valueField);
   $color = $view->style_plugin->options['field_colors'];
-  $data = Util::viewsData($view, $valueField, $labelField, $color);
+
+  if (0 < count($attachmentView)){
+    $data = Util::viewsData($view, $valueField, $labelField, $color, $attachmentChartTypeOption[$i]);
+  } else {
+    $data = Util::viewsData($view, $valueField, $labelField, $color, $attachmentChartTypeOption[$i] = NULL);
+  }
+
   $data = Util::createChartableData($data);
   $categories = $data[0];
   $seriesData = $data[1];
   $categories = array_merge($categories, $categoriesAttachment);
+
+  if (count($attachmentView) > 0) {
+    $attachmentId = $attachmentView[0]->display_handler->display['id'];
+    $attachmentDisplay = $view->storage->getDisplay($attachmentId);
+
+    if ($attachmentDisplay['display_options']['inherit_yaxis'] == 0){
+      $attachmentOptions = $attachmentDisplay['display_options']['style']['options'];
+    }
+  }
   $seriesData = array_merge($seriesData, $seriesDataAttachment);
-  /*$service = \Drupal::service('charts.charts_service');
-  $service->setLibrarySelected($view->style_plugin->options['library']);*/
-  //Handles the toggling from one library to another
+
+  // Handles the toggling from one library to another.
   switch ($library) {
     case 'google':
       $googleData = charts_google_render_charts($categories, $seriesData);
       $googleOptions = charts_google_create_charts_options($options, $seriesData);
       $googleChartType = charts_google_create_chart_type($options);
       $variables['chart_type'] = 'google';
-      $variables['attributes']['class'][0] = 'chart-google';
+      $variables['attributes']['class'][0] = 'charts-google';
+      $variables['attributes']['id'][0] = $chartId;
       $variables['content_attributes']['data-chart'][] = $googleData;
       $variables['attributes']['google-options'][1] = json_encode($googleOptions);
       $variables['attributes']['google-chart-type'][2] = json_encode($googleChartType);
@@ -97,21 +109,24 @@ function template_preprocess_views_view_charts(&$variables) {
       break;
 
     case 'highcharts':
-      $highchart = charts_highcharts_render_charts($options, $categories, $seriesData);
+      $highchart = charts_highcharts_render_charts($options, $categories, $seriesData, $attachmentOptions);
       $variables['chart_type'] = 'highcharts';
       $variables['content_attributes']['data-chart'][] = json_encode($highchart);
+      $variables['attributes']['id'][0] = $chartId;
       $variables['attributes']['class'][] = 'charts-highchart';
 
       break;
 
     case 'c3':
-      $c3 = charts_c3_render_charts($options, $categories, $seriesData);
+      $c3 = charts_c3_render_charts($options, $categories, $seriesData, $chartId);
       $variables['chart_type'] = 'c3';
       $variables['content_attributes']['data-chart'][] = json_encode($c3);
+      $variables['attributes']['id'][0] = $chartId;
       $variables['attributes']['class'][] = 'charts-c3';
       break;
 
     default:
-      //Not handled
+      // Not handled.
   }
+
 }

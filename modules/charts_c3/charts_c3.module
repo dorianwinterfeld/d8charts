@@ -1,8 +1,10 @@
 <?php
+
 /**
  * @file
  * Charts module integration with C3 library.
  */
+
 use Drupal\charts_c3\Settings\CThree\ChartType;
 use Drupal\charts_c3\Settings\CThree\CThree;
 use Drupal\charts_c3\Settings\CThree\ChartTitle;
@@ -21,7 +23,7 @@ function charts_c3_charts_info() {
   return $info;
 }
 
-function charts_c3_render_charts($options, $categories = array(), $seriesData = array()) {
+function charts_c3_render_charts($options, $categories = array(), $seriesData = array(), $chartId) {
 
   $c3Data = array();
   for ($i = 0; $i < count($seriesData); $i++) {
@@ -35,9 +37,9 @@ function charts_c3_render_charts($options, $categories = array(), $seriesData = 
   $c3ChartTitle = new ChartTitle();
   $c3ChartTitle->setText($options['title']);
   $chartAxis = new ChartAxis();
-
   $c3 = new CThree();
-
+  $bindTo = '#' . $chartId;
+  $c3->setBindTo($bindTo);
   //$c3->setChart($c3Chart);
   //$c3->setLabels($options['data_labels']);
   $c3->setTitle($c3ChartTitle);
@@ -60,6 +62,8 @@ function charts_c3_render_charts($options, $categories = array(), $seriesData = 
       $chartData->setColumns($c3Data);
     }
     else {
+      array_unshift($categories, 'x');
+      array_push($c3Data, $categories);
       $chartData->setColumns($c3Data);
     }
   }

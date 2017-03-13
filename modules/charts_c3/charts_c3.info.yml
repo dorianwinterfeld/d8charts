@@ -4,4 +4,4 @@ description: 'Charts module integration with C3 Charts.'
 package: Charts
 core: 8.x
 dependencies:
-  - charts
+  - charts:charts
