@@ -23,7 +23,19 @@ function charts_c3_charts_info() {
   return $info;
 }
 
-function charts_c3_render_charts($options, $categories = array(), $seriesData = array(), $chartId) {
+function charts_c3_render_charts($options, $categories = array(), $seriesData = array(), $chartId, $attachmentOptions = []) {
+
+  $yAxis = [];
+  for ($i = 0; $i < count($seriesData); $i++){
+    if ($i == 2){
+      break;
+    }
+    if ($i == 0)
+      $yAxis[$seriesData[$i]['name']] = 'y';
+    else
+      $yAxis[$seriesData[$i]['name']] = 'y2';
+
+  }
 
   $c3Data = array();
   for ($i = 0; $i < count($seriesData); $i++) {
@@ -44,7 +56,13 @@ function charts_c3_render_charts($options, $categories = array(), $seriesData = 
   //$c3->setLabels($options['data_labels']);
   $c3->setTitle($c3ChartTitle);
   $chartData = new ChartData();
-
+  if (count($attachmentOptions) > 0){
+    $chartData->axes = $yAxis;
+    //$showSecAxis = [];
+    $showSecAxis['show'] = true;
+    $showSecAxis['label'] = $attachmentOptions['yaxis_title'];
+    $chartAxis->y2 = $showSecAxis;
+  }
   $chartData->setType($options['type']);
   $c3->setData($chartData);
   if ($options['type'] == 'bar') {
@@ -78,7 +96,6 @@ function charts_c3_render_charts($options, $categories = array(), $seriesData = 
   }
   $chartColor->setPattern($seriesColors);
   $c3->setColor($chartColor);
-
 
   return $c3;
 }
