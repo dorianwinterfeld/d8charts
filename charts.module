@@ -118,7 +118,7 @@ function template_preprocess_views_view_charts(&$variables) {
       break;
 
     case 'c3':
-      $c3 = charts_c3_render_charts($options, $categories, $seriesData, $chartId);
+      $c3 = charts_c3_render_charts($options, $categories, $seriesData, $chartId, $attachmentOptions);
       $variables['chart_type'] = 'c3';
       $variables['content_attributes']['data-chart'][] = json_encode($c3);
       $variables['attributes']['id'][0] = $chartId;
