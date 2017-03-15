@@ -28,7 +28,7 @@ function charts_theme($existing, $type, $theme, $path) {
 function template_preprocess_views_view_charts(&$variables) {
 
   $options = $variables['view']->style_plugin->options;
-  $attachmentOptions = [];
+  $attachmentDisplayOptions = [];
 
   $service = \Drupal::service('charts.charts_attachment');
   $attachmentView = $service->getAttachmentViews();
@@ -88,8 +88,8 @@ function template_preprocess_views_view_charts(&$variables) {
     $attachmentDisplay = $view->storage->getDisplay($attachmentId);
 
     //if ($attachmentDisplay['display_options']['inherit_yaxis'] == 0){
-    //$attachmentOptions = $attachmentDisplay['display_options']['style']['options'];
-    $attachmentOptions[$i] = $attachmentDisplay['display_options'];
+    //$attachmentDisplayOptions = $attachmentDisplay['display_options']['style']['options'];
+    $attachmentDisplayOptions[$i] = $attachmentDisplay['display_options'];
     //}
   }
   /*if (count($attachmentView) > 0) {
@@ -97,8 +97,8 @@ function template_preprocess_views_view_charts(&$variables) {
     $attachmentDisplay = $view->storage->getDisplay($attachmentId);
 
     //if ($attachmentDisplay['display_options']['inherit_yaxis'] == 0){
-      //$attachmentOptions = $attachmentDisplay['display_options']['style']['options'];
-    $attachmentOptions = $attachmentDisplay['display_options'];
+      //$attachmentDisplayOptions = $attachmentDisplay['display_options']['style']['options'];
+    $attachmentDisplayOptions = $attachmentDisplay['display_options'];
     //}
   }*/
   $seriesData = array_merge($seriesData, $seriesDataAttachment);
@@ -121,7 +121,7 @@ function template_preprocess_views_view_charts(&$variables) {
 
     case 'highcharts':
       Util::checkMissingLibrary('charts_highcharts', '/vendor/highcharts/highcharts.js');
-      $highchart = charts_highcharts_render_charts($options, $categories, $seriesData, $attachmentOptions);
+      $highchart = charts_highcharts_render_charts($options, $categories, $seriesData, $attachmentDisplayOptions);
       $variables['chart_type'] = 'highcharts';
       $variables['content_attributes']['data-chart'][] = json_encode($highchart);
       $variables['attributes']['id'][0] = $chartId;
@@ -131,7 +131,7 @@ function template_preprocess_views_view_charts(&$variables) {
 
     case 'c3':
       Util::checkMissingLibrary('charts_c3', '/vendor/cthree/c3.min.js');
-      $c3 = charts_c3_render_charts($options, $categories, $seriesData, $chartId, $attachmentOptions);
+      $c3 = charts_c3_render_charts($options, $categories, $seriesData, $chartId, $attachmentDisplayOptions);
       $variables['chart_type'] = 'c3';
       $variables['content_attributes']['data-chart'][] = json_encode($c3);
       $variables['attributes']['id'][0] = $chartId;

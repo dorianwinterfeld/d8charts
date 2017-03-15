@@ -23,24 +23,30 @@ function charts_c3_charts_info() {
   return $info;
 }
 
-function charts_c3_render_charts($options, $categories = array(), $seriesData = array(), $chartId, $attachmentOptions = []) {
+/**
+ * @param $options
+ * @param array $categories
+ * @param array $seriesData
+ * @param $chartId
+ * @param array $attachmentDisplayOptions
+ *
+ * @return CThree
+ */
+function charts_c3_render_charts($options, $categories = array(), $seriesData = array(), $chartId, $attachmentDisplayOptions = []) {
 
-  $noAttachmentDisplays = count($attachmentOptions);
+  $noAttachmentDisplays = count($attachmentDisplayOptions);
   $yAxis = [];
   $types = [];
-  //To be changed to support multiple attachments
-  if ($attachmentOptions[0]['inherit_yaxis'] == 0){
-    //$yAxis[$seriesData[0]['name']] = 'y';
+  if ($attachmentDisplayOptions[0]['inherit_yaxis'] == 0){
     $yAxis[$seriesData[1]['name']] = 'y2';
-    $attachmentChartType = $attachmentOptions[0]['style']['options']['type'];
-
-    if ($attachmentOptions[0]['style']['options']['type'] == 'column')
-      $types[$seriesData[1]['name']] = 'bar';
-    else
-      $types[$seriesData[1]['name']] = $attachmentOptions[0]['style']['options']['type'];
   }
-  
 
+  for ($i = 1; $i <= count($attachmentDisplayOptions); $i++){
+    if ($attachmentDisplayOptions[$i - 1]['style']['options']['type'] == 'column')
+      $types[$seriesData[$i]['name']] = 'bar';
+    else
+      $types[$seriesData[$i]['name']] = $attachmentDisplayOptions[$i - 1]['style']['options']['type'];
+  }
   $c3Data = array();
   for ($i = 0; $i < count($seriesData); $i++) {
     $c3DataTemp = $seriesData[$i]['data'];
@@ -63,10 +69,10 @@ function charts_c3_render_charts($options, $categories = array(), $seriesData = 
   if ($noAttachmentDisplays > 0){
     $chartData->setLabels(FALSE);
   }
-  if ($attachmentOptions[0]['inherit_yaxis'] == 0){
+  if ($attachmentDisplayOptions[0]['inherit_yaxis'] == 0){
     $chartData->axes = $yAxis;
     $showSecAxis['show'] = true;
-    $showSecAxis['label'] = $attachmentOptions[0]['style']['options']['yaxis_title'];
+    $showSecAxis['label'] = $attachmentDisplayOptions[0]['style']['options']['yaxis_title'];
     $chartAxis->y2 = $showSecAxis;
   }
   $chartData->setType($options['type']);
