@@ -86,7 +86,8 @@ class Util {
   public static function checkMissingLibrary($moduleName, $libraryPath){
     $module_path = drupal_get_path('module', $moduleName);
     if (!file_exists($module_path . $libraryPath)){
-      drupal_set_message(t('Charting libraries for '.$moduleName.' might not be installed. Run \'composer install\' for '.$moduleName.' sub-module.'), 'error');
+      drupal_set_message(t('Charting libraries for '.$moduleName.' might 
+      not be installed. Run \'composer install\' for '.$moduleName.' sub-module.'), 'error');
     }
   }
 
