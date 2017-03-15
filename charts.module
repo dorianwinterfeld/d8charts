@@ -96,15 +96,7 @@ function template_preprocess_views_view_charts(&$variables) {
   // Handles the toggling from one library to another.
   switch ($library) {
     case 'google':
-      $module_path = drupal_get_path('module', 'charts_google');
-      if (file_exists($module_path . '/vendor/google/loader.js')){
-        drupal_set_message(' I am installed');
-        //Exception
-        //throw new \Drupal\charts\Exceptions\MissingLibraryException('fskjfjskfs');
-      }
-      else{
-        drupal_set_message(' I am not installed');
-      }
+      Util::checkMissingLibrary('charts_google', '/vendor/google/loader.js');
       $googleData = charts_google_render_charts($categories, $seriesData);
       $googleOptions = charts_google_create_charts_options($options, $seriesData);
       $googleChartType = charts_google_create_chart_type($options);
@@ -118,6 +110,7 @@ function template_preprocess_views_view_charts(&$variables) {
       break;
 
     case 'highcharts':
+      Util::checkMissingLibrary('charts_highcharts', '/vendor/highcharts/highcharts.js');
       $highchart = charts_highcharts_render_charts($options, $categories, $seriesData, $attachmentOptions);
       $variables['chart_type'] = 'highcharts';
       $variables['content_attributes']['data-chart'][] = json_encode($highchart);
@@ -127,6 +120,7 @@ function template_preprocess_views_view_charts(&$variables) {
       break;
 
     case 'c3':
+      Util::checkMissingLibrary('charts_c3', '/vendor/cthree/c3.min.js');
       $c3 = charts_c3_render_charts($options, $categories, $seriesData, $chartId, $attachmentOptions);
       $variables['chart_type'] = 'c3';
       $variables['content_attributes']['data-chart'][] = json_encode($c3);
@@ -139,3 +133,5 @@ function template_preprocess_views_view_charts(&$variables) {
   }
 
 }
+
+

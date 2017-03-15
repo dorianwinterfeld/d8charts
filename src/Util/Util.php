@@ -76,4 +76,18 @@ class Util {
     return $chartData;
   }
 
+  /**
+   * Checks for missing libraries necessary for data visualization
+   *
+   * @param $moduleName
+   * @param $libraryPath
+   *
+   */
+  public static function checkMissingLibrary($moduleName, $libraryPath){
+    $module_path = drupal_get_path('module', $moduleName);
+    if (!file_exists($module_path . $libraryPath)){
+      drupal_set_message(t('Charting libraries for '.$moduleName.' might not be installed. Run \'composer install\' for '.$moduleName.' sub-module.'), 'error');
+    }
+  }
+
 }
