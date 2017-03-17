@@ -32,12 +32,6 @@ function charts_google_charts_info() {
 function charts_google_render_charts($categories = array(), $seriesData = array()) {
 
   $dataTable = array();
-
-  /*$dataTableHeader = array();
-  for ($r = 0; $r < count($seriesData); $r++) {
-    array_push($dataTableHeader, $seriesData[$r]['name']);
-  }*/
-
   for ($j = 0; $j < count($categories); $j++) {
     $rowDataTable = [];
     for ($i = 0; $i < count($seriesData); $i++) {
@@ -68,7 +62,6 @@ function charts_google_render_charts($categories = array(), $seriesData = array(
 function charts_google_create_charts_options($options, $seriesData = array(), $attachmentDisplayOptions = []) {
   $chartSelected = [];
   $seriesTypes = array();
-  $k = 1;
   array_push($chartSelected, $options['type']);
   for ($i = 0; $i < count($attachmentDisplayOptions); $i++){
     $attachmentChartType = $attachmentDisplayOptions[$i]['style']['options']['type'];

@@ -86,21 +86,8 @@ function template_preprocess_views_view_charts(&$variables) {
   for ($i =0; $i < count($attachmentView); $i++){
     $attachmentId = $attachmentView[$i]->display_handler->display['id'];
     $attachmentDisplay = $view->storage->getDisplay($attachmentId);
-
-    //if ($attachmentDisplay['display_options']['inherit_yaxis'] == 0){
-    //$attachmentDisplayOptions = $attachmentDisplay['display_options']['style']['options'];
     $attachmentDisplayOptions[$i] = $attachmentDisplay['display_options'];
-    //}
   }
-  /*if (count($attachmentView) > 0) {
-    $attachmentId = $attachmentView[0]->display_handler->display['id'];
-    $attachmentDisplay = $view->storage->getDisplay($attachmentId);
-
-    //if ($attachmentDisplay['display_options']['inherit_yaxis'] == 0){
-      //$attachmentDisplayOptions = $attachmentDisplay['display_options']['style']['options'];
-    $attachmentDisplayOptions = $attachmentDisplay['display_options'];
-    //}
-  }*/
   $seriesData = array_merge($seriesData, $seriesDataAttachment);
 
   // Handles the toggling from one library to another.
