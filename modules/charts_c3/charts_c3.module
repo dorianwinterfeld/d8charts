@@ -37,6 +37,7 @@ function charts_c3_render_charts($options, $categories = array(), $seriesData = 
   $noAttachmentDisplays = count($attachmentDisplayOptions);
   $yAxis = [];
   $types = [];
+  //sets secondary axis from the first attachment only
   if ($attachmentDisplayOptions[0]['inherit_yaxis'] == 0){
     $yAxis[$seriesData[1]['name']] = 'y2';
   }

@@ -62,12 +62,26 @@ function charts_google_render_charts($categories = array(), $seriesData = array(
 function charts_google_create_charts_options($options, $seriesData = array(), $attachmentDisplayOptions = []) {
   $chartSelected = [];
   $seriesTypes = array();
+  $firstVaxis = array('minValue'=> 0, 'title' => $options['yaxis_title']);
+  $secondVaxis = array('minValue'=> 0);
+  $vAxes = array();
+  array_push($vAxes, $firstVaxis);
+  //sets secondary axis from the first attachment only
+  if ($attachmentDisplayOptions[0]['inherit_yaxis'] == 0){
+    $secondVaxis['title'] = $attachmentDisplayOptions[0]['style']['options']['yaxis_title'];
+    array_push($vAxes, $secondVaxis);
+  }
+  drupal_set_message(json_encode($vAxes));
   array_push($chartSelected, $options['type']);
   for ($i = 0; $i < count($attachmentDisplayOptions); $i++){
     $attachmentChartType = $attachmentDisplayOptions[$i]['style']['options']['type'];
     if ($attachmentChartType == 'column')
       $attachmentChartType = 'bars';
-    $seriesTypes[$i + 1] = array('type' => $attachmentChartType);
+    if ($attachmentDisplayOptions[0]['inherit_yaxis'] == 0 && $i == 0){
+      $seriesTypes[$i + 1] = array('type' => $attachmentChartType, 'targetAxisIndex' => 1);
+    }
+    else
+      $seriesTypes[$i + 1] = array('type' => $attachmentChartType);
     array_push($chartSelected, $attachmentChartType);
   }
 
@@ -81,8 +95,9 @@ function charts_google_create_charts_options($options, $seriesData = array(), $a
     $googleOptions->series = $seriesTypes;
   }
   $googleOptions->setTitle($options['title']);
-  $vAxis['title'] = $options['yaxis_title'];
-  $googleOptions->setVAxis($vAxis);
+  $googleOptions->vAxes = $vAxes;
+  //$vAxis['title'] = $options['yaxis_title'];
+  //$googleOptions->setVAxis($vAxis);
   $chartArea = new ChartArea();
   $chartArea->setWidth(400);
   // $googleOptions->setChartArea($chartArea);
@@ -92,7 +107,7 @@ function charts_google_create_charts_options($options, $seriesData = array(), $a
     array_push($seriesColors, $seriesColor);
   }
   $googleOptions->setColors($seriesColors);
-
+drupal_set_message(json_encode($googleOptions));
   return $googleOptions;
 }
 
