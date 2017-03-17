@@ -64,7 +64,6 @@ function template_preprocess_views_view_charts(&$variables) {
       array_push($seriesDataAttachment, $dataAttachmentFormatted[1][$j]);
     }
   }
-
   $library = $view->style_plugin->options['library'];
   $variables['data'] = array();
   $labelField = $view->style_plugin->options['label_field'];
@@ -82,6 +81,7 @@ function template_preprocess_views_view_charts(&$variables) {
   $categories = $data[0];
   $seriesData = $data[1];
   $categories = array_merge($categories, $categoriesAttachment);
+  $categories = array_unique($categories);
 
   for ($i =0; $i < count($attachmentView); $i++){
     $attachmentId = $attachmentView[$i]->display_handler->display['id'];
@@ -108,7 +108,7 @@ function template_preprocess_views_view_charts(&$variables) {
     case 'google':
       Util::checkMissingLibrary('charts_google', '/vendor/google/loader.js');
       $googleData = charts_google_render_charts($categories, $seriesData);
-      $googleOptions = charts_google_create_charts_options($options, $seriesData);
+      $googleOptions = charts_google_create_charts_options($options, $seriesData, $attachmentDisplayOptions);
       $googleChartType = charts_google_create_chart_type($options);
       $variables['chart_type'] = 'google';
       $variables['attributes']['class'][0] = 'charts-google';
