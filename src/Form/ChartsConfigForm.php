@@ -38,53 +38,52 @@ class ChartsConfigForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->configFactory->getEditable('charts.settings');
 
-    $parents = array('charts_default_settings');
+    $parents = ['charts_default_settings'];
     $default_config = $config->get('charts_default_settings');
     if ($default_config == NULL) {
       $defaults = [] + $this->charts_default_settings();
-    }
-    else {
+    } else {
       $defaults = $default_config + $this->charts_default_settings();
     }
 
-    $field_options = array();
+    $field_options = [];
     $url = Url::fromRoute('views_ui.add');
     $link = Link::fromTextAndUrl($this->t('create a new view'), $url)
       ->toRenderable();
 
     // Add help.
-    $form['help'] = array(
+    $form['help'] = [
       '#type' => 'markup',
       '#markup' => '<p>' . $this->t('The settings on this page are used to set 
         <strong>default</strong> settings. They do not affect existing charts. 
         To make a new chart, <a href="!views">create a new view</a> and select 
-        the display format of "Chart".', array('!views' => $link['url']))
+        the display format of "Chart".', ['!views' => $link['url']])
         . '</p>',
       '#weight' => -100,
-    );
+    ];
     // Reuse the global settings form for defaults, but remove JS classes.
     $form = $this->charts_settings_form($form, $defaults, $field_options, $parents);
-    $form['xaxis']['#attributes']['class'] = array();
-    $form['yaxis']['#attributes']['class'] = array();
+    $form['xaxis']['#attributes']['class'] = [];
+    $form['yaxis']['#attributes']['class'] = [];
     $form['display']['colors']['#prefix'] = NULL;
     $form['display']['colors']['#suffix'] = NULL;
     // Put settings into vertical tabs.
     $form['display']['#group'] = 'defaults';
     $form['xaxis']['#group'] = 'defaults';
     $form['yaxis']['#group'] = 'defaults';
-    $form['defaults'] = array('#type' => 'vertical_tabs',);
+    $form['defaults'] = ['#type' => 'vertical_tabs',];
     // Add submit buttons and normal saving behavior.
     $form['actions']['#type'] = 'actions';
-    $form['actions']['submit'] = array(
+    $form['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Save defaults'),
-    );
+    ];
 
     return $form;
   }
 
   public function charts_default_settings() {
-    $defaults = array();
+    $defaults = [];
     $defaults['type'] = 'pie';
     $defaults['library'] = NULL;
     $defaults['label_field'] = NULL;
@@ -122,7 +121,7 @@ class ChartsConfigForm extends ConfigFormBase {
    * Default colors used in all libraries.
    */
   public function charts_default_colors() {
-    return array(
+    return [
       '#2f7ed8',
       '#0d233a',
       '#8bbc21',
@@ -133,56 +132,56 @@ class ChartsConfigForm extends ConfigFormBase {
       '#77a1e5',
       '#c42525',
       '#a6c96a',
-    );
+    ];
   }
 
-  public function charts_settings_form($form, $defaults = array(), $field_options = array(), $parents = array()) {
+  public function charts_settings_form($form, $defaults = [], $field_options = [], $parents = []) {
     // Ensure all defaults are set.
     $options = array_merge($this->charts_default_settings(), $defaults);
 
-    $form['#attached']['library'][] = array('charts', 'charts.admin');
+    $form['#attached']['library'][] = ['charts', 'charts.admin'];
 
     // Get a list of available chart libraries.
     $charts_info = $this->charts_info();
-    $library_options = array();
+    $library_options = [];
     foreach ($charts_info as $library_name => $library_info) {
       $library_options[$library_name] = $library_info['label'];
     }
-    $form['library'] = array(
+    $form['library'] = [
       '#title' => $this->t('Charting library'),
       '#type' => 'select',
       '#options' => $library_options,
       '#default_value' => $options['library'],
       '#required' => TRUE,
       '#access' => count($library_options) > 1,
-      '#attributes' => array('class' => array('chart-library-select')),
+      '#attributes' => ['class' => ['chart-library-select']],
       '#weight' => -15,
-      '#parents' => array_merge($parents, array('library')),
-    );
+      '#parents' => array_merge($parents, ['library']),
+    ];
 
     //$chart_types = $this->charts_type_info();
     //This is a work around will need to revisit this
     $chart_types = $this->charts_charts_type_info();
-    $type_options = array();
+    $type_options = [];
     foreach ($chart_types as $chart_type => $chart_type_info) {
       $type_options[$chart_type] = $chart_type_info['label'];
     }
 
-    $form['type'] = array(
+    $form['type'] = [
       '#title' => $this->t('Chart type'),
       '#type' => 'radios',
       '#default_value' => $options['type'],
       '#options' => $type_options,
       '#required' => TRUE,
       '#weight' => -20,
-      '#attributes' => array(
-        'class' => array(
+      '#attributes' => [
+        'class' => [
           'chart-type-radios',
           'container-inline',
-        )
-      ),
-      '#parents' => array_merge($parents, array('type')),
-    );
+        ]
+      ],
+      '#parents' => array_merge($parents, ['type']),
+    ];
 
     // Set data attributes to identify special properties of different types.
     foreach ($chart_types as $chart_type => $chart_type_info) {
@@ -198,264 +197,267 @@ class ChartsConfigForm extends ConfigFormBase {
       $first_field = key($field_options);
       //$field_keys = array_diff($field_options, array($first_field => NULL));
       $form['fields']['#theme'] = 'charts_settings_fields';
-      $form['fields']['label_field'] = array(
+      $form['fields']['label_field'] = [
         '#type' => 'radios',
         '#title' => $this->t('Label field'),
-        '#options' => $field_options + array('' => $this->t('No label field')),
+        '#options' => $field_options + ['' => $this->t('No label field')],
         '#default_value' => isset($options['label_field']) ? $options['label_field'] : $first_field,
         '#weight' => -10,
-        '#parents' => array_merge($parents, array('label_field')),
-      );
-      $form['fields']['data_fields'] = array(
+        '#parents' => array_merge($parents, ['label_field']),
+      ];
+      $form['fields']['data_fields'] = [
         '#type' => 'checkboxes',
         '#title' => $this->t('Data fields'),
         '#options' => $field_options,
-        '#default_value' => isset($options['data_fields']) ? $options['data_fields'] : array_diff(array_keys($field_options), array($first_field)),
+        '#default_value' => isset($options['data_fields']) ? $options['data_fields'] : array_diff(array_keys($field_options), [$first_field]),
         '#weight' => -9,
-        '#parents' => array_merge($parents, array('data_fields')),
-      );
+        '#parents' => array_merge($parents, ['data_fields']),
+      ];
       $color_count = 0;
       foreach ($field_options as $field_name => $field_label) {
-        $form['fields']['field_colors'][$field_name] = array(
+        $form['fields']['field_colors'][$field_name] = [
           '#type' => 'textfield',
-          '#attributes' => array('TYPE' => 'color'),
+          '#attributes' => ['TYPE' => 'color'],
           '#size' => 10,
           '#maxlength' => 7,
-          '#theme_wrappers' => array(),
+          '#theme_wrappers' => [],
           '#default_value' => !empty($options['field_colors'][$field_name]) ? $options['field_colors'][$field_name] : $options['colors'][$color_count],
-          '#parents' => array_merge($parents, array(
+          '#parents' => array_merge($parents, [
             'field_colors',
             $field_name,
-          )),
-        );
+          ]),
+        ];
         $color_count++;
       }
     }
 
-    $form['display'] = array(
+    $form['display'] = [
       '#title' => $this->t('Display'),
       '#type' => 'details',
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
-    );
-    $form['display']['title'] = array(
+    ];
+    $form['display']['title'] = [
       '#title' => $this->t('Chart title'),
       '#type' => 'textfield',
       '#default_value' => $options['title'],
-      '#parents' => array_merge($parents, array('title')),
-    );
-    $form['display']['title_position'] = array(
+      '#parents' => array_merge($parents, ['title']),
+    ];
+    $form['display']['title_position'] = [
       '#title' => $this->t('Title position'),
       '#type' => 'select',
-      '#options' => array(
+      '#options' => [
         '' => $this->t('None'),
         'out' => $this->t('Outside'),
         'in' => $this->t('Inside'),
-      ),
+      ],
       '#default_value' => $options['title_position'],
-      '#parents' => array_merge($parents, array('title_position')),
-    );
+      '#parents' => array_merge($parents, ['title_position']),
+    ];
 
-    $form['display']['legend_position'] = array(
+    $form['display']['legend_position'] = [
       '#title' => $this->t('Legend position'),
       '#type' => 'select',
-      '#options' => array(
+      '#options' => [
         '' => $this->t('None'),
         'top' => $this->t('Top'),
         'right' => $this->t('Right'),
         'bottom' => $this->t('Bottom'),
         'left' => $this->t('Left'),
-      ),
+      ],
       '#default_value' => $options['legend_position'],
-      '#parents' => array_merge($parents, array('legend_position')),
-    );
+      '#parents' => array_merge($parents, ['legend_position']),
+    ];
 
-    $form['display']['colors'] = array(
+    $form['display']['colors'] = [
       '#title' => $this->t('Chart colors'),
-      '#theme_wrappers' => array('form_element'),
+      '#theme_wrappers' => ['form_element'],
       '#prefix' => '<div class="chart-colors">',
       '#suffix' => '</div>',
-    );
+    ];
     for ($color_count = 0; $color_count < 10; $color_count++) {
-      $form['display']['colors'][$color_count] = array(
+      $form['display']['colors'][$color_count] = [
         '#type' => 'textfield',
-        '#attributes' => array('TYPE' => 'color'),
+        '#attributes' => ['TYPE' => 'color'],
         '#size' => 10,
         '#maxlength' => 7,
-        '#theme_wrappers' => array(),
+        '#theme_wrappers' => [],
         '#suffix' => ' ',
         '#default_value' => $options['colors'][$color_count],
-        '#parents' => array_merge($parents, array('colors', $color_count)),
-      );
+        '#parents' => array_merge($parents, ['colors', $color_count]),
+      ];
     }
-    $form['display']['background'] = array(
+    $form['display']['background'] = [
       '#title' => $this->t('Background color'),
       '#type' => 'textfield',
       '#size' => 10,
       '#maxlength' => 7,
-      '#attributes' => array('placeholder' => $this->t('transparent')),
+      '#attributes' => ['placeholder' => $this->t('transparent')],
       '#description' => $this->t('Leave blank for a transparent background.'),
       '#default_value' => $options['background'],
-      '#parents' => array_merge($parents, array('background')),
-    );
+      '#parents' => array_merge($parents, ['background']),
+    ];
 
-    $form['display']['dimensions'] = array(
+    $form['display']['dimensions'] = [
       '#title' => $this->t('Dimensions'),
-      '#theme_wrappers' => array('form_element'),
+      '#theme_wrappers' => ['form_element'],
       '#description' => $this->t('If dimensions are left empty, the chart will fill its containing element.'),
-    );
-    $form['display']['dimensions']['width'] = array(
+    ];
+    $form['display']['dimensions']['width'] = [
       '#type' => 'textfield',
-      '#attributes' => array(
+      '#attributes' => [
         'TYPE' => 'number',
         'step' => 1,
         'min' => 0,
         'max' => 9999,
         'placeholder' => $this->t('auto'),
-      ),
+      ],
       '#default_value' => $options['width'],
       '#size' => 8,
       '#suffix' => ' x ',
-      '#theme_wrappers' => array(),
-      '#parents' => array_merge($parents, array('width')),
-    );
-    $form['display']['dimensions']['height'] = array(
+      '#theme_wrappers' => [],
+      '#parents' => array_merge($parents, ['width']),
+    ];
+    $form['display']['dimensions']['height'] = [
       '#type' => 'textfield',
-      '#attributes' => array(
+      '#attributes' => [
         'TYPE' => 'number',
         'step' => 1,
         'min' => 0,
         'max' => 9999,
         'placeholder' => $this->t('auto'),
-      ),
+      ],
       '#default_value' => $options['height'],
       '#size' => 8,
       '#suffix' => ' px',
-      '#theme_wrappers' => array(),
-      '#parents' => array_merge($parents, array('height')),
-    );
+      '#theme_wrappers' => [],
+      '#parents' => array_merge($parents, ['height']),
+    ];
 
-    $form['xaxis'] = array(
+    $form['xaxis'] = [
       '#title' => $this->t('Horizontal axis'),
       '#type' => 'details',
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
-      '#attributes' => array('class' => array('chart-xaxis')),
-    );
-    $form['xaxis']['title'] = array(
+      '#attributes' => ['class' => ['chart-xaxis']],
+    ];
+    $form['xaxis']['title'] = [
       '#title' => $this->t('Custom title'),
       '#type' => 'textfield',
       '#default_value' => $options['xaxis_title'],
-      '#parents' => array_merge($parents, array('xaxis_title')),
-    );
-    $form['xaxis']['labels_rotation'] = array(
+      '#parents' => array_merge($parents, ['xaxis_title']),
+    ];
+    $form['xaxis']['labels_rotation'] = [
       '#title' => $this->t('Labels rotation'),
       '#type' => 'select',
-      '#options' => array(
+      '#options' => [
         0 => $this->t('0°'),
         30 => $this->t('30°'),
         45 => $this->t('45°'),
         60 => $this->t('60°'),
         90 => $this->t('90°'),
-      ), // This is only shown on non-inverted charts.
-      '#attributes' => array('class' => array('axis-inverted-hide')),
+      ], // This is only shown on non-inverted charts.
+      '#attributes' => ['class' => ['axis-inverted-hide']],
       '#default_value' => $options['xaxis_labels_rotation'],
-      '#parents' => array_merge($parents, array('xaxis_labels_rotation')),
-    );
+      '#parents' => array_merge($parents, ['xaxis_labels_rotation']),
+    ];
 
-    $form['yaxis'] = array(
+    $form['yaxis'] = [
       '#title' => $this->t('Vertical axis'),
       '#type' => 'details',
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
-      '#attributes' => array('class' => array('chart-yaxis')),
-    );
-    $form['yaxis']['title'] = array(
+      '#attributes' => ['class' => ['chart-yaxis']],
+    ];
+    $form['yaxis']['title'] = [
       '#title' => $this->t('Custom title'),
       '#type' => 'textfield',
       '#default_value' => $options['yaxis_title'],
-      '#parents' => array_merge($parents, array('yaxis_title')),
-    );
-    $form['yaxis']['minmax'] = array(
+      '#parents' => array_merge($parents, ['yaxis_title']),
+    ];
+    $form['yaxis']['minmax'] = [
       '#title' => $this->t('Value range'),
-      '#theme_wrappers' => array('form_element'),
-    );
-    $form['yaxis']['minmax']['min'] = array(
+      '#theme_wrappers' => ['form_element'],
+    ];
+    $form['yaxis']['minmax']['min'] = [
       '#type' => 'textfield',
-      '#attributes' => array(
+      '#attributes' => [
         'TYPE' => 'number',
         'max' => 999999,
         'placeholder' => $this->t('Minimum'),
-      ),
+      ],
       '#default_value' => $options['yaxis_min'],
       '#size' => 12,
-      '#parents' => array_merge($parents, array('yaxis_min')),
+      '#parents' => array_merge($parents, ['yaxis_min']),
       '#suffix' => ' ',
-      '#theme_wrappers' => array(),
-    );
-    $form['yaxis']['minmax']['max'] = array(
+      '#theme_wrappers' => [],
+    ];
+    $form['yaxis']['minmax']['max'] = [
       '#type' => 'textfield',
-      '#attributes' => array(
+      '#attributes' => [
         'TYPE' => 'number',
         'max' => 999999,
         'placeholder' => $this->t('Maximum'),
-      ),
+      ],
       '#default_value' => $options['yaxis_max'],
       '#size' => 12,
-      '#parents' => array_merge($parents, array('yaxis_max')),
-      '#theme_wrappers' => array(),
-    );
-    $form['yaxis']['prefix'] = array(
+      '#parents' => array_merge($parents, ['yaxis_max']),
+      '#theme_wrappers' => [],
+    ];
+    $form['yaxis']['prefix'] = [
       '#title' => $this->t('Value prefix'),
       '#type' => 'textfield',
       '#default_value' => $options['yaxis_prefix'],
       '#size' => 12,
-      '#parents' => array_merge($parents, array('yaxis_prefix')),
-    );
-    $form['yaxis']['suffix'] = array(
+      '#parents' => array_merge($parents, ['yaxis_prefix']),
+    ];
+    $form['yaxis']['suffix'] = [
       '#title' => $this->t('Value suffix'),
       '#type' => 'textfield',
       '#default_value' => $options['yaxis_suffix'],
       '#size' => 12,
-      '#parents' => array_merge($parents, array('yaxis_suffix')),
-    );
-    $form['yaxis']['decimal_count'] = array(
+      '#parents' => array_merge($parents, ['yaxis_suffix']),
+    ];
+    $form['yaxis']['decimal_count'] = [
       '#title' => $this->t('Decimal count'),
       '#type' => 'textfield',
-      '#attributes' => array(
+      '#attributes' => [
         'TYPE' => 'number',
         'step' => 1,
         'min' => 0,
         'max' => 20,
         'placeholder' => $this->t('auto'),
-      ),
+      ],
       '#default_value' => $options['yaxis_decimal_count'],
       '#size' => 5,
       '#description' => $this->t('Enforce a certain number of decimal-place digits in displayed values.'),
-      '#parents' => array_merge($parents, array('yaxis_decimal_count')),
-    );
-    $form['yaxis']['labels_rotation'] = array(
+      '#parents' => array_merge($parents, ['yaxis_decimal_count']),
+    ];
+    $form['yaxis']['labels_rotation'] = [
       '#title' => $this->t('Labels rotation'),
       '#type' => 'select',
-      '#options' => array(
+      '#options' => [
         0 => $this->t('0°'),
         30 => $this->t('30°'),
         45 => $this->t('45°'),
         60 => $this->t('60°'),
         90 => $this->t('90°'),
-      ), // This is only shown on inverted charts.
-      '#attributes' => array(
-        'class' => array('axis-inverted-show')
-      ),
+      ],
+      '#attributes' => [
+        'class' => ['axis-inverted-show']
+      ],
       '#default_value' => $options['yaxis_labels_rotation'],
-      '#parents' => array_merge($parents, array('yaxis_labels_rotation')),
-    );
+      '#parents' => array_merge($parents, ['yaxis_labels_rotation']),
+    ];
 
     return $form;
   }
 
+  /**
+   * @return array
+   */
   public function charts_info() {
-    $charts_info = array();
+    $charts_info = [];
     foreach ($this->moduleHandler->getImplementations('charts_info') as $module) {
       $module_charts_info = $this->moduleHandler->invoke($module, 'charts_info');
       foreach ($module_charts_info as $chart_library => $chart_library_info) {
@@ -473,34 +475,34 @@ class ChartsConfigForm extends ConfigFormBase {
    * @return mixed
    */
   public function charts_charts_type_info() {
-    $chart_types['pie'] = array(
+    $chart_types['pie'] = [
       'label' => $this->t('Pie'),
       'axis' => CHARTS_SINGLE_AXIS,
-    );
-    $chart_types['bar'] = array(
+    ];
+    $chart_types['bar'] = [
       'label' => $this->t('Bar'),
       'axis' => CHARTS_DUAL_AXIS,
       'axis_inverted' => TRUE,
       'stacking' => TRUE,
-    );
-    $chart_types['column'] = array(
+    ];
+    $chart_types['column'] = [
       'label' => $this->t('Column'),
       'axis' => CHARTS_DUAL_AXIS,
       'stacking' => TRUE,
-    );
-    $chart_types['line'] = array(
+    ];
+    $chart_types['line'] = [
       'label' => $this->t('Line'),
       'axis' => CHARTS_DUAL_AXIS,
-    );
-    $chart_types['area'] = array(
+    ];
+    $chart_types['area'] = [
       'label' => $this->t('Area'),
       'axis' => CHARTS_DUAL_AXIS,
       'stacking' => TRUE,
-    );
-    $chart_types['scatter'] = array(
+    ];
+    $chart_types['scatter'] = [
       'label' => $this->t('Scatter'),
       'axis' => CHARTS_DUAL_AXIS,
-    );
+    ];
 
     return $chart_types;
   }
