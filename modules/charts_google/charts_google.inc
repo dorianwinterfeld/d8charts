@@ -32,7 +32,7 @@ function _charts_google_render($chart) {
   // Trim out empty options.
   charts_trim_array($chart_definition['options']);
 
-  $chart['#attached']['library'][] = array('charts_google', 'charts_google');
+  $chart['#attached']['library'][] = ['charts_google', 'charts_google'];
   $chart['#attributes']['class'][] = 'charts-google';
   $chart['#chart_definition'] = $chart_definition;
 
@@ -43,14 +43,14 @@ function _charts_google_render($chart) {
  * Utility to convert a Drupal renderable type to a Google visualization type.
  */
 function _charts_google_visualization_type($renderable_type) {
-  $types = array(
+  $types = [
     'area' => 'AreaChart',
     'bar' => 'BarChart',
     'column' => 'ColumnChart',
     'line' => 'LineChart',
     'pie' => 'PieChart',
     'scatter' => 'ScatterChart',
-  );
+  ];
   drupal_alter('charts_google_visualization_types', $types);
   return isset($types[$renderable_type]) ? $types[$renderable_type] : FALSE;
 }
@@ -107,7 +107,7 @@ function _charts_google_populate_chart_axes($chart, $chart_definition) {
       }
 
       // Populate the chart data.
-      $axis = array();
+      $axis = [];
       $axis['title'] = $chart[$key]['#title'] ? $chart[$key]['#title'] : '';
       $axis['titleTextStyle']['color'] = $chart[$key]['#title_color'];
       $axis['titleTextStyle']['bold'] = $chart[$key]['#title_font_weight'] === 'bold' ? TRUE : FALSE;
@@ -129,23 +129,22 @@ function _charts_google_populate_chart_axes($chart, $chart_definition) {
       $axis['baselineColor'] = $chart[$key]['#base_line_color'];
       $axis['minorGridlines']['color'] = $chart[$key]['#minor_grid_line_color'];
       $axis['viewWindowMode'] = isset($chart[$key]['#max']) ? 'explicit' : NULL;
-      $axis['viewWindow']['max'] = strlen($chart[$key]['#max']) ? (int) $chart[$key]['#max'] : NULL;
-      $axis['viewWindow']['min'] = strlen($chart[$key]['#min']) ? (int) $chart[$key]['#min'] : NULL;
+      $axis['viewWindow']['max'] = strlen($chart[$key]['#max']) ? (int)$chart[$key]['#max'] : NULL;
+      $axis['viewWindow']['min'] = strlen($chart[$key]['#min']) ? (int)$chart[$key]['#min'] : NULL;
 
       // Multi-axis support only applies to the major axis in Google charts.
       $chart_type_info = charts_get_type($chart['#chart_type']);
       $axis_index = $chart[$key]['#opposite'] ? 1 : 0;
       if ($chart[$key]['#type'] === 'chart_xaxis') {
-        $axis_keys = !$chart_type_info['axis_inverted'] ? array('hAxis') : array(
+        $axis_keys = !$chart_type_info['axis_inverted'] ? ['hAxis'] : [
           'vAxes',
           $axis_index,
-        );
-      }
-      else {
-        $axis_keys = !$chart_type_info['axis_inverted'] ? array(
+        ];
+      } else {
+        $axis_keys = !$chart_type_info['axis_inverted'] ? [
           'vAxes',
           $axis_index,
-        ) : array('hAxis');
+        ] : ['hAxis'];
       }
       $axis_drilldown = &$chart_definition['options'];
       foreach ($axis_keys as $key) {
@@ -162,12 +161,12 @@ function _charts_google_populate_chart_axes($chart, $chart_definition) {
  * Utility to populate chart data.
  */
 function _charts_google_populate_chart_data(&$chart, $chart_definition) {
-  $chart_definition['options']['series'] = array();
+  $chart_definition['options']['series'] = [];
   $chart_type_info = charts_get_type($chart['#chart_type']);
   $series_number = 0;
   foreach (element_children($chart) as $key) {
     if ($chart[$key]['#type'] === 'chart_data') {
-      $series = array();
+      $series = [];
 
       // Make sure defaults are loaded.
       if (empty($chart[$key]['#defaults_loaded'])) {
@@ -205,12 +204,11 @@ function _charts_google_populate_chart_data(&$chart, $chart_definition) {
         // approach leaves columns empty in order to make arbitrary pairings.
         // See https://developers.google.com/chart/interactive/docs/gallery/scatterchart#Data_Format
         if (is_array($data_value)) {
-          $chart_definition['data'][] = array(
+          $chart_definition['data'][] = [
             0 => $data_value[0],
             $series_number + 1 => $data_value[1],
-          );
-        }
-        // Most charts provide a single-dimension array of values.
+          ];
+        } // Most charts provide a single-dimension array of values.
         else {
           $chart_definition['data'][$index + 1][$series_number + 1] = $data_value;
         }

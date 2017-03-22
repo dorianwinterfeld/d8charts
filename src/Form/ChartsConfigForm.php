@@ -47,17 +47,12 @@ class ChartsConfigForm extends ConfigFormBase {
     }
 
     $field_options = [];
-    $url = Url::fromRoute('views_ui.add');
-    $link = Link::fromTextAndUrl($this->t('create a new view'), $url)
-      ->toRenderable();
-
-    // Add help.
     $form['help'] = [
       '#type' => 'markup',
-      '#markup' => '<p>' . $this->t('The settings on this page are used to set 
-        <strong>default</strong> settings. They do not affect existing charts. 
-        To make a new chart, <a href="!views">create a new view</a> and select 
-        the display format of "Chart".', ['!views' => $link['url']])
+      '#markup' => '<p>' . $this->t('The settings on this page are used to set
+        <strong>default</strong> settings. They do not affect existing charts.
+        To make a new chart, <a href="@create">create a new view</a> and select
+        the display format of "Chart".', ['@create' => Url::fromRoute('views_ui.add')->toString()])
         . '</p>',
       '#weight' => -100,
     ];
