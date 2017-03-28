@@ -71,7 +71,6 @@ function charts_google_create_charts_options($options, $seriesData = array(), $a
     $secondVaxis['title'] = $attachmentDisplayOptions[0]['style']['options']['yaxis_title'];
     array_push($vAxes, $secondVaxis);
   }
-
   array_push($chartSelected, $options['type']);
   for ($i = 0; $i < count($attachmentDisplayOptions); $i++){
     $attachmentChartType = $attachmentDisplayOptions[$i]['style']['options']['type'];
@@ -107,6 +106,7 @@ function charts_google_create_charts_options($options, $seriesData = array(), $a
     array_push($seriesColors, $seriesColor);
   }
   $googleOptions->setColors($seriesColors);
+
   return $googleOptions;
 }
 
