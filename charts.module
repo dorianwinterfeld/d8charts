@@ -28,7 +28,7 @@ function charts_theme($existing, $type, $theme, $path) {
 function template_preprocess_views_view_charts(&$variables) {
 
   $options = $variables['view']->style_plugin->options;
-  $attachmentOptions = [];
+  $attachmentDisplayOptions = [];
 
   $service = \Drupal::service('charts.charts_attachment');
   $attachmentView = $service->getAttachmentViews();
@@ -64,7 +64,6 @@ function template_preprocess_views_view_charts(&$variables) {
       array_push($seriesDataAttachment, $dataAttachmentFormatted[1][$j]);
     }
   }
-
   $library = $view->style_plugin->options['library'];
   $variables['data'] = array();
   $labelField = $view->style_plugin->options['label_field'];
@@ -82,22 +81,21 @@ function template_preprocess_views_view_charts(&$variables) {
   $categories = $data[0];
   $seriesData = $data[1];
   $categories = array_merge($categories, $categoriesAttachment);
+  $categories = array_unique($categories);
 
-  if (count($attachmentView) > 0) {
-    $attachmentId = $attachmentView[0]->display_handler->display['id'];
+  for ($i =0; $i < count($attachmentView); $i++){
+    $attachmentId = $attachmentView[$i]->display_handler->display['id'];
     $attachmentDisplay = $view->storage->getDisplay($attachmentId);
-
-    if ($attachmentDisplay['display_options']['inherit_yaxis'] == 0){
-      $attachmentOptions = $attachmentDisplay['display_options']['style']['options'];
-    }
+    $attachmentDisplayOptions[$i] = $attachmentDisplay['display_options'];
   }
   $seriesData = array_merge($seriesData, $seriesDataAttachment);
 
   // Handles the toggling from one library to another.
   switch ($library) {
     case 'google':
+      Util::checkMissingLibrary('charts_google', '/vendor/google/loader.js');
       $googleData = charts_google_render_charts($categories, $seriesData);
-      $googleOptions = charts_google_create_charts_options($options, $seriesData);
+      $googleOptions = charts_google_create_charts_options($options, $seriesData, $attachmentDisplayOptions);
       $googleChartType = charts_google_create_chart_type($options);
       $variables['chart_type'] = 'google';
       $variables['attributes']['class'][0] = 'charts-google';
@@ -109,7 +107,8 @@ function template_preprocess_views_view_charts(&$variables) {
       break;
 
     case 'highcharts':
-      $highchart = charts_highcharts_render_charts($options, $categories, $seriesData, $attachmentOptions);
+      Util::checkMissingLibrary('charts_highcharts', '/vendor/highcharts/highcharts.js');
+      $highchart = charts_highcharts_render_charts($options, $categories, $seriesData, $attachmentDisplayOptions);
       $variables['chart_type'] = 'highcharts';
       $variables['content_attributes']['data-chart'][] = json_encode($highchart);
       $variables['attributes']['id'][0] = $chartId;
@@ -118,7 +117,8 @@ function template_preprocess_views_view_charts(&$variables) {
       break;
 
     case 'c3':
-      $c3 = charts_c3_render_charts($options, $categories, $seriesData, $chartId, $attachmentOptions);
+      Util::checkMissingLibrary('charts_c3', '/vendor/cthree/c3.min.js');
+      $c3 = charts_c3_render_charts($options, $categories, $seriesData, $chartId, $attachmentDisplayOptions);
       $variables['chart_type'] = 'c3';
       $variables['content_attributes']['data-chart'][] = json_encode($c3);
       $variables['attributes']['id'][0] = $chartId;
@@ -130,3 +130,5 @@ function template_preprocess_views_view_charts(&$variables) {
   }
 
 }
+
+

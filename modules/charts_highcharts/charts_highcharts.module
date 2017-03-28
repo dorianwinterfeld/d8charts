@@ -39,9 +39,11 @@ function charts_highcharts_charts_info() {
  * @param array $categories
  * @param array $seriesData
  *
+ * @param array $attachmentDisplayOptions
+ *
  * @return Highcharts object to be used by highcharts javascripts visualization framework
  */
-function charts_highcharts_render_charts($options, $categories = array(), $seriesData = array(), $attachmentOptions = []) {
+function charts_highcharts_render_charts($options, $categories = array(), $seriesData = array(), $attachmentDisplayOptions = []) {
 
   $chart = new ChartType();
   $chart->setType($options['type']);
@@ -69,19 +71,20 @@ function charts_highcharts_render_charts($options, $categories = array(), $serie
   $chartYaxis->setLabels($yaxisLabels);
   $chartYaxis->setTitle($yAxisTitle);
   array_push($yAxes, $chartYaxis);
-  if (count($attachmentOptions) > 0){
+  // Chart libraries tend to supports only one secondary axis.
+  if ($attachmentDisplayOptions[0]['inherit_yaxis'] == 0){
     $chartYaxisSecondary = new Yaxis();
     $yAxisTitleSecondary = new YaxisTitle();
-    $yAxisTitleSecondary->setText($attachmentOptions['yaxis_title']);
+    $yAxisTitleSecondary->setText($attachmentDisplayOptions[0]['style']['options']['yaxis_title']);
     $chartYaxisSecondary->setTitle($yAxisTitleSecondary);
     $chartYaxisSecondary->setLabels($yaxisLabels);
     $chartYaxisSecondary->opposite = 'true';
 
-    if (!empty($attachmentOptions['yaxis_min'])){
-      $chartYaxisSecondary->min = $attachmentOptions['yaxis_min'];
+    if (!empty($attachmentDisplayOptions[0]['style']['options']['yaxis_min'])){
+      $chartYaxisSecondary->min = $attachmentDisplayOptions[0]['style']['options']['yaxis_min'];
     }
-    if (!empty($attachmentOptions['yaxis_max'])){
-      $chartYaxisSecondary->max = $attachmentOptions['yaxis_max'];
+    if (!empty($attachmentDisplayOptions[0]['style']['options']['yaxis_max'])){
+      $chartYaxisSecondary->max = $attachmentDisplayOptions[0]['style']['options']['yaxis_max'];
     }
     array_push($yAxes, $chartYaxisSecondary);
   }

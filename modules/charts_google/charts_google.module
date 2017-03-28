@@ -32,12 +32,6 @@ function charts_google_charts_info() {
 function charts_google_render_charts($categories = array(), $seriesData = array()) {
 
   $dataTable = array();
-
-  $dataTableHeader = array();
-  for ($r = 0; $r < count($seriesData); $r++) {
-    array_push($dataTableHeader, $seriesData[$r]['name']);
-  }
-
   for ($j = 0; $j < count($categories); $j++) {
     $rowDataTable = [];
     for ($i = 0; $i < count($seriesData); $i++) {
@@ -62,12 +56,48 @@ function charts_google_render_charts($categories = array(), $seriesData = array(
 /**
  * @param $options
  * @param array $seriesData
+ * @param array $attachmentDisplayOptions
  * @return GoogleOptions object with chart options or settings to be used by google visualization framework
  */
-function charts_google_create_charts_options($options, $seriesData = array()) {
+function charts_google_create_charts_options($options, $seriesData = array(), $attachmentDisplayOptions = []) {
+  $chartSelected = [];
+  $seriesTypes = array();
+  $firstVaxis = array('minValue'=> 0, 'title' => $options['yaxis_title']);
+  $secondVaxis = array('minValue'=> 0);
+  $vAxes = array();
+  array_push($vAxes, $firstVaxis);
+  //sets secondary axis from the first attachment only
+  if ($attachmentDisplayOptions[0]['inherit_yaxis'] == 0){
+    $secondVaxis['title'] = $attachmentDisplayOptions[0]['style']['options']['yaxis_title'];
+    array_push($vAxes, $secondVaxis);
+  }
 
+  array_push($chartSelected, $options['type']);
+  for ($i = 0; $i < count($attachmentDisplayOptions); $i++){
+    $attachmentChartType = $attachmentDisplayOptions[$i]['style']['options']['type'];
+    if ($attachmentChartType == 'column')
+      $attachmentChartType = 'bars';
+    if ($attachmentDisplayOptions[0]['inherit_yaxis'] == 0 && $i == 0){
+      $seriesTypes[$i + 1] = array('type' => $attachmentChartType, 'targetAxisIndex' => 1);
+    }
+    else
+      $seriesTypes[$i + 1] = array('type' => $attachmentChartType);
+    array_push($chartSelected, $attachmentChartType);
+  }
+
+  $chartSelected = array_unique($chartSelected);
   $googleOptions = new GoogleOptions();
+  if (count($chartSelected) > 1){
+    $parentChartType = $options['type'];
+    if ($parentChartType == 'column')
+      $parentChartType = 'bars';
+    $googleOptions->seriesType = $parentChartType;
+    $googleOptions->series = $seriesTypes;
+  }
   $googleOptions->setTitle($options['title']);
+  $googleOptions->vAxes = $vAxes;
+  //$vAxis['title'] = $options['yaxis_title'];
+  //$googleOptions->setVAxis($vAxis);
   $chartArea = new ChartArea();
   $chartArea->setWidth(400);
   // $googleOptions->setChartArea($chartArea);
@@ -77,7 +107,6 @@ function charts_google_create_charts_options($options, $seriesData = array()) {
     array_push($seriesColors, $seriesColor);
   }
   $googleOptions->setColors($seriesColors);
-
   return $googleOptions;
 }
 
