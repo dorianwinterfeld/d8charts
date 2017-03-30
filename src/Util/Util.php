@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * @file
+ *
+ * A class with a series of utility functions for manipulation of views & attachment data.
+ *
+ */
 namespace Drupal\charts\Util;
 
 class Util {
