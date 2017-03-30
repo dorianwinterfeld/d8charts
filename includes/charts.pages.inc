@@ -218,7 +218,7 @@ function charts_cast_element_integer_values(&$element) {
 function charts_settings_form($form, $defaults = array(), $field_options = array(), $parents = array()) {
   // Ensure all defaults are set.
   $options = array_merge(charts_default_settings(), $defaults);
-  $form['#attached']['library'][] = array('charts', 'charts.admin');
+  $form['#attached']['library'][] = "charts/charts.admin";
 
   // Get a list of available chart libraries.
   $charts_info = charts_info();

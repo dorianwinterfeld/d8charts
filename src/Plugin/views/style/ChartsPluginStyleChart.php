@@ -6,7 +6,6 @@ use Drupal\core\form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\views\Plugin\views\style\StylePluginBase;
 
-\Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
 \Drupal::moduleHandler()->loadInclude('charts', 'inc', 'includes/charts.pages');
 
 /**
