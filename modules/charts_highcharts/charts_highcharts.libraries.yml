@@ -18,3 +18,4 @@ highcharts:
     vendor/highcharts/highcharts.js: {}
   dependencies:
       - core/jquery
+      - charts_highcharts/charts_highcharts

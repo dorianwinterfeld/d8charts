@@ -6,6 +6,7 @@
  */
 
 use Drupal\charts\Util\Util;
+use Drupal\charts\Charts\ModuleSelector;
 
 /**
  * {@inheritdoc}
@@ -73,8 +74,7 @@ function template_preprocess_views_view_charts(&$variables) {
 
   if (0 < count($attachmentView)) {
     $data = Util::viewsData($view, $valueField, $labelField, $color, $attachmentChartTypeOption[$i]);
-  }
-  else {
+  } else {
     $data = Util::viewsData($view, $valueField, $labelField, $color, $attachmentChartTypeOption[$i] = NULL);
   }
 
@@ -91,43 +91,6 @@ function template_preprocess_views_view_charts(&$variables) {
   }
   $seriesData = array_merge($seriesData, $seriesDataAttachment);
 
-  // Handles the toggling from one library to another.
-  switch ($library) {
-    case 'google':
-      Util::checkMissingLibrary('charts_google', '/vendor/google/loader.js');
-      $googleData = charts_google_render_charts($categories, $seriesData);
-      $googleOptions = charts_google_create_charts_options($options, $seriesData, $attachmentDisplayOptions);
-      $googleChartType = charts_google_create_chart_type($options);
-      $variables['chart_type'] = 'google';
-      $variables['attributes']['class'][0] = 'charts-google';
-      $variables['attributes']['id'][0] = $chartId;
-      $variables['content_attributes']['data-chart'][] = $googleData;
-      $variables['attributes']['google-options'][1] = json_encode($googleOptions);
-      $variables['attributes']['google-chart-type'][2] = json_encode($googleChartType);
-
-      break;
-
-    case 'highcharts':
-      Util::checkMissingLibrary('charts_highcharts', '/vendor/highcharts/highcharts.js');
-      $highchart = charts_highcharts_render_charts($options, $categories, $seriesData, $attachmentDisplayOptions);
-      $variables['chart_type'] = 'highcharts';
-      $variables['content_attributes']['data-chart'][] = json_encode($highchart);
-      $variables['attributes']['id'][0] = $chartId;
-      $variables['attributes']['class'][] = 'charts-highchart';
-
-      break;
-
-    case 'c3':
-      Util::checkMissingLibrary('charts_c3', '/vendor/cthree/c3.min.js');
-      $c3 = charts_c3_render_charts($options, $categories, $seriesData, $chartId, $attachmentDisplayOptions);
-      $variables['chart_type'] = 'c3';
-      $variables['content_attributes']['data-chart'][] = json_encode($c3);
-      $variables['attributes']['id'][0] = $chartId;
-      $variables['attributes']['class'][] = 'charts-c3';
-      break;
-
-    default:
-      // Not handled.
-  }
+  $moduleSelector = new ModuleSelector($library, $categories, $seriesData, $options, $attachmentDisplayOptions, $variables, $chartId);
 
 }
