@@ -1,9 +1,0 @@
-charts:
-  version: 1.x
-  js:
-    js/charts.admin.js: {}
-  dependencies:
-    - core/jquery
-    - core/jquery.once
-    - core/drupal
-    - core/drupalSettings

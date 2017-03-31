@@ -79,39 +79,30 @@ function hook_chart_alter(&$chart, $chart_id) {
 function hook_chart_CHART_ID_alter(&$chart) {
 }
 
-///**
-// * Alter an individual chart's raw library representation.
-// *
-// * This hook is called AFTER hook_chart_alter(), after Charts module has
-// * converted the renderable into the chart definition that will be used by the
-// * library. Note that the structure of $definition will differ based on the
-// * charting library used. Switching charting libraries may cause your code
-// * to break when using this hook.
-// *
-// * Even though this hook may be fragile, it may provide developers with access
-// * to library-specific functionality.
-// *
-// * @param $definition
-// *   The chart definition to be modified. The raw values are passed directly to
-// *   the charting library.
-// * @param $chart
-// *   The chart renderable. This may be used for reference (or read to add
-// *   support for new properties), but any changes to this variable will not
-// *   have an effect on output.
-// * @internal param $chart_id The chart ID, derived from the $chart['#chart_id'] property. Note that not*   The chart ID, derived from the $chart['#chart_id'] property. Note that not
-// *   all charts may have a $chart_id.
-// */
-//function hook_chart_definition_alter(&$definition, $chart) {
-//  if ($chart['#chart_library'] === 'google') {
-//    $definition['options']['titleTextStyle']['fontSize'] = 20;
-//  }
-//  if ($chart['#chart_library'] === 'c3') {
-//    $definition['options']['titleTextStyle']['fontSize'] = 20;
-//  }
-//  elseif ($chart['#chart_library'] === 'highcharts') {
-//    $definition['title']['style']['fontSize'] = 20;
-//  }
-//}
+/**
+ * Alter an individual chart's raw library representation.
+ *
+ * This hook is called AFTER hook_chart_alter(), after Charts module has
+ * converted the renderable into the chart definition that will be used by the
+ * library. Note that the structure of $definition will differ based on the
+ * charting library used. Switching charting libraries may cause your code
+ * to break when using this hook.
+ *
+ * Even though this hook may be fragile, it may provide developers with access
+ * to library-specific functionality.
+ *
+ * @param $definition
+ *   The chart definition to be modified. The raw values are passed directly to
+ *   the charting library.
+ * @param $chart
+ *   The chart renderable. This may be used for reference (or read to add
+ *   support for new properties), but any changes to this variable will not
+ *   have an effect on output.
+ * @internal param $chart_id The chart ID, derived from the $chart['#chart_id'] property. Note that not*   The chart ID, derived from the $chart['#chart_id'] property. Note that not
+ *   all charts may have a $chart_id.
+ */
+function hook_chart_definition_alter(&$definition, $chart) {
+}
 
 /**
  * Alter an individual chart before it's rendered.

@@ -6,7 +6,6 @@ charts_google:
         - core/jquery
         - core/jquery.once
         - core/drupal
-        - core/drupalSettings
 
 google:
   remote: https://www.gstatic.com/charts/loader.js
