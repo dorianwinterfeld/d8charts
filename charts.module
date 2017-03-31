@@ -93,13 +93,13 @@ function template_preprocess_views_view_charts(&$variables) {
   $seriesData = array_merge($seriesData, $seriesDataAttachment);
 
 
-
+  $moduleSelector = new ModuleSelector($library, $categories, $seriesData, $options, $attachmentDisplayOptions, $variables, $chartId);
   // Handles the toggling from one library to another.
   switch ($library) {
     case 'google':
       Util::checkMissingLibrary('charts_google', '/vendor/google/loader.js');
-      $moduleSelector = new ModuleSelector($library, $categories, $seriesData, $options, $attachmentDisplayOptions, $variables, $chartId);
-      $variables = $moduleSelector->getVariables();
+
+      //$variables = $moduleSelector->getVariables();
       /*$googleData = charts_google_render_charts($categories, $seriesData);
       $googleOptions = charts_google_create_charts_options($options, $seriesData, $attachmentDisplayOptions);
       $googleChartType = charts_google_create_chart_type($options);*/

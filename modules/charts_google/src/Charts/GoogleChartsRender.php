@@ -8,21 +8,24 @@ use Drupal\charts_google\Settings\Google\ChartArea;
 
 class GoogleChartsRender {
 
-  private $variables;
+ // private $variables;
   private $googleData;
   private $googleOptions;
   private $googleChartType;
   private $chartId;
 
-  public function __construct($categories, $seriesData, $options, $attachmentDisplayOptions, $variables, $chartId) {
-    drupal_set_message('HeLLO GOOGLE');
-    $this->variables = $variables;
+  public function __construct($categories, $seriesData, $options, $attachmentDisplayOptions, &$variables, $chartId) {
     $this->chartId = $chartId;
-    drupal_set_message(json_encode($this->variables['view']->style_plugin->options));
     $this->googleData = $this->charts_google_render_charts($categories, $seriesData);
     $this->googleOptions = $this->charts_google_create_charts_options($options, $seriesData, $attachmentDisplayOptions);
     $this->googleChartType = $this->charts_google_create_chart_type($options);
-   // $this->setAttributes($googleData, $googleOptions, $googleChartType, $chartId);
+
+    $variables['chart_type'] = 'google';
+    $variables['attributes']['class'][0] = 'charts-google';
+    $variables['attributes']['id'][0] = $this->chartId;
+    $variables['content_attributes']['data-chart'][] = $this->googleData;
+    $variables['attributes']['google-options'][1] = json_encode($this->googleOptions);
+    $variables['attributes']['google-chart-type'][2] = json_encode($this->googleChartType);
   }
   /**
    * Creates a JSON Object formatted for Google charts to use
@@ -122,15 +125,5 @@ class GoogleChartsRender {
     $googleChartType->setChartType($options['type']);
 
     return $googleChartType;
-  }
-
-  public function setAttributes(){
-    drupal_set_message(json_encode($this->googleData));
-    $this->variables['chart_type'] = 'google';
-    $this->variables['attributes']['class'][0] = 'charts-google';
-    $this->variables['attributes']['id'][0] = $this->chartId;
-    $this->variables['content_attributes']['data-chart'][] = $this->googleData;
-    $this->variables['attributes']['google-options'][1] = json_encode($this->googleOptions);
-    $this->variables['attributes']['google-chart-type'][2] = json_encode($this->googleChartType);
   }
 }
