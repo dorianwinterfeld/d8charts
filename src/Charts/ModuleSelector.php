@@ -36,11 +36,8 @@ class ModuleSelector {
     if ('charts_'.$moduleExist){
       $className = ucfirst($moduleName);
       //$object = new $className;
-      $naamSpace = 'Drupal\charts_'.$moduleName.'\Charts\\'.ucfirst($moduleName).'ChartsRender';
-
-      $googelCharts = new $naamSpace($this->categories, $this->seriesData, $this->options, $this->attachmentDisplayOptions, $variables, $this->chartId);
+      $moduleChartsRenderer = 'Drupal\charts_'.$moduleName.'\Charts\\'.ucfirst($moduleName).'ChartsRender';
+      $googelCharts = new $moduleChartsRenderer($this->categories, $this->seriesData, $this->options, $this->attachmentDisplayOptions, $variables, $this->chartId);
     }
-    else
-      drupal_set_message('damn '.$moduleName);
   }
 }
