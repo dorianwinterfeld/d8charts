@@ -6,7 +6,7 @@ class Highcharts implements \JsonSerializable {
   private $chart;
   private $title;
   private $xAxis;
- // private $yAxis;
+  // private $yAxis;
   private $tooltip;
   private $plotOptions;
   private $legend;
@@ -64,9 +64,9 @@ class Highcharts implements \JsonSerializable {
   /**
    * @param mixed $yAxis
    */
- /* public function setYAxis($yAxis) {
-    $this->yAxis = $yAxis;
-  }*/
+  /* public function setYAxis($yAxis) {
+     $this->yAxis = $yAxis;
+   }*/
 
   /**
    * @return mixed

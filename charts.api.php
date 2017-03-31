@@ -79,39 +79,39 @@ function hook_chart_alter(&$chart, $chart_id) {
 function hook_chart_CHART_ID_alter(&$chart) {
 }
 
-/**
- * Alter an individual chart's raw library representation.
- *
- * This hook is called AFTER hook_chart_alter(), after Charts module has
- * converted the renderable into the chart definition that will be used by the
- * library. Note that the structure of $definition will differ based on the
- * charting library used. Switching charting libraries may cause your code
- * to break when using this hook.
- *
- * Even though this hook may be fragile, it may provide developers with access
- * to library-specific functionality.
- *
- * @param $definition
- *   The chart definition to be modified. The raw values are passed directly to
- *   the charting library.
- * @param $chart
- *   The chart renderable. This may be used for reference (or read to add
- *   support for new properties), but any changes to this variable will not
- *   have an effect on output.
- * @internal param $chart_id The chart ID, derived from the $chart['#chart_id'] property. Note that not*   The chart ID, derived from the $chart['#chart_id'] property. Note that not
- *   all charts may have a $chart_id.
- */
-function hook_chart_definition_alter(&$definition, $chart) {
-  if ($chart['#chart_library'] === 'google') {
-    $definition['options']['titleTextStyle']['fontSize'] = 20;
-  }
-  if ($chart['#chart_library'] === 'c3') {
-    $definition['options']['titleTextStyle']['fontSize'] = 20;
-  }
-  elseif ($chart['#chart_library'] === 'highcharts') {
-    $definition['title']['style']['fontSize'] = 20;
-  }
-}
+///**
+// * Alter an individual chart's raw library representation.
+// *
+// * This hook is called AFTER hook_chart_alter(), after Charts module has
+// * converted the renderable into the chart definition that will be used by the
+// * library. Note that the structure of $definition will differ based on the
+// * charting library used. Switching charting libraries may cause your code
+// * to break when using this hook.
+// *
+// * Even though this hook may be fragile, it may provide developers with access
+// * to library-specific functionality.
+// *
+// * @param $definition
+// *   The chart definition to be modified. The raw values are passed directly to
+// *   the charting library.
+// * @param $chart
+// *   The chart renderable. This may be used for reference (or read to add
+// *   support for new properties), but any changes to this variable will not
+// *   have an effect on output.
+// * @internal param $chart_id The chart ID, derived from the $chart['#chart_id'] property. Note that not*   The chart ID, derived from the $chart['#chart_id'] property. Note that not
+// *   all charts may have a $chart_id.
+// */
+//function hook_chart_definition_alter(&$definition, $chart) {
+//  if ($chart['#chart_library'] === 'google') {
+//    $definition['options']['titleTextStyle']['fontSize'] = 20;
+//  }
+//  if ($chart['#chart_library'] === 'c3') {
+//    $definition['options']['titleTextStyle']['fontSize'] = 20;
+//  }
+//  elseif ($chart['#chart_library'] === 'highcharts') {
+//    $definition['title']['style']['fontSize'] = 20;
+//  }
+//}
 
 /**
  * Alter an individual chart before it's rendered.
@@ -132,16 +132,16 @@ function hook_chart_definition_CHART_ID_alter(&$chart) {
  * hook may be used as a #chart_library property on $chart renderables.
  */
 function hook_charts_info() {
-  $info['my_charting_library'] = array(
+  $info['my_charting_library'] = [
     'label' => t('New charting library'),
     // Specify a callback function which will be responsible for accepting a
     // $chart renderable and printing a chart on the page.
     'render' => '_my_charting_library_render',
     // Specify the chart types your library is capable of providing.
-    'types' => array('area', 'bar', 'column', 'line', 'pie', 'scatter'),
+    'types' => ['area', 'bar', 'column', 'line', 'pie', 'scatter'],
     // If your callback function is in a separate file, specify it's location.
     // 'file' => 'includes/my_charting_library.inc',
-  );
+  ];
   return $info;
 }
 
@@ -165,7 +165,7 @@ function hook_charts_info_alter(&$info) {
  * all charting libraries.
  */
 function hook_charts_type_info() {
-  $chart_types['bar'] = array(
+  $chart_types['bar'] = [
     'label' => t('Bar'),
     // If this chart supports both an X and Y axis, set this to
     // CHARTS_DUAL_AXIS. If only a single axis is supported (e.g. pie), then
@@ -178,7 +178,7 @@ function hook_charts_type_info() {
     // For bar/area/other charts that support stacking of series, set this value
     // to TRUE.
     'stacking' => TRUE,
-  );
+  ];
   return $chart_types;
 }
 

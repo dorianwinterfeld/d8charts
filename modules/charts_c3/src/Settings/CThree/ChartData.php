@@ -3,7 +3,7 @@
 namespace Drupal\charts_c3\Settings\CThree;
 
 class ChartData implements \JsonSerializable {
-  private $columns = array();
+  private $columns = [];
   private $type;
   private $labels = TRUE;
   private $x = 'x';

@@ -2,6 +2,7 @@
 
 namespace Drupal\charts_highcharts\Charts;
 
+use Drupal\charts\Util\Util;
 use Drupal\charts_highcharts\Settings\Highcharts\ChartType;
 use Drupal\charts_highcharts\Settings\Highcharts\ChartTitle;
 use Drupal\charts_highcharts\Settings\Highcharts\Xaxis;
@@ -19,9 +20,9 @@ use Drupal\charts_highcharts\Settings\Highcharts\Highcharts;
 
 class HighchartsChartsRender {
 
-  public function __construct($categories, $seriesData, $options,
-                              $attachmentDisplayOptions, &$variables, $chartId) {
+  public function __construct($categories, $seriesData, $options, $attachmentDisplayOptions, &$variables, $chartId) {
 
+    Util::checkMissingLibrary('charts_highcharts', '/vendor/highcharts/highcharts.js');
     $highchart = $this->charts_highcharts_render_charts($options, $categories, $seriesData, $attachmentDisplayOptions);
     $variables['chart_type'] = 'highcharts';
     $variables['content_attributes']['data-chart'][] = json_encode($highchart);
@@ -29,6 +30,7 @@ class HighchartsChartsRender {
     $variables['attributes']['class'][] = 'charts-highchart';
 
   }
+
   /**
    * Creates a JSON Object formatted for Highcharts to use
    *
@@ -40,7 +42,7 @@ class HighchartsChartsRender {
    *
    * @return Highcharts object to be used by highcharts javascripts visualization framework
    */
-  private function charts_highcharts_render_charts($options, $categories = array(), $seriesData = array(), $attachmentDisplayOptions = []) {
+  private function charts_highcharts_render_charts($options, $categories = [], $seriesData = [], $attachmentDisplayOptions = []) {
 
     $chart = new ChartType();
     $chart->setType($options['type']);
@@ -58,10 +60,10 @@ class HighchartsChartsRender {
     $yAxes = [];
     $yAxisTitle = new YaxisTitle();
     $yAxisTitle->setText($options['yaxis_title']);
-    if (!empty($options['yaxis_min'])){
+    if (!empty($options['yaxis_min'])) {
       $chartYaxis->min = $options['yaxis_min'];
     }
-    if (!empty($options['yaxis_max'])){
+    if (!empty($options['yaxis_max'])) {
       $chartYaxis->max = $options['yaxis_max'];
     }
 
@@ -69,7 +71,7 @@ class HighchartsChartsRender {
     $chartYaxis->setTitle($yAxisTitle);
     array_push($yAxes, $chartYaxis);
     // Chart libraries tend to supports only one secondary axis.
-    if ($attachmentDisplayOptions[0]['inherit_yaxis'] == 0){
+    if ($attachmentDisplayOptions[0]['inherit_yaxis'] == 0) {
       $chartYaxisSecondary = new Yaxis();
       $yAxisTitleSecondary = new YaxisTitle();
       $yAxisTitleSecondary->setText($attachmentDisplayOptions[0]['style']['options']['yaxis_title']);
@@ -77,10 +79,10 @@ class HighchartsChartsRender {
       $chartYaxisSecondary->setLabels($yaxisLabels);
       $chartYaxisSecondary->opposite = 'true';
 
-      if (!empty($attachmentDisplayOptions[0]['style']['options']['yaxis_min'])){
+      if (!empty($attachmentDisplayOptions[0]['style']['options']['yaxis_min'])) {
         $chartYaxisSecondary->min = $attachmentDisplayOptions[0]['style']['options']['yaxis_min'];
       }
-      if (!empty($attachmentDisplayOptions[0]['style']['options']['yaxis_max'])){
+      if (!empty($attachmentDisplayOptions[0]['style']['options']['yaxis_max'])) {
         $chartYaxisSecondary->max = $attachmentDisplayOptions[0]['style']['options']['yaxis_max'];
       }
       array_push($yAxes, $chartYaxisSecondary);

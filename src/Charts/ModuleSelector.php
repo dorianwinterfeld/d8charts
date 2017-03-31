@@ -5,9 +5,8 @@
  *
  *
  */
-namespace Drupal\charts\Charts;
 
-use Drupal\charts\Util\Util;
+namespace Drupal\charts\Charts;
 
 class ModuleSelector {
 
@@ -27,16 +26,14 @@ class ModuleSelector {
     $this->options = $options;
     $this->attachmentDisplayOptions = $attachmentDisplayOptions;
     $this->chartId = $chartId;
-
-//    Util::checkMissingLibrary('charts_'.$moduleName, $this->assetLocation.'/'.$moduleName.'/'.$assetName);
     $this->moduleExists($moduleName, $variables);
   }
-  private function moduleExists($moduleName, &$variables){
+
+  private function moduleExists($moduleName, &$variables) {
     $moduleExist = \Drupal::moduleHandler()->moduleExists($moduleName);
-    if ('charts_'.$moduleExist){
+    if ('charts_' . $moduleExist) {
       $className = ucfirst($moduleName);
-      //$object = new $className;
-      $moduleChartsRenderer = 'Drupal\charts_'.$moduleName.'\Charts\\'.ucfirst($moduleName).'ChartsRender';
+      $moduleChartsRenderer = 'Drupal\charts_' . $moduleName . '\Charts\\' . ucfirst($moduleName) . 'ChartsRender';
       $chartingModule = new $moduleChartsRenderer($this->categories, $this->seriesData, $this->options, $this->attachmentDisplayOptions, $variables, $this->chartId);
     }
   }

@@ -17,3 +17,5 @@ google:
       gpl-compatible: false
   js:
     vendor/google/loader.js: {}
+  dependencies:
+        - charts_google/charts_google

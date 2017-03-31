@@ -2,6 +2,7 @@
 
 namespace Drupal\charts_google\Charts;
 
+use Drupal\charts\Util\Util;
 use Drupal\charts_google\Settings\Google\GoogleOptions;
 use Drupal\charts_google\Settings\Google\ChartType;
 use Drupal\charts_google\Settings\Google\ChartArea;
@@ -14,11 +15,11 @@ class GoogleChartsRender {
   private $chartId;
 
   public function __construct($categories, $seriesData, $options, $attachmentDisplayOptions, &$variables, $chartId) {
+    Util::checkMissingLibrary('charts_google', '/vendor/google/loader.js');
     $this->chartId = $chartId;
     $this->googleData = $this->charts_google_render_charts($categories, $seriesData);
     $this->googleOptions = $this->charts_google_create_charts_options($options, $seriesData, $attachmentDisplayOptions);
     $this->googleChartType = $this->charts_google_create_chart_type($options);
-
     $variables['chart_type'] = 'google';
     $variables['attributes']['class'][0] = 'charts-google';
     $variables['attributes']['id'][0] = $this->chartId;
@@ -26,6 +27,7 @@ class GoogleChartsRender {
     $variables['attributes']['google-options'][1] = json_encode($this->googleOptions);
     $variables['attributes']['google-chart-type'][2] = json_encode($this->googleChartType);
   }
+
   /**
    * Creates a JSON Object formatted for Google charts to use
    * @param array $categories
@@ -33,9 +35,9 @@ class GoogleChartsRender {
    *
    * @return json|string
    */
-  private function charts_google_render_charts($categories = array(), $seriesData = array()) {
+  private function charts_google_render_charts($categories = [], $seriesData = []) {
 
-    $dataTable = array();
+    $dataTable = [];
     for ($j = 0; $j < count($categories); $j++) {
       $rowDataTable = [];
       for ($i = 0; $i < count($seriesData); $i++) {
@@ -46,7 +48,7 @@ class GoogleChartsRender {
       array_push($dataTable, $rowDataTable);
     }
 
-    $dataTableHeader = array();
+    $dataTableHeader = [];
     for ($r = 0; $r < count($seriesData); $r++) {
       array_push($dataTableHeader, $seriesData[$r]['name']);
     }
@@ -63,34 +65,33 @@ class GoogleChartsRender {
    * @param array $attachmentDisplayOptions
    * @return GoogleOptions object with chart options or settings to be used by google visualization framework
    */
-  private function charts_google_create_charts_options($options, $seriesData = array(), $attachmentDisplayOptions = []) {
+  private function charts_google_create_charts_options($options, $seriesData = [], $attachmentDisplayOptions = []) {
     $chartSelected = [];
-    $seriesTypes = array();
-    $firstVaxis = array('minValue'=> 0, 'title' => $options['yaxis_title']);
-    $secondVaxis = array('minValue'=> 0);
-    $vAxes = array();
+    $seriesTypes = [];
+    $firstVaxis = ['minValue' => 0, 'title' => $options['yaxis_title']];
+    $secondVaxis = ['minValue' => 0];
+    $vAxes = [];
     array_push($vAxes, $firstVaxis);
     //sets secondary axis from the first attachment only
-    if ($attachmentDisplayOptions[0]['inherit_yaxis'] == 0){
+    if ($attachmentDisplayOptions[0]['inherit_yaxis'] == 0) {
       $secondVaxis['title'] = $attachmentDisplayOptions[0]['style']['options']['yaxis_title'];
       array_push($vAxes, $secondVaxis);
     }
     array_push($chartSelected, $options['type']);
-    for ($i = 0; $i < count($attachmentDisplayOptions); $i++){
+    for ($i = 0; $i < count($attachmentDisplayOptions); $i++) {
       $attachmentChartType = $attachmentDisplayOptions[$i]['style']['options']['type'];
       if ($attachmentChartType == 'column')
         $attachmentChartType = 'bars';
-      if ($attachmentDisplayOptions[0]['inherit_yaxis'] == 0 && $i == 0){
-        $seriesTypes[$i + 1] = array('type' => $attachmentChartType, 'targetAxisIndex' => 1);
-      }
-      else
-        $seriesTypes[$i + 1] = array('type' => $attachmentChartType);
+      if ($attachmentDisplayOptions[0]['inherit_yaxis'] == 0 && $i == 0) {
+        $seriesTypes[$i + 1] = ['type' => $attachmentChartType, 'targetAxisIndex' => 1];
+      } else
+        $seriesTypes[$i + 1] = ['type' => $attachmentChartType];
       array_push($chartSelected, $attachmentChartType);
     }
 
     $chartSelected = array_unique($chartSelected);
     $googleOptions = new GoogleOptions();
-    if (count($chartSelected) > 1){
+    if (count($chartSelected) > 1) {
       $parentChartType = $options['type'];
       if ($parentChartType == 'column')
         $parentChartType = 'bars';
@@ -104,7 +105,7 @@ class GoogleChartsRender {
     $chartArea = new ChartArea();
     $chartArea->setWidth(400);
     // $googleOptions->setChartArea($chartArea);
-    $seriesColors = array();
+    $seriesColors = [];
     for ($i = 0; $i < count($seriesData); $i++) {
       $seriesColor = $seriesData[$i]['color'];
       array_push($seriesColors, $seriesColor);

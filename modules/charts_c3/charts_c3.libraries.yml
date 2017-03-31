@@ -32,4 +32,5 @@ c3:
         - core/jquery
         - core/jquery.once
         - core/drupal
+        - charts_c3/charts_c3
         - charts_c3/d3

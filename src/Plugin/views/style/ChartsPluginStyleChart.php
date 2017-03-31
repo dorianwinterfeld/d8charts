@@ -6,7 +6,6 @@ use Drupal\core\form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\views\Plugin\views\style\StylePluginBase;
 
-\Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
 \Drupal::moduleHandler()->loadInclude('charts', 'inc', 'includes/charts.pages');
 
 /**
@@ -35,7 +34,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
     $options = parent::defineOptions();
 
     // Get the default chart values.
-    $defaults = \Drupal::state()->get('charts_default_settings', array());
+    $defaults = \Drupal::state()->get('charts_default_settings', []);
 
     $defaults += charts_default_settings();
     foreach ($defaults as $default_key => $default_value) {
@@ -47,7 +46,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
     if ($this->view->style_plugin === 'chart_extension') {
       $options['type']['default'] = NULL;
     }
-    $options['path'] = array('default' => 'charts');
+    $options['path'] = ['default' => 'charts'];
 
     return $options;
   }
@@ -60,7 +59,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
 
     $handlers = $this->displayHandler->getHandlers('field');
     if (empty($handlers)) {
-      $form['error_markup'] = array('#markup' => '<div class="error messages">' . t('You need at least one field before you can configure your table settings') . '</div>',);
+      $form['error_markup'] = ['#markup' => '<div class="error messages">' . t('You need at least one field before you can configure your table settings') . '</div>',];
     }
 
     // Limit grouping options (we only support one grouping field).
@@ -78,7 +77,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
 
     // Merge in the global chart settings form.
     $field_options = $this->displayHandler->getFieldLabels();
-    $form = charts_settings_form($form, $this->options, $field_options, array('style_options'));
+    $form = charts_settings_form($form, $this->options, $field_options, ['style_options']);
 
     // Reduce the options if this is a chart extension.
     /*if (empty($this->displayHandler->getAttachedDisplays())) {
@@ -116,7 +115,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
 
     $errors = parent::validate();
     $dataFields = $this->options['data_fields'];
-    $dataFieldsValueState = array();
+    $dataFieldsValueState = [];
     $dataFieldsCounter = 0;
 
     foreach ($dataFields as $value) {
@@ -160,7 +159,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
 
     // Assemble the fields to be used to provide data access.
     $data_field_options = array_filter($this->options['data_fields']);
-    $data_fields = array();
+    $data_fields = [];
     foreach ($data_field_options as $field_key) {
       if (isset($field_handlers[$field_key])) {
         $data_fields[$field_key] = $field_handlers[$field_key];
@@ -171,7 +170,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
       unset($data_fields[$label_field_key]);
     }
     $chart_id = $this->view->id() . '__' . $this->view->current_display;
-    $chart = array(
+    $chart = [
       '#type' => 'chart',
       '#chart_type' => $this->options['type'],
       '#chart_library' => $this->options['library'],
@@ -190,17 +189,17 @@ class ChartsPluginStyleChart extends StylePluginBase {
       '#view' => $this->view,
       // Pass info about the actual view results to allow further processing
       '#theme' => 'views_view_charts',
-    );
+    ];
     $chart_type_info = charts_get_type($this->options['type']);
     if ($chart_type_info['axis'] === CHARTS_SINGLE_AXIS) {
       $data_field_key = key($data_fields);
       $data_field = $data_fields[$data_field_key];
 
-      $data = array();
+      $data = [];
       $this->renderFields($this->view->result);
       $renders = $this->rendered_fields;
       foreach ($renders as $row_number => $row) {
-        $data_row = array();
+        $data_row = [];
         if ($label_field_key) {
           // Labels need to be decoded, as the charting library will re-encode.
           $data_row[] = htmlspecialchars_decode($this->getField($row_number, $label_field_key), ENT_QUOTES);
@@ -211,7 +210,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
           $value = NULL;
         } // Strip thousands placeholders if present, then cast to float.
         else {
-          $value = (float)str_replace(array(',', ' '), '', $value);
+          $value = (float)str_replace([',', ' '], '', $value);
         }
         $data_row[] = $value;
         $data[] = $data_row;
@@ -221,25 +220,25 @@ class ChartsPluginStyleChart extends StylePluginBase {
         $chart['#legend_title'] = $label_field->options['label'];
       }
 
-      $chart[$this->view->current_display . '_series'] = array(
+      $chart[$this->view->current_display . '_series'] = [
         '#type' => 'chart_data',
         '#data' => $data,
         '#title' => $data_field->options['label'],
-      );
+      ];
 
     } else {
-      $chart['xaxis'] = array(
+      $chart['xaxis'] = [
         '#type' => 'chart_xaxis',
         '#title' => $this->options['xaxis_title'] ? $this->options['xaxis_title'] : FALSE,
         '#labels_rotation' => $this->options['xaxis_labels_rotation'],
-      );
-      $chart['yaxis'] = array(
+      ];
+      $chart['yaxis'] = [
         '#type' => 'chart_yaxis',
         '#title' => $this->options['yaxis_title'] ? $this->options['yaxis_title'] : FALSE,
         '#labels_rotation' => $this->options['yaxis_labels_rotation'],
         '#max' => $this->options['yaxis_max'],
         '#min' => $this->options['yaxis_min'],
-      );
+      ];
 
       // @todo incorporate this patch: https://www.drupal.org/files/issues/charts_grouping-2146927-6.patch.
       $sets = $this->renderGrouping($this->view->result, $this->options['grouping'], TRUE);
@@ -247,16 +246,16 @@ class ChartsPluginStyleChart extends StylePluginBase {
         $series_index = isset($series_index) ? $series_index + 1 : 0;
         $series_key = $this->view->current_display . '__' . $field_key . '_' . $series_index;
         foreach ($data_fields as $field_key => $field_handler) {
-          $chart[$series_key] = array(
+          $chart[$series_key] = [
             '#type' => 'chart_data',
-            '#data' => array(),
+            '#data' => [],
             // If using a grouping field, inherit from the chart level colors.
             '#color' => ($series_label === '' && isset($this->options['field_colors'][$field_key])) ? $this->options['field_colors'][$field_key] : NULL,
             '#title' => $series_label ? $series_label : $field_handler->options['label'],
             '#prefix' => $this->options['yaxis_prefix'] ? $this->options['yaxis_prefix'] : NULL,
             '#suffix' => $this->options['yaxis_suffix'] ? $this->options['yaxis_suffix'] : NULL,
             '#decimal_count' => $this->options['yaxis_decimal_count'] ? $this->options['yaxis_decimal_count'] : NULL,
-          );
+          ];
         }
 
         // Grouped results come back indexed by their original result number
@@ -279,7 +278,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
               $value = NULL;
             } // Strip thousands placeholders if present, then cast to float.
             else {
-              $value = (float)str_replace(array(',', ' '), '', $value);
+              $value = (float)str_replace([',', ' '], '', $value);
             }
             $chart[$series_key]['#data'][] = $value;
           }
@@ -292,7 +291,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
     // on top of it.
     $children_displays = $this->getChildrenChartDisplays();
     //contains the different subviews of the attachments
-    $attachments = array();
+    $attachments = [];
     $service = \Drupal::service('charts.charts_attachment');
 
     foreach ($children_displays as $child_display) {

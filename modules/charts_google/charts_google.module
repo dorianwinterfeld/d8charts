@@ -13,12 +13,12 @@ use Drupal\charts_google\Settings\Google\ChartArea;
  * Implements hook_charts_info().
  */
 function charts_google_charts_info() {
-  $info['google'] = array(
+  $info['google'] = [
     'label' => t('Google Charts'),
     'render' => '_charts_google_render',
-    'types' => array('area', 'bar', 'column', 'line', 'pie', 'scatter'),
+    'types' => ['area', 'bar', 'column', 'line', 'pie', 'scatter'],
     'file' => 'charts_google.inc',
-  );
+  ];
   return $info;
 }
 
