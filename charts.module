@@ -114,11 +114,11 @@ function template_preprocess_views_view_charts(&$variables) {
 
     case 'highcharts':
       Util::checkMissingLibrary('charts_highcharts', '/vendor/highcharts/highcharts.js');
-      $highchart = charts_highcharts_render_charts($options, $categories, $seriesData, $attachmentDisplayOptions);
+      /*$highchart = charts_highcharts_render_charts($options, $categories, $seriesData, $attachmentDisplayOptions);
       $variables['chart_type'] = 'highcharts';
       $variables['content_attributes']['data-chart'][] = json_encode($highchart);
       $variables['attributes']['id'][0] = $chartId;
-      $variables['attributes']['class'][] = 'charts-highchart';
+      $variables['attributes']['class'][] = 'charts-highchart';*/
 
       break;
 

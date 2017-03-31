@@ -7,7 +7,7 @@ use Drupal\charts_google\Settings\Google\ChartType;
 use Drupal\charts_google\Settings\Google\ChartArea;
 
 class GoogleChartsRender {
-  
+
   private $googleData;
   private $googleOptions;
   private $googleChartType;

@@ -37,7 +37,7 @@ class ModuleSelector {
       $className = ucfirst($moduleName);
       //$object = new $className;
       $moduleChartsRenderer = 'Drupal\charts_'.$moduleName.'\Charts\\'.ucfirst($moduleName).'ChartsRender';
-      $googelCharts = new $moduleChartsRenderer($this->categories, $this->seriesData, $this->options, $this->attachmentDisplayOptions, $variables, $this->chartId);
+      $chartingModule = new $moduleChartsRenderer($this->categories, $this->seriesData, $this->options, $this->attachmentDisplayOptions, $variables, $this->chartId);
     }
   }
 }
