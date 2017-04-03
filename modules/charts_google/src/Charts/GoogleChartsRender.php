@@ -10,24 +10,9 @@ use Drupal\charts_google\Settings\Google\ChartArea;
 
 class GoogleChartsRender implements ChartsRenderInterface {
 
-  private $googleData;
-  private $googleOptions;
-  private $googleChartType;
-  private $chartId;
-
-  /*public function __construct($categories, $seriesData, $options, $attachmentDisplayOptions, &$variables, $chartId) {
+  public function __construct() {
     Util::checkMissingLibrary('charts_google', '/vendor/google/loader.js');
-    $this->chartId = $chartId;
-    $this->googleData = $this->charts_google_render_charts($categories, $seriesData);
-    $this->googleOptions = $this->charts_google_create_charts_options($options, $seriesData, $attachmentDisplayOptions);
-    $this->googleChartType = $this->charts_google_create_chart_type($options);
-    $variables['chart_type'] = 'google';
-    $variables['attributes']['class'][0] = 'charts-google';
-    $variables['attributes']['id'][0] = $this->chartId;
-    $variables['content_attributes']['data-chart'][] = $this->googleData;
-    $variables['attributes']['google-options'][1] = json_encode($this->googleOptions);
-    $variables['attributes']['google-chart-type'][2] = json_encode($this->googleChartType);
-  }*/
+  }
 
   /**
    * Creates a JSON Object formatted for Google charts to use
@@ -36,11 +21,8 @@ class GoogleChartsRender implements ChartsRenderInterface {
    *
    * @return json|string
    */
-  //$options, $categories = [], $seriesData = [], $attachmentDisplayOptions = [], &$variables, $chartId
   public function charts_render_charts($options, $categories = [], $seriesData = [], $attachmentDisplayOptions = [], &$variables, $chartId) {
 
-    $variables['naam'] = 'Michael Mwebaze';
-    $google = array();
     $dataTable = [];
     for ($j = 0; $j < count($categories); $j++) {
       $rowDataTable = [];
@@ -60,15 +42,14 @@ class GoogleChartsRender implements ChartsRenderInterface {
     array_unshift($dataTableHeader, 'label');
     array_unshift($dataTable, $dataTableHeader);
 
+    $googleOptions = $this->charts_google_create_charts_options($options, $seriesData, $attachmentDisplayOptions);
+    $googleChartType = $this->charts_google_create_chart_type($options);
     $variables['chart_type'] = 'google';
     $variables['attributes']['class'][0] = 'charts-google';
     $variables['attributes']['id'][0] = $chartId;
     $variables['content_attributes']['data-chart'][] = json_encode($dataTable);
-    $variables['attributes']['google-options'][1] = json_encode($this->charts_google_create_charts_options($options, $seriesData, $attachmentDisplayOptions));
-    $variables['attributes']['google-chart-type'][2] = json_encode($this->charts_google_create_chart_type($options));
-drupal_set_message(json_encode($dataTable));
-    //array_push($google, $dataTable);
-    //return json_encode($dataTable);
+    $variables['attributes']['google-options'][1] = json_encode($googleOptions);
+    $variables['attributes']['google-chart-type'][2] = json_encode($googleChartType);
   }
 
   /**
@@ -137,9 +118,5 @@ drupal_set_message(json_encode($dataTable));
     $googleChartType->setChartType($options['type']);
 
     return $googleChartType;
-  }
-  public function charts_library_check($moduleName, $libraryPath){
-    //Util::checkMissingLibrary('charts_google', '/vendor/google/loader.js');
-    Util::checkMissingLibrary($moduleName, $libraryPath);
   }
 }

@@ -21,16 +21,9 @@ use Drupal\charts_highcharts\Settings\Highcharts\Highcharts;
 
 class HighchartsChartsRender implements ChartsRenderInterface {
 
-  //public function __construct($categories, $seriesData, $options, $attachmentDisplayOptions, &$variables, $chartId) {
-
-    //Util::checkMissingLibrary('charts_highcharts', '/vendor/highcharts/highcharts.js');
-    /*$highchart = $this->charts_render_charts($options, $categories, $seriesData, $attachmentDisplayOptions);
-    $variables['chart_type'] = 'highcharts';
-    $variables['content_attributes']['data-chart'][] = json_encode($highchart);
-    $variables['attributes']['id'][0] = $chartId;
-    $variables['attributes']['class'][] = 'charts-highchart';*/
-
-  //}
+  public function __construct() {
+    Util::checkMissingLibrary('charts_highcharts', '/vendor/highcharts/highcharts.js');
+  }
 
   /**
    * Creates a JSON Object formatted for Highcharts to use
@@ -113,11 +106,5 @@ class HighchartsChartsRender implements ChartsRenderInterface {
     $variables['content_attributes']['data-chart'][] = json_encode($highchart);
     $variables['attributes']['id'][0] = $chartId;
     $variables['attributes']['class'][] = 'charts-highchart';
-
-    //return $highchart;
-  }
-  public function charts_library_check($moduleName, $libraryPath){
-    //Util::checkMissingLibrary('charts_highcharts', '/vendor/highcharts/highcharts.js');
-    Util::checkMissingLibrary($moduleName, $libraryPath);
   }
 }

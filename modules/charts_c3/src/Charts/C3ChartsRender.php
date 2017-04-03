@@ -2,6 +2,7 @@
 
 namespace Drupal\charts_c3\Charts;
 
+use Drupal\charts\Charts\ChartsRenderInterface;
 use Drupal\charts\Util\Util;
 use Drupal\charts_c3\Settings\CThree\ChartType;
 use Drupal\charts_c3\Settings\CThree\CThree;
@@ -10,16 +11,10 @@ use Drupal\charts_c3\Settings\CThree\ChartData;
 use Drupal\charts_c3\Settings\CThree\ChartColor;
 use Drupal\charts_c3\Settings\CThree\ChartAxis;
 
-class C3ChartsRender {
+class C3ChartsRender implements ChartsRenderInterface {
 
-  public function __construct($categories, $seriesData, $options, $attachmentDisplayOptions, &$variables, $chartId) {
-
+  public function __construct() {
     Util::checkMissingLibrary('charts_c3', '/vendor/cthree/c3.min.js');
-    $c3 = $this->charts_c3_render_charts($options, $categories, $seriesData, $chartId, $attachmentDisplayOptions);
-    $variables['chart_type'] = 'c3';
-    $variables['content_attributes']['data-chart'][] = json_encode($c3);
-    $variables['attributes']['id'][0] = $chartId;
-    $variables['attributes']['class'][] = 'charts-c3';
   }
 
   /**
@@ -31,7 +26,7 @@ class C3ChartsRender {
    *
    * @return CThree
    */
-  private function charts_c3_render_charts($options, $categories = [], $seriesData = [], $chartId, $attachmentDisplayOptions = []) {
+  public function charts_render_charts($options, $categories = [], $seriesData = [], $attachmentDisplayOptions = [], &$variables, $chartId) {
 
     $noAttachmentDisplays = count($attachmentDisplayOptions);
     $yAxis = [];
@@ -108,7 +103,9 @@ class C3ChartsRender {
     $chartColor->setPattern($seriesColors);
     $c3->setColor($chartColor);
 
-    return $c3;
+    $variables['chart_type'] = 'c3';
+    $variables['content_attributes']['data-chart'][] = json_encode($c3);
+    $variables['attributes']['id'][0] = $chartId;
+    $variables['attributes']['class'][] = 'charts-c3';
   }
-
 }
