@@ -1,4 +1,4 @@
-charts.form:
+charts.settings:
   path: '/admin/config/content/charts'
   defaults:
     _form: 'Drupal\charts\Form\ChartsConfigForm'

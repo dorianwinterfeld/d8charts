@@ -3,8 +3,7 @@
 namespace Drupal\charts\Services;
 
 /**
- * Service class necessary for getting and setting the state of the currently
- * selected Library.
+ * Service class for getting and setting the currently selected library's state.
  *
  * Class ChartService
  *
@@ -18,7 +17,7 @@ class ChartService implements ChartServiceInterface {
   /**
    * Gets the currently selected Library.
    *
-   * @return string $librarySelected.
+   * @return string $librarySelected
    */
   public function getLibrarySelected() {
     return $this->librarySelected;
@@ -27,7 +26,7 @@ class ChartService implements ChartServiceInterface {
   /**
    * Sets the previously set Library with the newly selected library value.
    *
-   * @param String $librarySelected .
+   * @param string $librarySelected
    */
   public function setLibrarySelected($librarySelected) {
     $this->librarySelected = $librarySelected;

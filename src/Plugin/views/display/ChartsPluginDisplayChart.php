@@ -33,7 +33,7 @@ class ChartsPluginDisplayChart extends Attachment {
   protected function defineOptions() {
     $options = parent::defineOptions();
     $options['style_plugin']['default'] = 'chart';
-    $options['inherit_yaxis'] = array('default' => '1');
+    $options['inherit_yaxis'] = ['default' => '1'];
 
     return $options;
 
@@ -63,8 +63,7 @@ class ChartsPluginDisplayChart extends Attachment {
     $displays = array_filter($this->getOption('displays'));
     if (count($displays) > 1) {
       $attach_to = $this->t('Multiple displays');
-    }
-    elseif (count($displays) == 1) {
+    } elseif (count($displays) == 1) {
       $display = array_shift($displays);
       if ($display = $this->view->storage->getDisplay($display)) {
         $attach_to = $display['display_title'];
@@ -73,23 +72,23 @@ class ChartsPluginDisplayChart extends Attachment {
     if (!isset($attach_to)) {
       $attach_to = $this->t('Not defined');
     }
-    $options['displays'] = array(
+    $options['displays'] = [
       'category' => 'attachment',
       'title' => $this->t('Parent display'),
       'value' => $attach_to,
-    );
+    ];
 
-    $options['inherit_yaxis'] = array(
+    $options['inherit_yaxis'] = [
       'category' => 'attachment',
       'title' => $this->t('Axis settings'),
       'value' => $this->getOption('inherit_yaxis') ? t('Use primary Y-axis') : t('Create secondary axis'),
-    );
+    ];
 
-    $options['attachment_position'] = array('disabled' => TRUE);
+    $options['attachment_position'] = ['disabled' => TRUE];
 
-    $options['inherit_pager'] = array('disabled' => TRUE);
+    $options['inherit_pager'] = ['disabled' => TRUE];
 
-    $options['render_pager'] = array('disabled' => TRUE);
+    $options['render_pager'] = ['disabled' => TRUE];
 
   }
 
@@ -108,16 +107,16 @@ class ChartsPluginDisplayChart extends Attachment {
         break;
       case 'inherit_yaxis':
         $form['#title'] .= t('Axis settings');
-        $form['inherit_yaxis'] = array(
+        $form['inherit_yaxis'] = [
           '#title' => t('Y-Axis settings'),
           '#type' => 'radios',
-          '#options' => array(
+          '#options' => [
             1 => t('Inherit primary of parent display'),
             0 => t('Create a secondary axis'),
-          ),
+          ],
           '#default_value' => $this->getOption('inherit_yaxis'),
           '#description' => t('In most charts, the X and Y axis from the parent display are both shared with each attached child chart. However, if this chart is going to use a different unit of measurement, a secondary axis may be added on the opposite side of the normal Y-axis.'),
-        );
+        ];
         break;
     }
 

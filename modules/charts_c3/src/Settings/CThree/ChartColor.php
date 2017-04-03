@@ -3,7 +3,7 @@
 namespace Drupal\charts_c3\Settings\CThree;
 
 class ChartColor implements \JsonSerializable {
-  private $pattern = array();
+  private $pattern = [];
 
   /**
    * @return mixed

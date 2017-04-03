@@ -5,21 +5,22 @@
  * Charts module file that provides hook_theme.
  */
 
-use \Drupal\charts\Util\Util;
+use Drupal\charts\Util\Util;
+use Drupal\charts\Charts\ModuleSelector;
 
 /**
  * {@inheritdoc}
  */
 function charts_theme($existing, $type, $theme, $path) {
 
-  return array(
-    'views_view_charts' => array(
-      'variables' => array(
+  return [
+    'views_view_charts' => [
+      'variables' => [
         'view' => NULL,
         'row' => NULL,
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 }
 
 /**
@@ -28,7 +29,7 @@ function charts_theme($existing, $type, $theme, $path) {
 function template_preprocess_views_view_charts(&$variables) {
 
   $options = $variables['view']->style_plugin->options;
-  $attachmentOptions = [];
+  $attachmentDisplayOptions = [];
 
   $service = \Drupal::service('charts.charts_attachment');
   $attachmentView = $service->getAttachmentViews();
@@ -37,9 +38,9 @@ function template_preprocess_views_view_charts(&$variables) {
   $viewId = $view->id();
   $displayId = $view->display_handler->display['id'];
   $chartId = $viewId . '__' . $displayId;
-  $categoriesAttachment = array();
-  $seriesDataAttachment = array();
-  $attachmentChartTypeOption = array();
+  $categoriesAttachment = [];
+  $seriesDataAttachment = [];
+  $attachmentChartTypeOption = [];
 
   for ($i = 0; $i < count($attachmentView); $i++) {
 
@@ -64,15 +65,14 @@ function template_preprocess_views_view_charts(&$variables) {
       array_push($seriesDataAttachment, $dataAttachmentFormatted[1][$j]);
     }
   }
-
   $library = $view->style_plugin->options['library'];
-  $variables['data'] = array();
+  $variables['data'] = [];
   $labelField = $view->style_plugin->options['label_field'];
   $valueField = $view->style_plugin->options['data_fields'];
   $valueField = Util::removeUnselectedFields($valueField);
   $color = $view->style_plugin->options['field_colors'];
 
-  if (0 < count($attachmentView)){
+  if (0 < count($attachmentView)) {
     $data = Util::viewsData($view, $valueField, $labelField, $color, $attachmentChartTypeOption[$i]);
   } else {
     $data = Util::viewsData($view, $valueField, $labelField, $color, $attachmentChartTypeOption[$i] = NULL);
@@ -82,51 +82,15 @@ function template_preprocess_views_view_charts(&$variables) {
   $categories = $data[0];
   $seriesData = $data[1];
   $categories = array_merge($categories, $categoriesAttachment);
+  $categories = array_unique($categories);
 
-  if (count($attachmentView) > 0) {
-    $attachmentId = $attachmentView[0]->display_handler->display['id'];
+  for ($i = 0; $i < count($attachmentView); $i++) {
+    $attachmentId = $attachmentView[$i]->display_handler->display['id'];
     $attachmentDisplay = $view->storage->getDisplay($attachmentId);
-
-    if ($attachmentDisplay['display_options']['inherit_yaxis'] == 0){
-      $attachmentOptions = $attachmentDisplay['display_options']['style']['options'];
-    }
+    $attachmentDisplayOptions[$i] = $attachmentDisplay['display_options'];
   }
   $seriesData = array_merge($seriesData, $seriesDataAttachment);
 
-  // Handles the toggling from one library to another.
-  switch ($library) {
-    case 'google':
-      $googleData = charts_google_render_charts($categories, $seriesData);
-      $googleOptions = charts_google_create_charts_options($options, $seriesData);
-      $googleChartType = charts_google_create_chart_type($options);
-      $variables['chart_type'] = 'google';
-      $variables['attributes']['class'][0] = 'charts-google';
-      $variables['attributes']['id'][0] = $chartId;
-      $variables['content_attributes']['data-chart'][] = $googleData;
-      $variables['attributes']['google-options'][1] = json_encode($googleOptions);
-      $variables['attributes']['google-chart-type'][2] = json_encode($googleChartType);
-
-      break;
-
-    case 'highcharts':
-      $highchart = charts_highcharts_render_charts($options, $categories, $seriesData, $attachmentOptions);
-      $variables['chart_type'] = 'highcharts';
-      $variables['content_attributes']['data-chart'][] = json_encode($highchart);
-      $variables['attributes']['id'][0] = $chartId;
-      $variables['attributes']['class'][] = 'charts-highchart';
-
-      break;
-
-    case 'c3':
-      $c3 = charts_c3_render_charts($options, $categories, $seriesData, $chartId);
-      $variables['chart_type'] = 'c3';
-      $variables['content_attributes']['data-chart'][] = json_encode($c3);
-      $variables['attributes']['id'][0] = $chartId;
-      $variables['attributes']['class'][] = 'charts-c3';
-      break;
-
-    default:
-      // Not handled.
-  }
+  $moduleSelector = new ModuleSelector($library, $categories, $seriesData, $options, $attachmentDisplayOptions, $variables, $chartId);
 
 }

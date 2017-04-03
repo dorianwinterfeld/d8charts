@@ -29,7 +29,5 @@ c3:
   js:
     vendor/cthree/c3.min.js: {}
   dependencies:
-        - core/jquery
-        - core/jquery.once
-        - core/drupal
+        - charts_c3/charts_c3
         - charts_c3/d3

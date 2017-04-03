@@ -16,7 +16,7 @@ class ChartLabel implements \JsonSerializable {
    * @param mixed $rotation
    */
   public function setRotation($rotation) {
-    $this->rotation = (int) $rotation;
+    $this->rotation = (int)$rotation;
   }
 
   /**

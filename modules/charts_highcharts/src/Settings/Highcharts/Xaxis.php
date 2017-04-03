@@ -3,7 +3,7 @@
 namespace Drupal\charts_highcharts\Settings\Highcharts;
 
 class Xaxis implements \JsonSerializable {
-  private $categories = array();
+  private $categories = [];
   private $title;
   private $labels;
 

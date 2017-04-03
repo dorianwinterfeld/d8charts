@@ -13,82 +13,13 @@ use Drupal\charts_google\Settings\Google\ChartArea;
  * Implements hook_charts_info().
  */
 function charts_google_charts_info() {
-  $info['google'] = array(
+  $info['google'] = [
     'label' => t('Google Charts'),
     'render' => '_charts_google_render',
-    'types' => array('area', 'bar', 'column', 'line', 'pie', 'scatter'),
+    'types' => ['area', 'bar', 'column', 'line', 'pie', 'scatter'],
     'file' => 'charts_google.inc',
-  );
+  ];
   return $info;
 }
 
-/**
- * Creates a JSON Object formatted for Google charts to use
- * @param array $categories
- * @param array $seriesData
- *
- * @return json|string
- */
-function charts_google_render_charts($categories = array(), $seriesData = array()) {
 
-  $dataTable = array();
-
-  $dataTableHeader = array();
-  for ($r = 0; $r < count($seriesData); $r++) {
-    array_push($dataTableHeader, $seriesData[$r]['name']);
-  }
-
-  for ($j = 0; $j < count($categories); $j++) {
-    $rowDataTable = [];
-    for ($i = 0; $i < count($seriesData); $i++) {
-      $rowDataTabletemp = $seriesData[$i]['data'][$j];
-      array_push($rowDataTable, $rowDataTabletemp);
-    }
-    array_unshift($rowDataTable, $categories[$j]);
-    array_push($dataTable, $rowDataTable);
-  }
-
-  $dataTableHeader = array();
-  for ($r = 0; $r < count($seriesData); $r++) {
-    array_push($dataTableHeader, $seriesData[$r]['name']);
-  }
-
-  array_unshift($dataTableHeader, 'label');
-  array_unshift($dataTable, $dataTableHeader);
-
-  return json_encode($dataTable);
-}
-
-/**
- * @param $options
- * @param array $seriesData
- * @return GoogleOptions object with chart options or settings to be used by google visualization framework
- */
-function charts_google_create_charts_options($options, $seriesData = array()) {
-
-  $googleOptions = new GoogleOptions();
-  $googleOptions->setTitle($options['title']);
-  $chartArea = new ChartArea();
-  $chartArea->setWidth(400);
-  // $googleOptions->setChartArea($chartArea);
-  $seriesColors = array();
-  for ($i = 0; $i < count($seriesData); $i++) {
-    $seriesColor = $seriesData[$i]['color'];
-    array_push($seriesColors, $seriesColor);
-  }
-  $googleOptions->setColors($seriesColors);
-
-  return $googleOptions;
-}
-
-/**
- * @param $options
- * @return ChartType
- */
-function charts_google_create_chart_type($options) {
-
-  $googleChartType = new ChartType();
-  $googleChartType->setChartType($options['type']);
-
-  return $googleChartType;
-}
