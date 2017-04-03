@@ -34,7 +34,8 @@ class ModuleSelector {
     if ('charts_' . $moduleExist) {
       $className = ucfirst($moduleName);
       $moduleChartsRenderer = 'Drupal\charts_' . $moduleName . '\Charts\\' . ucfirst($moduleName) . 'ChartsRender';
-      $chartingModule = new $moduleChartsRenderer($this->categories, $this->seriesData, $this->options, $this->attachmentDisplayOptions, $variables, $this->chartId);
+      $chartingModule = new $moduleChartsRenderer();
+      $chartingModule->charts_render_charts($this->categories, $this->seriesData, $this->options, $this->attachmentDisplayOptions, $variables, $this->chartId);
     }
   }
 }

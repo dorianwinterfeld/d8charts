@@ -2,6 +2,7 @@
 
 namespace Drupal\charts_highcharts\Charts;
 
+use Drupal\charts\Charts\ChartsRenderInterface;
 use Drupal\charts\Util\Util;
 use Drupal\charts_highcharts\Settings\Highcharts\ChartType;
 use Drupal\charts_highcharts\Settings\Highcharts\ChartTitle;
@@ -18,18 +19,18 @@ use Drupal\charts_highcharts\Settings\Highcharts\ChartCredits;
 use Drupal\charts_highcharts\Settings\Highcharts\ChartLegend;
 use Drupal\charts_highcharts\Settings\Highcharts\Highcharts;
 
-class HighchartsChartsRender {
+class HighchartsChartsRender implements ChartsRenderInterface {
 
-  public function __construct($categories, $seriesData, $options, $attachmentDisplayOptions, &$variables, $chartId) {
+  //public function __construct($categories, $seriesData, $options, $attachmentDisplayOptions, &$variables, $chartId) {
 
-    Util::checkMissingLibrary('charts_highcharts', '/vendor/highcharts/highcharts.js');
-    $highchart = $this->charts_highcharts_render_charts($options, $categories, $seriesData, $attachmentDisplayOptions);
+    //Util::checkMissingLibrary('charts_highcharts', '/vendor/highcharts/highcharts.js');
+    /*$highchart = $this->charts_render_charts($options, $categories, $seriesData, $attachmentDisplayOptions);
     $variables['chart_type'] = 'highcharts';
     $variables['content_attributes']['data-chart'][] = json_encode($highchart);
     $variables['attributes']['id'][0] = $chartId;
-    $variables['attributes']['class'][] = 'charts-highchart';
+    $variables['attributes']['class'][] = 'charts-highchart';*/
 
-  }
+  //}
 
   /**
    * Creates a JSON Object formatted for Highcharts to use
@@ -42,7 +43,7 @@ class HighchartsChartsRender {
    *
    * @return Highcharts object to be used by highcharts javascripts visualization framework
    */
-  private function charts_highcharts_render_charts($options, $categories = [], $seriesData = [], $attachmentDisplayOptions = []) {
+  public function charts_render_charts($options, $categories = [], $seriesData = [], $attachmentDisplayOptions = [], &$variables, $chartId) {
 
     $chart = new ChartType();
     $chart->setType($options['type']);
@@ -108,6 +109,15 @@ class HighchartsChartsRender {
     $highchart->setLegend($chartLegend);
     $highchart->setSeries($seriesData);
 
-    return $highchart;
+    $variables['chart_type'] = 'highcharts';
+    $variables['content_attributes']['data-chart'][] = json_encode($highchart);
+    $variables['attributes']['id'][0] = $chartId;
+    $variables['attributes']['class'][] = 'charts-highchart';
+
+    //return $highchart;
+  }
+  public function charts_library_check($moduleName, $libraryPath){
+    //Util::checkMissingLibrary('charts_highcharts', '/vendor/highcharts/highcharts.js');
+    Util::checkMissingLibrary($moduleName, $libraryPath);
   }
 }
