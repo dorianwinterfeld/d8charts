@@ -40,9 +40,6 @@ define('CHARTS_SINGLE_AXIS', 'y_only');
  */
 define('CHARTS_DUAL_AXIS', 'xy');
 
-// Store Charts preprocess theme functions in a separate .inc file.
-\Drupal::moduleHandler()->loadInclude('charts', 'inc', 'charts.theme');
-
 /**
  * Retrieve a list of all charting libraries available.
  *
@@ -611,7 +608,7 @@ function charts_default_settings_form($form, $form_state) {
  */
 function charts_default_settings_form_submit($form, $form_state) {
   \Drupal::state()
-    ->set('charts_default_settings', $form_state['values']['charts_default_settings']); //was variable_set
+    ->set('charts_default_settings', $form_state['values']['charts_default_settings']);
 }
 
 
