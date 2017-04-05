@@ -7,3 +7,7 @@ services:
 
   charts.views_variable:
     class: Drupal\charts\Services\ViewsDataService
+
+  charts.settings:
+    class: Drupal\charts\Services\ChartsSettingsService
+    arguments: ['@config.factory']
