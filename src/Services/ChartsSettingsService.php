@@ -14,7 +14,6 @@ class ChartsSettingsService implements ChartsSettingsServiceInterface{
   }
 
   public function getChartsSettings(){
-    drupal_set_message('Charts settings');
     $config = $this->configFactory->getEditable('charts.settings');
 
     return $config->get('charts_default_settings');
