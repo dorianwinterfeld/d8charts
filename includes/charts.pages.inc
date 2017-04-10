@@ -440,7 +440,7 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
     '#collapsed' => TRUE,
     '#attributes' => array('class' => array('chart-xaxis')),
   );
-  $form['xaxis']['title'] = array(
+  $form['xaxis']['xaxis_title'] = array(
     '#title' => t('Custom title'),
     '#type' => 'textfield',
     '#default_value' => $options['xaxis_title'],

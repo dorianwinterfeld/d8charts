@@ -47,7 +47,7 @@ class HighchartsChartsRender implements ChartsRenderInterface {
     $chartLabels->setRotation($options['xaxis_labels_rotation']);
     $chartXaxis->setCategories($categories);
     $chartTitle->setText($options['title']);
-    $chartXaxis->setTitle($chartTitle);
+    $chartXaxis->setTitle($options['xaxis_title']);
     $chartXaxis->setLabels($chartLabels);
     $yaxisLabels = new YaxisLabel();
     $chartYaxis = new Yaxis();
