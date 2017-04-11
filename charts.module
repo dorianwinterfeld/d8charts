@@ -29,6 +29,7 @@ function charts_theme($existing, $type, $theme, $path) {
 function template_preprocess_views_view_charts(&$variables) {
 
   $options = $variables['view']->style_plugin->options;
+  drupal_set_message(json_encode($options).'options');
   $attachmentDisplayOptions = [];
 
   $service = \Drupal::service('charts.charts_attachment');
