@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains the Chart display type (similar to Page, Block, Attachment, etc.)
- */
 
 namespace Drupal\charts\Plugin\views\display;
 
@@ -164,4 +160,3 @@ class ChartsPluginDisplayChart extends Attachment {
   }
 
 }
-

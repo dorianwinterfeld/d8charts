@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- *
- */
 
 namespace Drupal\charts\Charts;
 
