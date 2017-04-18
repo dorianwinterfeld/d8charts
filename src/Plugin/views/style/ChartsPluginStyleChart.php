@@ -119,11 +119,10 @@ class ChartsPluginStyleChart extends StylePluginBase {
     $dataFieldsCounter = 0;
 
     foreach ($dataFields as $value) {
-      /*if (count(array_unique($plugin)) === 1 && end($plugin) === 0) {
-          $errors[] = $this->t('At least one data field must be selected in the chart configuration before this chart may be shown');
-      }*/
-      /*Skip title field no need to validate it and if data field is set add to dataFieldsValueState array state 1
-      otherwise add to same array state 0*/
+      /**
+       * Skip title field no need to validate it and if data field is set add to dataFieldsValueState array state 1
+       * otherwise add to same array state 0
+       */
       if ($dataFieldsCounter > 0) {
         if (empty($value)) {
           array_push($dataFieldsValueState, 0);
@@ -133,8 +132,11 @@ class ChartsPluginStyleChart extends StylePluginBase {
       }
       $dataFieldsCounter++;
     }
-    /*If total sum of dataFieldsValueState is less than 1, then no dataFields were selected otherwise 1 or more selected
-    total sum will be greater than 1*/
+
+    /**
+     * If total sum of dataFieldsValueState is less than 1, then no dataFields were selected otherwise 1 or more selected
+     * total sum will be greater than 1
+     */
     if (array_sum($dataFieldsValueState) < 1) {
       $errors[] = $this->t('At least one data field must be selected in the chart configuration before this chart may be shown');
     }
