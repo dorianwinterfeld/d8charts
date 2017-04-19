@@ -140,7 +140,12 @@ class ChartsConfigForm extends ConfigFormBase {
     $charts_info = $this->charts_info();
     $library_options = [];
     foreach ($charts_info as $library_name => $library_info) {
-      $library_options[$library_name] = $library_info['label'];
+      if (\Drupal::moduleHandler()->moduleExists($charts_info[$library_name]['module'])) {
+        $library_options[$library_name] = $library_info['label'];
+      }
+    }
+    if (count($library_options) == 0) {
+      drupal_set_message(t('There are no enabled charting libraries. Please enable a Charts sub-module.'));
     }
     $form['library'] = [
       '#title' => $this->t('Charting library'),
@@ -148,7 +153,7 @@ class ChartsConfigForm extends ConfigFormBase {
       '#options' => $library_options,
       '#default_value' => $options['library'],
       '#required' => TRUE,
-      '#access' => count($library_options) > 1,
+      '#access' => count($library_options) > 0,
       '#attributes' => ['class' => ['chart-library-select']],
       '#weight' => -15,
       '#parents' => array_merge($parents, ['library']),
