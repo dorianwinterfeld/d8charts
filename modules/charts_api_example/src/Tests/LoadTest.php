@@ -10,7 +10,7 @@ use Drupal\simpletest\WebTestBase;
  *
  * @group charts_api_example
  */
-class LoadTest extends WebTestBase{
+class LoadTest extends WebTestBase {
 
   /**
    * Modules to enable.
