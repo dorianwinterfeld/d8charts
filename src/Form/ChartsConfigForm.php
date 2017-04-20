@@ -2,6 +2,7 @@
 
 namespace Drupal\charts\Form;
 
+use Drupal\charts\Theme\ChartsInterface;
 use Drupal\Core\Extension\ModuleHandler;
 use Drupal\Core\Url;
 use Drupal\Core\Link;
@@ -188,7 +189,7 @@ class ChartsConfigForm extends ConfigFormBase {
       if ($chart_type_info['axis_inverted']) {
         $form['type'][$chart_type]['#attributes']['data-axis-inverted'] = TRUE;
       }
-      if ($chart_type_info['axis'] === CHARTS_SINGLE_AXIS) {
+      if ($chart_type_info['axis'] === ChartsInterface::CHARTS_SINGLE_AXIS) {
         $form['type'][$chart_type]['#attributes']['data-axis-single'] = TRUE;
       }
     }
@@ -477,31 +478,31 @@ class ChartsConfigForm extends ConfigFormBase {
   public function charts_charts_type_info() {
     $chart_types['pie'] = [
       'label' => $this->t('Pie'),
-      'axis' => CHARTS_SINGLE_AXIS,
+      'axis' => ChartsInterface::CHARTS_SINGLE_AXIS,
     ];
     $chart_types['bar'] = [
       'label' => $this->t('Bar'),
-      'axis' => CHARTS_DUAL_AXIS,
+      'axis' => ChartsInterface::CHARTS_DUAL_AXIS,
       'axis_inverted' => TRUE,
       'stacking' => TRUE,
     ];
     $chart_types['column'] = [
       'label' => $this->t('Column'),
-      'axis' => CHARTS_DUAL_AXIS,
+      'axis' => ChartsInterface::CHARTS_DUAL_AXIS,
       'stacking' => TRUE,
     ];
     $chart_types['line'] = [
       'label' => $this->t('Line'),
-      'axis' => CHARTS_DUAL_AXIS,
+      'axis' => ChartsInterface::CHARTS_DUAL_AXIS,
     ];
     $chart_types['area'] = [
       'label' => $this->t('Area'),
-      'axis' => CHARTS_DUAL_AXIS,
+      'axis' => ChartsInterface::CHARTS_DUAL_AXIS,
       'stacking' => TRUE,
     ];
     $chart_types['scatter'] = [
       'label' => $this->t('Scatter'),
-      'axis' => CHARTS_DUAL_AXIS,
+      'axis' => ChartsInterface::CHARTS_DUAL_AXIS,
     ];
 
     return $chart_types;

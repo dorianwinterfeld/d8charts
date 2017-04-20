@@ -1,5 +1,7 @@
 <?php
 
+use Drupal\charts\Theme\ChartsInterface;
+
 /**
  * @file
  * Documentation on hooks provided by the Charts module.
@@ -161,7 +163,7 @@ function hook_charts_type_info() {
     // If this chart supports both an X and Y axis, set this to
     // CHARTS_DUAL_AXIS. If only a single axis is supported (e.g. pie), then
     // set this to CHARTS_SINGLE_AXIS.
-    'axis' => CHARTS_DUAL_AXIS,
+    'axis' => ChartsInterface::CHARTS_DUAL_AXIS,
     // Many charting libraries always refer to the main axis as the "y-axis",
     // even if the chart's main axis is horizontal. An example of this is a
     // bar chart, where the values are along the horizontal axis.

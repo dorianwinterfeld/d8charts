@@ -4,6 +4,7 @@
  * @file
  * Menu callbacks for Charts module.
  */
+use Drupal\charts\Theme\ChartsInterface;
 
 /**
  * Module settings page. Users can set the default layout of their charts.
@@ -22,23 +23,6 @@
  * @return mixed The form with the chart settings added.
  * The form with the chart settings added.
  */
-
-/**
- * Used to define a single axis.
- *
- * Constant used in hook_charts_type_info() to declare chart types with a single
- * axis. For example a pie chart only has a single dimension.
- */
-define('CHARTS_SINGLE_AXIS', 'y_only');
-
-/**
- * Used to define a dual axis.
- *
- * Constant used in hook_charts_type_info() to declare chart types with a dual
- * axes. Most charts use this type of data, meaning multiple categories each
- * have multiple values. This type of data is usually represented as a table.
- */
-define('CHARTS_DUAL_AXIS', 'xy');
 
 /**
  * Retrieve a list of all charting libraries available.
@@ -74,7 +58,7 @@ function charts_type_info() {
   foreach ($charts_type_info as $chart_type => $chart_type_info) {
     $charts_type_info[$chart_type] += array(
       'label' => '',
-      'axis' => CHARTS_DUAL_AXIS,
+      'axis' => ChartsInterface::CHARTS_DUAL_AXIS,
       'axis_inverted' => FALSE,
       'stacking' => FALSE,
     );
@@ -104,31 +88,31 @@ function charts_get_type($chart_type) {
 function charts_charts_type_info() {
   $chart_types['pie'] = array(
     'label' => t('Pie'),
-    'axis' => CHARTS_SINGLE_AXIS,
+    'axis' => ChartsInterface::CHARTS_SINGLE_AXIS,
   );
   $chart_types['bar'] = array(
     'label' => t('Bar'),
-    'axis' => CHARTS_DUAL_AXIS,
+    'axis' => ChartsInterface::CHARTS_DUAL_AXIS,
     'axis_inverted' => TRUE,
     'stacking' => TRUE,
   );
   $chart_types['column'] = array(
     'label' => t('Column'),
-    'axis' => CHARTS_DUAL_AXIS,
+    'axis' => ChartsInterface::CHARTS_DUAL_AXIS,
     'stacking' => TRUE,
   );
   $chart_types['line'] = array(
     'label' => t('Line'),
-    'axis' => CHARTS_DUAL_AXIS,
+    'axis' => ChartsInterface::CHARTS_DUAL_AXIS,
   );
   $chart_types['area'] = array(
     'label' => t('Area'),
-    'axis' => CHARTS_DUAL_AXIS,
+    'axis' => ChartsInterface::CHARTS_DUAL_AXIS,
     'stacking' => TRUE,
   );
   $chart_types['scatter'] = array(
     'label' => t('Scatter'),
-    'axis' => CHARTS_DUAL_AXIS,
+    'axis' => ChartsInterface::CHARTS_DUAL_AXIS,
   );
   return $chart_types;
 }
@@ -265,7 +249,7 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
     if ($chart_type_info['axis_inverted']) {
       $form['type'][$chart_type]['#attributes']['data-axis-inverted'] = TRUE;
     }
-    if ($chart_type_info['axis'] === CHARTS_SINGLE_AXIS) {
+    if ($chart_type_info['axis'] === ChartsInterface::CHARTS_SINGLE_AXIS) {
       $form['type'][$chart_type]['#attributes']['data-axis-single'] = TRUE;
     }
   }
