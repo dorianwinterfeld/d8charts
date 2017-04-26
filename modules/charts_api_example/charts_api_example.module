@@ -28,12 +28,12 @@ function charts_api_example_help($route_name, RouteMatchInterface $route_match) 
  * Implements hook_theme().
  */
 function charts_api_example_theme() {
-  $vars = array(
+  $vars = [
     'library' => '',
     'categories' => '',
     'seriesData' => '',
     'options' => '',
-    );
+  ];
   return [
     'charts_api_example' => [
       'template' => 'charts_api_example',
@@ -47,6 +47,6 @@ function charts_api_example_theme() {
  *
  * @param $variables
  */
-function template_preprocess_charts_api_example(&$variables){
+function template_preprocess_charts_api_example(&$variables) {
   $moduleSelector = new ModuleSelector($variables['library'], $variables['categories'], $variables['seriesData'], $variables['options'], [], $variables, 'xyz');
 }

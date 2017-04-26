@@ -23,7 +23,7 @@ use Drupal\Component\Utility\NestedArray;
 function _charts_highcharts_render($chart) {
 
   // Populate chart settings.
-  $chart_definition = array();
+  $chart_definition = [];
   $chart_definition = _charts_highcharts_populate_chart_options($chart, $chart_definition);
   $chart_definition = _charts_highcharts_populate_chart_axes($chart, $chart_definition);
   $chart_definition = _charts_highcharts_populate_chart_data($chart, $chart_definition);
@@ -42,10 +42,10 @@ function _charts_highcharts_render($chart) {
     $chart['#id'] = Html::getUniqueId('highchart-render');
   }
 
-  $chart['#attached']['library'][] = array(
+  $chart['#attached']['library'][] = [
     'charts_highcharts',
     'charts_highcharts'
-  );
+  ];
   $chart['#attributes']['class'][] = 'charts-highchart';
   $chart['#chart_definition'] = $chart_definition;
 
@@ -60,14 +60,14 @@ function _charts_highcharts_render($chart) {
  * @return bool|mixed
  */
 function _charts_highcharts_type($renderable_type) {
-  $types = array(
+  $types = [
     'area_chart' => 'AreaChart',
     'bar_chart' => 'BarChart',
     'column_chart' => 'ColumnChart',
     'line_chart' => 'LineChart',
     'pie_chart' => 'PieChart',
     'scatter_chart' => 'ScatterChart',
-  );
+  ];
   Drupal::moduleHandler()->alter('charts_highcharts_types', $types);
   return isset($types[$renderable_type]) ? $types[$renderable_type] : FALSE;
 }
@@ -112,12 +112,10 @@ function _charts_highcharts_populate_chart_options($chart, $chart_definition) {
   if ($chart['#legend_position'] === 'bottom') {
     $chart_definition['legend']['verticalAlign'] = 'bottom';
     $chart_definition['legend']['layout'] = 'horizontal';
-  }
-  elseif ($chart['#legend_position'] === 'top') {
+  } elseif ($chart['#legend_position'] === 'top') {
     $chart_definition['legend']['verticalAlign'] = 'top';
     $chart_definition['legend']['layout'] = 'horizontal';
-  }
-  else {
+  } else {
     $chart_definition['legend']['align'] = $chart['#legend_position'];
     $chart_definition['legend']['verticalAlign'] = 'middle';
     $chart_definition['legend']['layout'] = 'vertical';
@@ -154,7 +152,7 @@ function _charts_highcharts_populate_chart_axes($chart, $chart_definition) {
 
       // Populate the chart data.
       $axisType = $chart[$key]['#type'] === 'chart_xaxis' ? 'xAxis' : 'yAxis';
-      $axis = array();
+      $axis = [];
       $axis['type'] = $chart[$key]['#axis_type'];
       $axis['title']['text'] = $chart[$key]['#title'];
       $axis['title']['style']['color'] = $chart[$key]['#title_color'];
@@ -182,11 +180,9 @@ function _charts_highcharts_populate_chart_axes($chart, $chart_definition) {
         $chart_type = charts_get_type($chart['#chart_type']);
         if ($axisType === 'xAxis' && !$chart_type['axis_inverted']) {
           $axis['labels']['align'] = 'left';
-        }
-        elseif ($axisType === 'yAxis' && $chart_type['axis_inverted']) {
+        } elseif ($axisType === 'yAxis' && $chart_type['axis_inverted']) {
           $axis['labels']['align'] = 'left';
-        }
-        else {
+        } else {
           // Rotation not allowed on left/right axis.
           unset($axis['labels']['rotation']);
         }
@@ -211,11 +207,11 @@ function _charts_highcharts_populate_chart_axes($chart, $chart_definition) {
  * @return mixed
  */
 function _charts_highcharts_populate_chart_data(&$chart, $chart_definition) {
-  $chart_definition['series'] = array();
+  $chart_definition['series'] = [];
   foreach (\Drupal::state()->getMultiple($chart) as $key) {
     if ($chart[$key]['#type'] === 'chart_data') {
-      $series = array();
-      $series_data = array();
+      $series = [];
+      $series_data = [];
 
       // Make sure defaults are loaded.
       if (empty($chart[$key]['#defaults_loaded'])) {
@@ -249,8 +245,7 @@ function _charts_highcharts_populate_chart_data(&$chart, $chart_definition) {
       foreach ($chart[$key]['#data'] as $data_index => $data) {
         if (isset($series_data[$data_index])) {
           $series_data[$data_index][] = $data;
-        }
-        else {
+        } else {
           $series_data[$data_index] = $data;
         }
       }
@@ -303,12 +298,11 @@ function _charts_highcharts_populate_chart_data(&$chart, $chart_definition) {
           // Convert the point from a simple data value to a complex point.
           if (!isset($series_point['data'])) {
             $data = $series_point;
-            $series_point = array();
+            $series_point = [];
             if (is_array($data)) {
               $series_point['name'] = $data[0];
               $series_point['y'] = $data[1];
-            }
-            else {
+            } else {
               $series_point['y'] = $data;
             }
           }
@@ -316,8 +310,7 @@ function _charts_highcharts_populate_chart_data(&$chart, $chart_definition) {
             if (is_array($data_item['#data'])) {
               $series_point['x'] = $data_item['#data'][0];
               $series_point['y'] = $data_item['#data'][1];
-            }
-            else {
+            } else {
               $series_point['y'] = $data_item['#data'];
             }
           }
