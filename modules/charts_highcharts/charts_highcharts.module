@@ -4,7 +4,6 @@
  * Charts module integration with Highcharts library.
  */
 
-
 /**
  * Implements hook_charts_info().
  */

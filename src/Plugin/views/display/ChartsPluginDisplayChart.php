@@ -101,6 +101,7 @@ class ChartsPluginDisplayChart extends Attachment {
       case 'displays':
         $form['#title'] .= t('Parent display');
         break;
+
       case 'inherit_yaxis':
         $form['#title'] .= t('Axis settings');
         $form['inherit_yaxis'] = [
@@ -115,7 +116,6 @@ class ChartsPluginDisplayChart extends Attachment {
         ];
         break;
     }
-
 
   }
 
@@ -134,6 +134,7 @@ class ChartsPluginDisplayChart extends Attachment {
       case 'displays':
         $form_state->setValue($section, array_filter($form_state->getValue($section)));
         break;
+
       case 'inherit_arguments':
       case 'inherit_exposed_filters':
       case 'inherit_yaxis':

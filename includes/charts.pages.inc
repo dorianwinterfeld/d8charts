@@ -204,7 +204,7 @@ function charts_settings_form($form, $defaults = array(), $field_options = array
   $charts_info = charts_info();
   $library_options = array();
   foreach ($charts_info as $library_name => $library_info) {
-    if (\Drupal::moduleHandler()->moduleExists($charts_info[$library_name]['module'])) {
+    if (Drupal::moduleHandler()->moduleExists($charts_info[$library_name]['module'])) {
       $library_options[$library_name] = $library_info['label'];
     }
   }
@@ -622,10 +622,8 @@ function charts_default_settings() {
   $defaults['tooltips_use_html'] = FALSE;
   $defaults['width'] = NULL;
   $defaults['height'] = NULL;
-
   $defaults['xaxis_title'] = '';
   $defaults['xaxis_labels_rotation'] = 0;
-
   $defaults['yaxis_title'] = '';
   $defaults['yaxis_min'] = '';
   $defaults['yaxis_max'] = '';
@@ -634,7 +632,7 @@ function charts_default_settings() {
   $defaults['yaxis_decimal_count'] = '';
   $defaults['yaxis_labels_rotation'] = 0;
 
-  \Drupal::moduleHandler()->alter('charts_default_settings', $defaults);
+  Drupal::moduleHandler()->alter('charts_default_settings', $defaults);
   return $defaults;
 }
 

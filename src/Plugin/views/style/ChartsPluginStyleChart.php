@@ -2,6 +2,7 @@
 
 namespace Drupal\charts\Plugin\views\style;
 
+use Drupal\charts\Theme\ChartsInterface;
 use Drupal\core\form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\views\Plugin\views\style\StylePluginBase;
@@ -59,7 +60,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
 
     $handlers = $this->displayHandler->getHandlers('field');
     if (empty($handlers)) {
-      $form['error_markup'] = ['#markup' => '<div class="error messages">' . t('You need at least one field before you can configure your table settings') . '</div>',];
+      $form['error_markup'] = ['#markup' => '<div class="error messages">' . t('You need at least one field before you can configure your table settings') . '</div>'];
     }
 
     // Limit grouping options (we only support one grouping field).
@@ -79,34 +80,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
     $field_options = $this->displayHandler->getFieldLabels();
     $form = charts_settings_form($form, $this->options, $field_options, ['style_options']);
 
-    // Reduce the options if this is a chart extension.
-    /*if (empty($this->displayHandler->getAttachedDisplays())) {
-      $form['type']['#description'] = empty($form['type']['#description']) ? '' : $form['type']['#description'] . ' ';
-      $form['type']['#description'] .= t('This chart will be combined with the parent display "@display_title",
-          which is a "@type" chart. Not all chart types may be combined. Selecting a different chart type than
-          the parent may cause errors.' //,
-      //    array('@display_title' => $parent_display->display_title, '@type' => $parent_chart_type['label'])
-      );
-      $form['fields']['label_field']['#disabled'] = TRUE;
-      $form['display']['#access'] = FALSE;
-      $form['xaxis']['#access'] = FALSE;
-      if ($this->displayHandler->options['inherit_yaxis']) {
-        $form['yaxis']['#access'] = FALSE;
-      }
-      else {
-        $form['yaxis']['#title'] = t('Secondary axis');
-        $form['yaxis']['#attributes']['class'] = array();
-      }
-    }*/
   }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function submitOptionsForm(&$form, FormStateInterface $form_state) {
-    parent::submitOptionsForm($form, $form_state);
-  }
-
 
   /**
    * {@inheritdoc}
@@ -130,6 +104,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
           array_push($dataFieldsValueState, 1);
         }
       }
+
       $dataFieldsCounter++;
     }
 
@@ -193,7 +168,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
       '#theme' => 'views_view_charts',
     ];
     $chart_type_info = charts_get_type($this->options['type']);
-    if ($chart_type_info['axis'] === CHARTS_SINGLE_AXIS) {
+    if ($chart_type_info['axis'] === ChartsInterface::CHARTS_SINGLE_AXIS) {
       $data_field_key = key($data_fields);
       $data_field = $data_fields[$data_field_key];
 

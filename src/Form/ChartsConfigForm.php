@@ -3,12 +3,9 @@
 namespace Drupal\charts\Form;
 
 use Drupal\charts\Theme\ChartsInterface;
-use Drupal\Core\Extension\ModuleHandler;
 use Drupal\Core\Url;
-use Drupal\Core\Link;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -58,7 +55,7 @@ class ChartsConfigForm extends ConfigFormBase {
       '#weight' => -100,
     ];
     // Reuse the global settings form for defaults, but remove JS classes.
-    $form = $this->charts_settings_form($form, $defaults, $field_options, $parents);
+    $form = $this->chartsSettingsForm($form, $defaults, $field_options, $parents);
     $form['xaxis']['#attributes']['class'] = [];
     $form['yaxis']['#attributes']['class'] = [];
     $form['display']['colors']['#prefix'] = NULL;
@@ -67,7 +64,7 @@ class ChartsConfigForm extends ConfigFormBase {
     $form['display']['#group'] = 'defaults';
     $form['xaxis']['#group'] = 'defaults';
     $form['yaxis']['#group'] = 'defaults';
-    $form['defaults'] = ['#type' => 'vertical_tabs',];
+    $form['defaults'] = ['#type' => 'vertical_tabs'];
     // Add submit buttons and normal saving behavior.
     $form['actions']['#type'] = 'actions';
     $form['actions']['submit'] = [
@@ -107,7 +104,6 @@ class ChartsConfigForm extends ConfigFormBase {
     $defaults['yaxis_decimal_count'] = '';
     $defaults['yaxis_labels_rotation'] = 0;
 
-    //\Drupal::moduleHandler()->alter('charts_default_settings', $defaults);
     $this->moduleHandler->alter('charts_default_settings', $defaults);
 
     return $defaults;
@@ -131,7 +127,7 @@ class ChartsConfigForm extends ConfigFormBase {
     ];
   }
 
-  public function charts_settings_form($form, $defaults = [], $field_options = [], $parents = []) {
+  public function chartsSettingsForm($form, $defaults = [], $field_options = [], $parents = []) {
     // Ensure all defaults are set.
     $options = array_merge($this->charts_default_settings(), $defaults);
 
@@ -141,7 +137,7 @@ class ChartsConfigForm extends ConfigFormBase {
     $charts_info = $this->charts_info();
     $library_options = [];
     foreach ($charts_info as $library_name => $library_info) {
-      if (\Drupal::moduleHandler()->moduleExists($charts_info[$library_name]['module'])) {
+      if ($this->moduleHandler->moduleExists($charts_info[$library_name]['module'])) {
         $library_options[$library_name] = $library_info['label'];
       }
     }
@@ -160,9 +156,8 @@ class ChartsConfigForm extends ConfigFormBase {
       '#parents' => array_merge($parents, ['library']),
     ];
 
-    //$chart_types = $this->charts_type_info();
-    //This is a work around will need to revisit this
-    $chart_types = $this->charts_charts_type_info();
+    // This is a work around will need to revisit this.
+    $chart_types = $this->chartsChartsTypeInfo();
     $type_options = [];
     foreach ($chart_types as $chart_type => $chart_type_info) {
       $type_options[$chart_type] = $chart_type_info['label'];
@@ -196,7 +191,6 @@ class ChartsConfigForm extends ConfigFormBase {
 
     if ($field_options) {
       $first_field = key($field_options);
-      //$field_keys = array_diff($field_options, array($first_field => NULL));
       $form['fields']['#theme'] = 'charts_settings_fields';
       $form['fields']['label_field'] = [
         '#type' => 'radios',
@@ -475,7 +469,7 @@ class ChartsConfigForm extends ConfigFormBase {
   /**
    * @return mixed
    */
-  public function charts_charts_type_info() {
+  public function chartsChartsTypeInfo() {
     $chart_types['pie'] = [
       'label' => $this->t('Pie'),
       'axis' => ChartsInterface::CHARTS_SINGLE_AXIS,
