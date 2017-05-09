@@ -80,11 +80,8 @@ class ChartsPluginDisplayChart extends Attachment {
       'value' => $this->getOption('inherit_yaxis') ? t('Use primary Y-axis') : t('Create secondary axis'),
     ];
 
-    $options['attachment_position'] = ['disabled' => TRUE];
-
-    $options['inherit_pager'] = ['disabled' => TRUE];
-
-    $options['render_pager'] = ['disabled' => TRUE];
+    unset($options['attachment_position']);
+    unset($options['inherit_pager']);
 
   }
 
