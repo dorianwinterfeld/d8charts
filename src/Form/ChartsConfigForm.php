@@ -142,7 +142,7 @@ class ChartsConfigForm extends ConfigFormBase {
       }
     }
     if (count($library_options) == 0) {
-      drupal_set_message(t('There are no enabled charting libraries. Please enable a Charts sub-module.'));
+      drupal_set_message($this->t('There are no enabled charting libraries. Please enable a Charts sub-module.'));
     }
     $form['library'] = [
       '#title' => $this->t('Charting library'),

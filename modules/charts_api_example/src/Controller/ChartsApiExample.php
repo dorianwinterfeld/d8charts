@@ -20,11 +20,11 @@ class ChartsApiExample extends ControllerBase implements ContainerInjectionInter
     $library = $this->chartSettings['library'];
     $options = [];
     $options['type'] = $this->chartSettings['type'];
-    $options['title'] = t('Chart title');
-    $options['yaxis_title'] = t('Y-Axis');
+    $options['title'] = $this->t('Chart title');
+    $options['yaxis_title'] = $this->t('Y-Axis');
     $options['yaxis_min'] = '';
     $options['yaxis_max'] = '';
-    $options['xaxis_title'] = t('X-Axis');
+    $options['xaxis_title'] = $this->t('X-Axis');
     //sample data format
     $categories = ["Category 1", "Category 2", "Category 3", "Category 4"];
     $seriesData = [

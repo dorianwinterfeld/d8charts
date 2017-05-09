@@ -8,8 +8,7 @@
  * Implements hook_requirements().
  */
 function charts_requirements($phase) {
-  $requirements = array();
+  $requirements = [];
 
   return $requirements;
 }
-
