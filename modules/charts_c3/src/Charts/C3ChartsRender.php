@@ -27,12 +27,11 @@ class C3ChartsRender implements ChartsRenderInterface {
    * @return CThree
    */
   public function charts_render_charts($options, $categories = [], $seriesData = [], $attachmentDisplayOptions = [], &$variables, $chartId) {
-
-    $noAttachmentDisplays = count($attachmentDisplayOptions);
+    $noAttachmentDisplays = count($attachmentDisplayOptions) === 0;
     $yAxis = [];
     $types = [];
     //sets secondary axis from the first attachment only
-    if ($attachmentDisplayOptions[0]['inherit_yaxis'] == 0) {
+    if (!$noAttachmentDisplays && $attachmentDisplayOptions[0]['inherit_yaxis'] == 0) {
       $yAxis[$seriesData[1]['name']] = 'y2';
     }
 
@@ -64,7 +63,7 @@ class C3ChartsRender implements ChartsRenderInterface {
     if ($noAttachmentDisplays > 0) {
       $chartData->setLabels(FALSE);
     }
-    if ($attachmentDisplayOptions[0]['inherit_yaxis'] == 0) {
+    if (!$noAttachmentDisplays && $attachmentDisplayOptions[0]['inherit_yaxis'] == 0) {
       $chartData->axes = $yAxis;
       $showSecAxis['show'] = true;
       $showSecAxis['label'] = $attachmentDisplayOptions[0]['style']['options']['yaxis_title'];

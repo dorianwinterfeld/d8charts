@@ -194,13 +194,13 @@ class ChartsPluginStyleChart extends StylePluginBase {
       }
 
       if ($label_field) {
-        $chart['#legend_title'] = $label_field->options['label'];
+        $chart['#legend_title'] = $label_field['label'];
       }
 
       $chart[$this->view->current_display . '_series'] = [
         '#type' => 'chart_data',
         '#data' => $data,
-        '#title' => $data_field->options['label'],
+        '#title' => $data_field['label'],
       ];
 
     } else {
@@ -228,7 +228,7 @@ class ChartsPluginStyleChart extends StylePluginBase {
             '#data' => [],
             // If using a grouping field, inherit from the chart level colors.
             '#color' => ($series_label === '' && isset($this->options['field_colors'][$field_key])) ? $this->options['field_colors'][$field_key] : NULL,
-            '#title' => $series_label ? $series_label : $field_handler->options['label'],
+            '#title' => $series_label ? $series_label : $field_handler['label'],
             '#prefix' => $this->options['yaxis_prefix'] ? $this->options['yaxis_prefix'] : NULL,
             '#suffix' => $this->options['yaxis_suffix'] ? $this->options['yaxis_suffix'] : NULL,
             '#decimal_count' => $this->options['yaxis_decimal_count'] ? $this->options['yaxis_decimal_count'] : NULL,
