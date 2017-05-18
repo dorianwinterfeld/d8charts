@@ -14,13 +14,18 @@ class Util {
   public static function viewsData($view, $labelValues, $labelField, $color, $attachmentChartTypeOption) {
     $data = [];
 
-    foreach ($view->result as $id => $row) {
+    foreach ($view->result as $row_number => $row) {
       $numberFields = 0;
       $rowData = [];
       foreach ($labelValues as $fieldId => $rowDataValue) {
+        $alter_text = $view->field[$labelField]->options['alter']['alter_text'];
+        if ($alter_text) {
+            $text = $view->field[$labelField]->options['alter']['text'];
+            $tokenized_text = trim(str_replace("\n", '', strip_tags($view->field[$labelField]->tokenizeValue($text, $row_number))));
+        }
         $rowData[$numberFields] = [
           'value' => $view->field[$fieldId]->getValue($row),
-          'label_field' => $view->field[$labelField]->getValue($row),
+          'label_field' => ($alter_text) ? $tokenized_text : $view->field[$labelField]->getValue($row),
           'label' => $view->field[$fieldId]->label(),
           // 'label' => $view->display_handler->display['id'], to use display_id
           'color' => $color[$fieldId],
@@ -28,7 +33,7 @@ class Util {
         ];
         $numberFields++;
       }
-      $data[$id] = $rowData;
+      $data[$row_number] = $rowData;
     }
 
     return $data;
