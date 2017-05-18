@@ -71,14 +71,15 @@ class GoogleChartsRender implements ChartsRenderInterface {
       array_push($vAxes, $secondVaxis);
     }
     array_push($chartSelected, $options['type']);
+    // @todo: make sure this works for more than one attachment.
     for ($i = 0; $i < count($attachmentDisplayOptions); $i++) {
       $attachmentChartType = $attachmentDisplayOptions[$i]['style']['options']['type'];
       if ($attachmentChartType == 'column')
         $attachmentChartType = 'bars';
       if ($attachmentDisplayOptions[0]['inherit_yaxis'] == 0 && $i == 0) {
-        $seriesTypes[$i + 1] = ['type' => $attachmentChartType, 'targetAxisIndex' => 1];
+        $seriesTypes[$i + 2] = ['type' => $attachmentChartType, 'targetAxisIndex' => 1];
       } else
-        $seriesTypes[$i + 1] = ['type' => $attachmentChartType];
+        $seriesTypes[$i + 2] = ['type' => $attachmentChartType];
       array_push($chartSelected, $attachmentChartType);
     }
 

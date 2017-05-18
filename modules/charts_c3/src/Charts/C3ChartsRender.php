@@ -34,12 +34,12 @@ class C3ChartsRender implements ChartsRenderInterface {
     if (!$noAttachmentDisplays && $attachmentDisplayOptions[0]['inherit_yaxis'] == 0) {
       $yAxis[$seriesData[1]['name']] = 'y2';
     }
-
+    // @todo - make this work for more that one attachment.
     for ($i = 1; $i <= count($attachmentDisplayOptions); $i++) {
       if ($attachmentDisplayOptions[$i - 1]['style']['options']['type'] == 'column')
-        $types[$seriesData[$i]['name']] = 'bar';
+        $types[$seriesData[$i + 1]['name']] = 'bar';
       else
-        $types[$seriesData[$i]['name']] = $attachmentDisplayOptions[$i - 1]['style']['options']['type'];
+        $types[$seriesData[$i + 1]['name']] = $attachmentDisplayOptions[$i - 1]['style']['options']['type'];
     }
     $c3Data = [];
     for ($i = 0; $i < count($seriesData); $i++) {
@@ -56,8 +56,6 @@ class C3ChartsRender implements ChartsRenderInterface {
     $c3 = new CThree();
     $bindTo = '#' . $chartId;
     $c3->setBindTo($bindTo);
-    //$c3->setChart($c3Chart);
-    //$c3->setLabels($options['data_labels']);
     $c3->setTitle($c3ChartTitle);
     $chartData = new ChartData();
     if ($noAttachmentDisplays > 0) {
