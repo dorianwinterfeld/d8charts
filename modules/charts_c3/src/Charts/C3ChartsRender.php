@@ -74,22 +74,27 @@ class C3ChartsRender implements ChartsRenderInterface {
       array_unshift($categories, 'x');
       array_push($c3Data, $categories);
       $chartData->setColumns($c3Data);
-    } else {
-      if ($options['type'] == 'column') {
-        $chartData->setType('bar');
-        $chartAxis->setRotated(FALSE);
-        array_unshift($categories, 'x');
-        array_push($c3Data, $categories);
-        $chartData->setColumns($c3Data);
-      } else {
-        array_unshift($categories, 'x');
-        array_push($c3Data, $categories);
-        $chartData->setColumns($c3Data);
-      }
+    }
+    else if ($options['type'] == 'column') {
+      $chartData->setType('bar');
+      $chartAxis->setRotated(FALSE);
+      array_unshift($categories, 'x');
+      array_push($c3Data, $categories);
+      $chartData->setColumns($c3Data);
+    }
+    else if ($options['type'] == 'pie') {
+      $chartData->setColumns($c3Data);
+    }
+    else {
+      array_unshift($categories, 'x');
+      array_push($c3Data, $categories);
+      $chartData->setColumns($c3Data);
     }
     $chartData->types = $types;
 
-    $c3->setAxis($chartAxis);
+    if ($options['type'] != 'pie') {
+      $c3->setAxis($chartAxis);
+    }
 
     $chartColor = new ChartColor();
     $seriesColors = [];
