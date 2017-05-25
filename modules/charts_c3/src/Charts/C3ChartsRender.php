@@ -82,7 +82,7 @@ class C3ChartsRender implements ChartsRenderInterface {
       array_push($c3Data, $categories);
       $chartData->setColumns($c3Data);
     }
-    else if ($options['type'] == 'pie') {
+    else if ($options['type'] == 'pie' || $options['type'] == 'donut') {
       $chartData->setColumns($c3Data);
     }
     else {
@@ -92,7 +92,7 @@ class C3ChartsRender implements ChartsRenderInterface {
     }
     $chartData->types = $types;
 
-    if ($options['type'] != 'pie') {
+    if ($options['type'] != 'pie' && $options['type'] != 'donut') {
       $c3->setAxis($chartAxis);
     }
 

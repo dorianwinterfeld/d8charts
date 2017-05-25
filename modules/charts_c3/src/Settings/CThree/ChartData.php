@@ -70,10 +70,10 @@ class ChartData implements \JsonSerializable {
   public function jsonSerialize() {
     $vars = get_object_vars($this);
 
-    if ($vars['type'] == 'pie') {
+    if ($vars['type'] == 'pie' || $vars['type'] == 'donut') {
       unset($vars['x']);
     }
-    
+
     return $vars;
   }
 
