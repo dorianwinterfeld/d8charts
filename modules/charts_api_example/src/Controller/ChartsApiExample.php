@@ -18,6 +18,10 @@ class ChartsApiExample extends ControllerBase implements ContainerInjectionInter
   public function display() {
 
     $library = $this->chartSettings['library'];
+    if (!isset($library)) {
+      drupal_set_message('You need to first configure Charts default 
+      settings');
+    }
     $options = [];
     $options['type'] = $this->chartSettings['type'];
     $options['title'] = $this->t('Chart title');
@@ -25,7 +29,7 @@ class ChartsApiExample extends ControllerBase implements ContainerInjectionInter
     $options['yaxis_min'] = '';
     $options['yaxis_max'] = '';
     $options['xaxis_title'] = $this->t('X-Axis');
-    //sample data format
+    // Sample data format.
     $categories = ["Category 1", "Category 2", "Category 3", "Category 4"];
     $seriesData = [
       ["name" => "Series 1", "color" => "#0d233a", "type" => null, "data" => [250, 350, 400, 200]],
