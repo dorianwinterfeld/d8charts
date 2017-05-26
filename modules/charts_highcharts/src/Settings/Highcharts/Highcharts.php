@@ -11,6 +11,8 @@ class Highcharts implements \JsonSerializable {
   private $plotOptions;
   private $legend;
   private $credits;
+  private $innerSize = '%20';
+  private $series;
 
   /**
    * @return mixed
@@ -127,6 +129,20 @@ class Highcharts implements \JsonSerializable {
   /**
    * @return mixed
    */
+  public function getInnerSize() {
+    return $this->innerSize;
+  }
+
+  /**
+   * @param mixed $innerSize
+   */
+  public function setInnerSize($innerSize) {
+    $this->innerSize = $innerSize;
+  }
+
+  /**
+   * @return mixed
+   */
   public function getSeries() {
     return $this->series;
   }
@@ -137,8 +153,6 @@ class Highcharts implements \JsonSerializable {
   public function setSeries($series) {
     $this->series = $series;
   }
-
-  private $series;
 
   /**
    * @return array

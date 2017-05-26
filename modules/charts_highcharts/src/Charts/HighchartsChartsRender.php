@@ -38,9 +38,28 @@ class HighchartsChartsRender implements ChartsRenderInterface {
    * @return Highcharts object to be used by highcharts javascripts visualization framework
    */
   public function charts_render_charts($options, $categories = [], $seriesData = [], $attachmentDisplayOptions = [], &$variables, $chartId) {
+    $noAttachmentDisplays = count($attachmentDisplayOptions) === 0;
 
     $chart = new ChartType();
-    $chart->setType($options['type']);
+    $typeOptions = $options['type'];
+    // @todo: make this so that it happens if any display uses donut.
+    if ($typeOptions == 'donut'){
+      $typeOptions = 'pie';
+      // Remove donut from seriesData.
+      foreach ($seriesData as $key => &$value) {
+        $value = str_replace('donut','pie',$value);
+      }
+      // Add innerSize to differentiate between donut and pie.
+      foreach ($seriesData as $key => &$value) {
+        if ($typeOptions == 'pie') {
+          $innerSize['showInLegend'] = 'true';
+          $innerSize['innerSize'] = '40%';
+          $chartPlacement = array_search($value, $seriesData);
+          $seriesData[$chartPlacement] = array_merge($innerSize, $seriesData[$chartPlacement]);
+        }
+      }
+    }
+    $chart->setType($typeOptions);
     $chartTitle = new ChartTitle();
     $chartTitle->setText($options['title']);
     $chartXaxis = new Xaxis();
@@ -67,14 +86,13 @@ class HighchartsChartsRender implements ChartsRenderInterface {
     $chartYaxis->setTitle($yAxisTitle);
     array_push($yAxes, $chartYaxis);
     // Chart libraries tend to supports only one secondary axis.
-    if ($attachmentDisplayOptions[0]['inherit_yaxis'] == 0) {
+    if (!$noAttachmentDisplays && $attachmentDisplayOptions[0]['inherit_yaxis'] == 0) {
       $chartYaxisSecondary = new Yaxis();
       $yAxisTitleSecondary = new YaxisTitle();
       $yAxisTitleSecondary->setText($attachmentDisplayOptions[0]['style']['options']['yaxis_title']);
       $chartYaxisSecondary->setTitle($yAxisTitleSecondary);
       $chartYaxisSecondary->setLabels($yaxisLabels);
       $chartYaxisSecondary->opposite = 'true';
-
       if (!empty($attachmentDisplayOptions[0]['style']['options']['yaxis_min'])) {
         $chartYaxisSecondary->min = $attachmentDisplayOptions[0]['style']['options']['yaxis_min'];
       }
@@ -86,8 +104,8 @@ class HighchartsChartsRender implements ChartsRenderInterface {
     $dataLabelStatus = new DataLabelStatus();
     $dataLabels = new DataLabels();
     $dataLabels->setDataLabels($dataLabelStatus);
-    $barPlotOptns = new PlotOptions();
-    $barPlotOptns->setBar($dataLabels);
+    $plotOptions = new PlotOptions();
+    $plotOptions->setPlotType($dataLabels);
     $chartTooltip = new Tooltip();
     $chartCredits = new ChartCredits();
     $chartLegend = new ChartLegend();
@@ -96,10 +114,9 @@ class HighchartsChartsRender implements ChartsRenderInterface {
     $highchart->setChart($chart);
     $highchart->setTitle($chartTitle);
     $highchart->setXAxis($chartXaxis);
-    //$highchart->setYAxis($chartYaxis);
     $highchart->yAxis = $yAxes;
     $highchart->setTooltip($chartTooltip);
-    $highchart->setPlotOptions($barPlotOptns);
+    $highchart->setPlotOptions($plotOptions);
     $highchart->setCredits($chartCredits);
     $highchart->setLegend($chartLegend);
     $highchart->setSeries($seriesData);

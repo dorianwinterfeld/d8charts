@@ -13,7 +13,7 @@ use Drupal\charts\Theme\ChartsInterface;
 function charts_c3_charts_info() {
   $info['c3'] = [
     'label' => t('C3 Charts'),
-    'types' => ['area', 'bar', 'column', 'line', 'pie', 'donut', 'scatter'],
+    'types' => ['area', 'bar', 'column', 'donut', 'line', 'pie', 'donut', 'scatter'],
   ];
   return $info;
 }

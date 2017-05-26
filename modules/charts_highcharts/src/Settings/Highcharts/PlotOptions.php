@@ -3,20 +3,20 @@
 namespace Drupal\charts_highcharts\Settings\Highcharts;
 
 class PlotOptions implements \JsonSerializable {
-  private $bar;
+  private $plotType;
 
   /**
    * @return mixed
    */
-  public function getBar() {
-    return $this->bar;
+  public function getPlotType() {
+    return $this->plotType;
   }
 
   /**
-   * @param mixed $bar
+   * @param mixed $plotType
    */
-  public function setBar($bar) {
-    $this->bar = $bar;
+  public function setPlotType($plotType) {
+    $this->plotType = $plotType;
   }
 
   /**

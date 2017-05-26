@@ -94,11 +94,14 @@ class GoogleChartsRender implements ChartsRenderInterface {
     }
     $googleOptions->setTitle($options['title']);
     $googleOptions->vAxes = $vAxes;
-    //$vAxis['title'] = $options['yaxis_title'];
-    //$googleOptions->setVAxis($vAxis);
+
+    if (in_array('donut',$chartSelected)) {
+      $googleOptions->pieHole = '0.5';
+    }
+
     $chartArea = new ChartArea();
     $chartArea->setWidth(400);
-    // $googleOptions->setChartArea($chartArea);
+
     $seriesColors = [];
     for ($i = 0; $i < count($seriesData); $i++) {
       $seriesColor = $seriesData[$i]['color'];

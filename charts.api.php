@@ -131,7 +131,7 @@ function hook_charts_info() {
     // $chart renderable and printing a chart on the page.
     'render' => '_my_charting_library_render',
     // Specify the chart types your library is capable of providing.
-    'types' => ['area', 'bar', 'column', 'line', 'pie', 'scatter'],
+    'types' => ['area', 'bar', 'column', 'donut', 'line', 'pie', 'scatter'],
     // If your callback function is in a separate file, specify it's location.
     // 'file' => 'includes/my_charting_library.inc',
   ];

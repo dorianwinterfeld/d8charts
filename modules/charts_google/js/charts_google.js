@@ -33,6 +33,9 @@
               case 'ColumnChart':
                 chart = new google.visualization.ColumnChart(document.getElementById(chartId));
                 break;
+              case 'DonutChart':
+                chart = new google.visualization.PieChart(document.getElementById(chartId));
+                break;
               case 'PieChart':
                 chart = new google.visualization.PieChart(document.getElementById(chartId));
                 break;
