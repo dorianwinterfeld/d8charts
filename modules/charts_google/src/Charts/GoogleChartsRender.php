@@ -59,6 +59,7 @@ class GoogleChartsRender implements ChartsRenderInterface {
    * @return GoogleOptions object with chart options or settings to be used by google visualization framework
    */
   private function charts_google_create_charts_options($options, $seriesData = [], $attachmentDisplayOptions = []) {
+    $noAttachmentDisplays = count($attachmentDisplayOptions) === 0;
     $chartSelected = [];
     $seriesTypes = [];
     $firstVaxis = ['minValue' => 0, 'title' => $options['yaxis_title']];
@@ -66,7 +67,7 @@ class GoogleChartsRender implements ChartsRenderInterface {
     $vAxes = [];
     array_push($vAxes, $firstVaxis);
     //sets secondary axis from the first attachment only
-    if ($attachmentDisplayOptions[0]['inherit_yaxis'] == 0) {
+    if (!$noAttachmentDisplays && $attachmentDisplayOptions[0]['inherit_yaxis'] == 0) {
       $secondVaxis['title'] = $attachmentDisplayOptions[0]['style']['options']['yaxis_title'];
       array_push($vAxes, $secondVaxis);
     }

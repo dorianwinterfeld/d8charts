@@ -30,7 +30,7 @@ class C3ChartsRender implements ChartsRenderInterface {
     $noAttachmentDisplays = count($attachmentDisplayOptions) === 0;
     $yAxis = [];
     $types = [];
-    //sets secondary axis from the first attachment only
+    // Sets secondary axis from the first attachment only.
     if (!$noAttachmentDisplays && $attachmentDisplayOptions[0]['inherit_yaxis'] == 0) {
       $yAxis[$seriesData[1]['name']] = 'y2';
     }
