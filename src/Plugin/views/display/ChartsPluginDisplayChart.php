@@ -117,11 +117,7 @@ class ChartsPluginDisplayChart extends Attachment {
   }
 
   /**
-   * Perform any necessary changes to the form values prior to storage.
-   * There is no need for this function to actually store the data.
-   *
-   * @param $form
-   * @param FormStateInterface $form_state
+   * {@inheritdoc}
    */
   public function submitOptionsForm(&$form, FormStateInterface $form_state) {
     // It is very important to call the parent function here:
@@ -131,7 +127,7 @@ class ChartsPluginDisplayChart extends Attachment {
       case 'displays':
         $form_state->setValue($section, array_filter($form_state->getValue($section)));
         break;
-
+      // @todo set isDefaulted to false by default.
       case 'inherit_arguments':
       case 'inherit_exposed_filters':
       case 'inherit_yaxis':
