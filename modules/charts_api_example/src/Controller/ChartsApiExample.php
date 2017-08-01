@@ -19,8 +19,8 @@ class ChartsApiExample extends ControllerBase implements ContainerInjectionInter
 
     $library = $this->chartSettings['library'];
     if (!isset($library)) {
-      drupal_set_message('You need to first configure Charts default 
-      settings');
+      drupal_set_message(t('You need to first configure Charts default 
+      settings'));
     }
     $options = [];
     $options['type'] = $this->chartSettings['type'];
